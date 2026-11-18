@@ -377,6 +377,7 @@
   <script>
     let globalData = { produk: [], layanan: [], pesanan: [], booking: [] };
     let currentUser = null;
+let lastBaruCount = null;
 
     // Placeholder gambar lokal (tidak bergantung pada situs luar)
     const PLACEHOLDER = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Crect width='300' height='300' fill='%23e5e7eb'/%3E%3Ctext x='150' y='155' font-size='20' text-anchor='middle' fill='%239ca3af'%3ENo Image%3C/text%3E%3C/svg%3E";
@@ -423,11 +424,8 @@
           btn.disabled = false;
           btn.innerText = "Masuk Dashboard";
           if (res.success) {
-            currentUser = res;
-            document.getElementById('adminRoleDisplay').innerText = `${res.nama} (${res.role})`;
-            document.getElementById('loginScreen').classList.add('hidden');
-            document.getElementById('appContainer').classList.remove('hidden');
-            loadDashboardData();
+            try { localStorage.setItem('lsg_user', JSON.stringify({ nama: res.nama, role: res.role })); } catch (e) {}
+showApp(res);
           } else {
             err.innerText = res.message;
             err.classList.remove('hidden');
@@ -441,12 +439,22 @@
         .loginAdmin(u, p);
     }
 
-    function logout() {
-      currentUser = null;
-      document.getElementById('appContainer').classList.add('hidden');
-      document.getElementById('loginScreen').classList.remove('hidden');
-      document.getElementById('loginForm').reset();
-    }
+    function showApp(u) {
+  currentUser = u;
+  document.getElementById('adminRoleDisplay').innerText = `${u.nama} (${u.role})`;
+  document.getElementById('loginScreen').classList.add('hidden');
+  document.getElementById('appContainer').classList.remove('hidden');
+  loadDashboardData();
+}
+
+function logout() {
+  currentUser = null;
+  try { localStorage.removeItem('lsg_user'); } catch (e) {}
+  if (window.lsgClearToken) window.lsgClearToken();
+  document.getElementById('appContainer').classList.add('hidden');
+  document.getElementById('loginScreen').classList.remove('hidden');
+  document.getElementById('loginForm').reset();
+}
 
     // NAVIGATION TABS
     function switchTab(targetTab) {
@@ -462,20 +470,23 @@
     }
 
     // LOAD DATA
-    function loadDashboardData() {
-      showLoading(true, "Memuat data terbaru...");
-      google.script.run
-        .withSuccessHandler(data => {
-          globalData = data;
-          renderDashboard();
-          showLoading(false);
-        })
-        .withFailureHandler(err => {
-          showLoading(false);
-          alert("Gagal memuat data: " + err.message);
-        })
-        .getAdminDashboardData();
-    }
+   function loadDashboardData(silent) {
+  if (silent !== true) showLoading(true, "Memuat data terbaru...");
+  google.script.run
+    .withSuccessHandler(data => {
+      globalData = data;
+      renderDashboard();
+      if (silent !== true) showLoading(false);
+      checkNewOrders();
+    })
+    .withFailureHandler(err => {
+      if (silent !== true) {
+        showLoading(false);
+        alert("Gagal memuat data: " + err.message);
+      }
+    })
+    .getAdminDashboardData();
+}
 
     function showLoading(show, text = "Memuat...") {
       const el = document.getElementById('loadingOverlay');
@@ -796,6 +807,41 @@
         })
         .saveService(srvObj);
     }
+    // Notifikasi pesanan baru: judul tab + bunyi beep
+function checkNewOrders() {
+  const n = globalData.pesanan.filter(p => p.Status === 'Baru').length;
+  if (lastBaruCount !== null && n > lastBaruCount) {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const o = ctx.createOscillator();
+      o.connect(ctx.destination);
+      o.frequency.value = 880;
+      o.start();
+      o.stop(ctx.currentTime + 0.3);
+    } catch (e) {}
+  }
+  lastBaruCount = n;
+  document.title = (n > 0 ? '(' + n + ') ' : '') + 'Admin Dashboard - Laras Satwa Graha';
+}
+
+// Pulihkan sesi saat halaman di-reload
+window.addEventListener('load', function () {
+  let u = null;
+  try { u = JSON.parse(localStorage.getItem('lsg_user') || 'null'); } catch (e) {}
+  if (u && window.lsgHasToken && window.lsgHasToken()) showApp(u);
+});
+
+// Sesi habis -> kembali ke layar login
+window.addEventListener('lsg:session-expired', logout);
+
+// Auto-refresh tiap 30 detik (dilewati kalau lagi buka form atau milih status)
+setInterval(function () {
+  if (!currentUser) return;
+  if (!document.getElementById('productModal').classList.contains('hidden')) return;
+  if (!document.getElementById('serviceModal').classList.contains('hidden')) return;
+  if (document.activeElement && document.activeElement.tagName === 'SELECT') return;
+  loadDashboardData(true);
+}, 30000);
   </script>
 </body>
 </html>
