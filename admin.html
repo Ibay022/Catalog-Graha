@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Laras Satwa Graha</title>
+  <!-- Tailwind CSS & FontAwesome -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      <script src="api.js"></script>
+      theme: {
+        extend: {
+          colors: {
+            brand: { 50: '#fff7ed', 100: '#ffedd5', 500: '#f97316', 600: '#ea580c', 700: '#c2410c' }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+
+  <!-- LOGIN SCREEN -->
+  <div id="loginScreen" class="fixed inset-0 bg-gray-900 z-50 flex items-center justify-center p-4 bg-cover bg-center" style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&fit=crop&w=1200&q=80')">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 border-t-8 border-brand-500">
+      <div class="text-center mb-6">
+        <div class="w-20 h-20 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-3 text-brand-600 text-3xl font-bold overflow-hidden">
+          <img src="data:image/jpeg;base64,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UyuufU9W0vmmaxve5xDQFuZOZGCSKVr2Hsc1wI+oVu8L2vmqXXPRcZlQeXF+i5DXBzctOQrkutUREVUREREREREREREREREREREREREREREREREREREREREWhOGkrVfGocQwAHtKIV8JJHPdz/RbBzOEWjnsYC57mtaOZLjgK0leahq5Sz6luU+odRzTx2CKd0VHRsPC6pc04w0e2S5feKnqtJ1NJqrTMtRNpyrka2elcS7qwXcJBHhnsd7FdpX2m2WaglZn9pUzrk6pjghYZnRsewg/KO3hdzWjYpNU1ENPIyK0WSmnbIKWSIwumdzc53Cezn8o7BzJWgmjcHku/OJuCD3t7nfTdtw+q2b1kFth+XoRwt4fu6qTD28l9IpCx/kV8mvbI0PY4OB7wcharfgta0XYAgjIRfCnfxAg9y+6uVwRERFVERERERERERERERERERERERERERERERERERERFxaonjauUuLVf1jUVDouFWNqnW6obROa2pMThCXdgfj5SeR5Zx3LF5GbkySyPaNNxx9YOrjeZJC1mDnLuEZOcdw7T4LL0VqsWGVVNuOJJ3W+4WYCVjeETcWInCPnw4Z3v/ezy+i+0se4koqI3T2NrCx3VPgMjZAeNuObmkA8HHzweZHLkVlqIq3WEzN3NpKXhpf+Hat7WgHIkY5xxz7sE8h4Zz3Y55jSioFDCKt0b6gMb1rogQ0uxzLQeeM5wvqiKi+1MftHDyXKXFpv613ouUqhXhERFVVREREREREREREREREX/9k=" referrerpolicy="no-referrer" alt="Logo" class="w-full h-full object-contain" onerror="this.replaceWith(document.createTextNode('🐾'))">
+        </div>
+        <h2 class="text-2xl font-bold text-gray-900">Laras Satwa Graha</h2>
+        <p class="text-sm text-gray-500 mt-1">Silakan login untuk masuk ke Dashboard Admin</p>
+      </div>
+      <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-gray-600 mb-1">Username</label>
+          <input type="text" id="loginUser" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-gray-600 mb-1">Password</label>
+          <input type="password" id="loginPass" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+        </div>
+        <div id="loginError" class="text-red-500 text-xs hidden"></div>
+        <button type="submit" id="btnLogin" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 rounded-lg transition duration-200 shadow-md">
+          Masuk Dashboard
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MAIN APP CONTAINER -->
+  <div id="appContainer" class="hidden min-h-screen flex flex-col md:flex-row">
+
+    <!-- SIDEBAR NAVIGATION -->
+    <aside class="w-full md:w-64 bg-white border-r border-gray-200 flex flex-col justify-between shrink-0">
+      <div>
+        <div class="p-5 border-b border-gray-100 flex items-center space-x-3">
+          <div class="w-10 h-10 bg-brand-500 text-white rounded-xl flex items-center justify-center font-bold text-lg shadow-sm overflow-hidden shrink-0">
+            <img src="data:image/jpeg;base64,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UyuufU9W0vmmaxve5xDQFuZOZGCSKVr2Hsc1wI+oVu8L2vmqXXPRcZlQeXF+i5DXBzctOQrkutUREVUREREREREREREREREREREREREREREREREREREREREWhOGkrVfGocQwAHtKIV8JJHPdz/RbBzOEWjnsYC57mtaOZLjgK0leahq5Sz6luU+odRzTx2CKd0VHRsPC6pc04w0e2S5feKnqtJ1NJqrTMtRNpyrka2elcS7qwXcJBHhnsd7FdpX2m2WaglZn9pUzrk6pjghYZnRsewg/KO3hdzWjYpNU1ENPIyK0WSmnbIKWSIwumdzc53Cezn8o7BzJWgmjcHku/OJuCD3t7nfTdtw+q2b1kFth+XoRwt4fu6qTD28l9IpCx/kV8mvbI0PY4OB7wcharfgta0XYAgjIRfCnfxAg9y+6uVwRERFVERERERERERERERERERERERERERERERERERERFxaonjauUuLVf1jUVDouFWNqnW6obROa2pMThCXdgfj5SeR5Zx3LF5GbkySyPaNNxx9YOrjeZJC1mDnLuEZOcdw7T4LL0VqsWGVVNuOJJ3W+4WYCVjeETcWInCPnw4Z3v/ezy+i+0se4koqI3T2NrCx3VPgMjZAeNuObmkA8HHzweZHLkVlqIq3WEzN3NpKXhpf+Hat7WgHIkY5xxz7sE8h4Zz3Y55jSioFDCKt0b6gMb1rogQ0uxzLQeeM5wvqiKi+1MftHDyXKXFpv613ouUqhXhERFVVREREREREREREREREX/9k=" referrerpolicy="no-referrer" alt="Logo" class="w-full h-full object-contain bg-white" onerror="this.replaceWith(document.createTextNode('LSG'))">
+          </div>
+          <div>
+            <h1 class="font-bold text-sm text-gray-900">Laras Satwa Graha</h1>
+            <p class="text-xs text-gray-500" id="adminRoleDisplay">Admin Panel</p>
+          </div>
+        </div>
+        <nav class="p-4 space-y-1">
+          <button onclick="switchTab('home')" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-600 hover:bg-brand-50 hover:text-brand-600 transition bg-brand-50 text-brand-600 font-semibold" data-target="home">
+            <i class="fa-solid fa-chart-pie w-5"></i><span>Ringkasan</span>
+          </button>
+          <button onclick="switchTab('pesanan')" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-600 hover:bg-brand-50 hover:text-brand-600 transition" data-target="pesanan">
+            <i class="fa-solid fa-cart-shopping w-5"></i><span>Pesanan Masuk</span>
+            <span id="badgePesananBaru" class="ml-auto bg-brand-500 text-white text-xs px-2 py-0.5 rounded-full hidden">0</span>
+          </button>
+          <button onclick="switchTab('booking')" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-600 hover:bg-brand-50 hover:text-brand-600 transition" data-target="booking">
+            <i class="fa-solid fa-calendar-check w-5"></i><span>Jadwal Booking</span>
+          </button>
+          <button onclick="switchTab('produk')" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-600 hover:bg-brand-50 hover:text-brand-600 transition" data-target="produk">
+            <i class="fa-solid fa-box-open w-5"></i><span>Kelola Produk</span>
+          </button>
+          <button onclick="switchTab('layanan')" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-600 hover:bg-brand-50 hover:text-brand-600 transition" data-target="layanan">
+            <i class="fa-solid fa-scissors w-5"></i><span>Kelola Layanan Jasa</span>
+          </button>
+        </nav>
+      </div>
+      <div class="p-4 border-t border-gray-100">
+        <button onclick="logout()" class="w-full flex items-center justify-center space-x-2 px-4 py-2.5 border border-red-200 text-red-600 hover:bg-red-50 rounded-xl text-sm font-medium transition">
+          <i class="fa-solid fa-right-from-bracket"></i><span>Keluar Akun</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-1 p-6 md:p-8 max-w-7xl overflow-x-auto">
+
+      <!-- LOADING SPINNER OVERLAY -->
+      <div id="loadingOverlay" class="fixed inset-0 bg-white/80 z-[60] flex flex-col items-center justify-center hidden">
+        <div class="animate-spin rounded-full h-12 w-12 border-4 border-brand-500 border-t-transparent mb-3"></div>
+        <p class="text-sm font-medium text-gray-600" id="loadingText">Memuat data...</p>
+      </div>
+
+      <!-- TAB 1: HOME / RINGKASAN -->
+      <section id="tab-home" class="tab-content space-y-6">
+        <div>
+          <h2 class="text-2xl font-bold text-gray-900">Dashboard Overview</h2>
+          <p class="text-sm text-gray-500">Ringkasan aktivitas operasional petshop hari ini.</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-center space-x-4">
+            <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center text-xl"><i class="fa-solid fa-cart-arrow-down"></i></div>
+            <div>
+              <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Pesanan Baru</p>
+              <h3 class="text-2xl font-bold text-gray-900 mt-0.5" id="statPesananBaru">0</h3>
+            </div>
+          </div>
+          <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-center space-x-4">
+            <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center text-xl"><i class="fa-solid fa-clock"></i></div>
+            <div>
+              <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Booking Pending</p>
+              <h3 class="text-2xl font-bold text-gray-900 mt-0.5" id="statBookingPending">0</h3>
+            </div>
+          </div>
+          <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-center space-x-4">
+            <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center text-xl"><i class="fa-solid fa-boxes-stacked"></i></div>
+            <div>
+              <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Total Produk Aktif</p>
+              <h3 class="text-2xl font-bold text-gray-900 mt-0.5" id="statTotalProduk">0</h3>
+            </div>
+          </div>
+          <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-center space-x-4">
+            <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-xl flex items-center justify-center text-xl"><i class="fa-solid fa-stethoscope"></i></div>
+            <div>
+              <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Layanan Jasa Aktif</p>
+              <h3 class="text-2xl font-bold text-gray-900 mt-0.5" id="statTotalLayanan">0</h3>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: PESANAN MASUK -->
+      <section id="tab-pesanan" class="tab-content space-y-6 hidden">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h2 class="text-2xl font-bold text-gray-900">Pesanan Masuk Katalog</h2>
+            <p class="text-sm text-gray-500">Kelola pesanan barang yang masuk dari pelanggan.</p>
+          </div>
+          <button onclick="loadDashboardData()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-sm font-medium transition flex items-center space-x-2 w-fit">
+            <i class="fa-solid fa-rotate"></i><span>Refresh Data</span>
+          </button>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-gray-50 border-b border-gray-100 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  <th class="p-4">ID & Waktu</th>
+                  <th class="p-4">Pelanggan</th>
+                  <th class="p-4">Metode & Alamat</th>
+                  <th class="p-4">Rincian Item & Total</th>
+                  <th class="p-4">Status</th>
+                  <th class="p-4 text-center">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="tablePesananBody" class="divide-y divide-gray-100 text-sm"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: JADWAL BOOKING -->
+      <section id="tab-booking" class="tab-content space-y-6 hidden">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h2 class="text-2xl font-bold text-gray-900">Jadwal Booking Grooming & Klinik</h2>
+            <p class="text-sm text-gray-500">Pantau jadwal kedatangan hewan dan konfirmasi status booking.</p>
+          </div>
+          <button onclick="loadDashboardData()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-sm font-medium transition flex items-center space-x-2 w-fit">
+            <i class="fa-solid fa-rotate"></i><span>Refresh Data</span>
+          </button>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-gray-50 border-b border-gray-100 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  <th class="p-4">ID & Waktu</th>
+                  <th class="p-4">Pemilik & Hewan</th>
+                  <th class="p-4">Divisi & Layanan</th>
+                  <th class="p-4">Jadwal (Tanggal & Jam)</th>
+                  <th class="p-4">Status</th>
+                  <th class="p-4 text-center">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="tableBookingBody" class="divide-y divide-gray-100 text-sm"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: KELOLA PRODUK -->
+      <section id="tab-produk" class="tab-content space-y-6 hidden">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h2 class="text-2xl font-bold text-gray-900">Kelola Produk Petshop</h2>
+            <p class="text-sm text-gray-500">Tambah produk baru, ubah harga, atau update stok barang.</p>
+          </div>
+          <button onclick="openProductModal()" class="px-4 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-sm font-medium transition flex items-center space-x-2 shadow-sm w-fit">
+            <i class="fa-solid fa-plus"></i><span>Tambah Produk Baru</span>
+          </button>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-gray-50 border-b border-gray-100 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  <th class="p-4">Foto</th>
+                  <th class="p-4">Nama Produk</th>
+                  <th class="p-4">Kategori / Varian</th>
+                  <th class="p-4">Harga</th>
+                  <th class="p-4">Stok</th>
+                  <th class="p-4">Status</th>
+                  <th class="p-4 text-center">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="tableProdukBody" class="divide-y divide-gray-100 text-sm"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: KELOLA LAYANAN JASA -->
+      <section id="tab-layanan" class="tab-content space-y-6 hidden">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h2 class="text-2xl font-bold text-gray-900">Kelola Layanan Grooming & Klinik</h2>
+            <p class="text-sm text-gray-500">Atur paket layanan, tarif harga, dan kuota maksimal per jam.</p>
+          </div>
+          <button onclick="openServiceModal()" class="px-4 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-sm font-medium transition flex items-center space-x-2 shadow-sm w-fit">
+            <i class="fa-solid fa-plus"></i><span>Tambah Layanan Baru</span>
+          </button>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-gray-50 border-b border-gray-100 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  <th class="p-4">Divisi</th>
+                  <th class="p-4">Nama Layanan</th>
+                  <th class="p-4">Deskripsi</th>
+                  <th class="p-4">Harga</th>
+                  <th class="p-4">Kuota / Jam</th>
+                  <th class="p-4">Status</th>
+                  <th class="p-4 text-center">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="tableLayananBody" class="divide-y divide-gray-100 text-sm"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- MODAL: FORM PRODUK -->
+  <div id="productModal" class="fixed inset-0 bg-gray-900/50 z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-100">
+        <h3 id="productModalTitle" class="text-lg font-bold text-gray-900">Tambah Produk Baru</h3>
+        <button onclick="closeProductModal()" class="text-gray-400 hover:text-gray-600 text-lg"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="productForm" onsubmit="handleSaveProduct(event)" class="space-y-4">
+        <input type="hidden" id="prodID">
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-gray-600 mb-1">Nama Produk</label>
+          <input type="text" id="prodNama" required class="w-full px-3 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-600 mb-1">Kategori</label>
+            <select id="prodKategori" class="w-full px-3 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm bg-white">
+              <option value="Dry Food">Dry Food</option>
+              <option value="Wet Food">Wet Food</option>
+              <option value="Pasir & Litter">Pasir & Litter</option>
+              <option value="Vitamin & Obat">Vitamin & Obat</option>
+              <option value="Aksesoris & Lainnya">Aksesoris & Lainnya</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-600 mb-1">Varian / Ukuran</label>
+            <input type="text" id="prodVarian" placeholder="Misal: 1kg / 400gr" class="w-full px-3 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-600 mb-1">Harga (Rp)</label>
+            <input type="number" id="prodHarga" required class="w-full px-3 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-600 mb-1">Stok</label>
+            <input type="number" id="prodStok" required class="w-full px-3 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-gray-600 mb-1">Status Tampil</label>
+          <select id="prodStatus" class="w-full px-3 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm bg-white">
+            <option value="Aktif">Aktif (Tampil di Katalog)</option>
+            <option value="Nonaktif">Nonaktif (Sembunyikan)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-gray-600 mb-1">Link Foto Produk (URL)</label>
+          <input type="text" id="prodFotoURL" oninput="previewFoto()" placeholder="https://... (Link Google Drive / Imgur / dll)" class="w-full px-3 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+          <p class="text-xs text-gray-400 mt-1">Link Google Drive otomatis dikonversi. Pastikan file di-share "Anyone with the link".</p>
+          <img id="prodFotoPreview" class="hidden mt-2 w-24 h-24 object-cover rounded-xl border border-gray-200" referrerpolicy="no-referrer" alt="Preview">
+        </div>
+        <div class="pt-3 flex space-x-3">
+          <button type="button" onclick="closeProductModal()" class="w-1/2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-2.5 rounded-lg text-sm transition">Batal</button>
+          <button type="submit" class="w-1/2 bg-brand-600 hover:bg-brand-700 text-white font-semibold py-2.5 rounded-lg text-sm transition shadow-sm">Simpan Produk</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: FORM LAYANAN -->
+  <div id="serviceModal" class="fixed inset-0 bg-gray-900/50 z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-100">
+        <h3 id="serviceModalTitle" class="text-lg font-bold text-gray-900">Tambah Layanan Baru</h3>
+        <button onclick="closeServiceModal()" class="text-gray-400 hover:text-gray-600 text-lg"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="serviceForm" onsubmit="handleSaveService(event)" class="space-y-4">
+        <input type="hidden" id="srvID">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-600 mb-1">Divisi</label>
+            <select id="srvDivisi" class="w-full px-3 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm bg-white">
+              <option value="Grooming">Grooming</option>
+              <option value="Klinik">Klinik</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-600 mb-1">Kuota Max / Jam</label>
+            <input type="number" id="srvKuota" required value="3" class="w-full px-3 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-gray-600 mb-1">Nama Layanan</label>
+          <input type="text" id="srvNama" required placeholder="Misal: Grooming Sehat Kucing" class="w-full px-3 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-gray-600 mb-1">Deskripsi Singkat</label>
+          <textarea id="srvDeskripsi" rows="2" placeholder="Misal: Mandi bersih, potong kuku, bersihkan telinga" class="w-full px-3 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm"></textarea>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-600 mb-1">Harga (Rp)</label>
+            <input type="number" id="srvHarga" required class="w-full px-3 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-600 mb-1">Status</label>
+            <select id="srvStatus" class="w-full px-3 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm bg-white">
+              <option value="Aktif">Aktif</option>
+              <option value="Nonaktif">Nonaktif</option>
+            </select>
+          </div>
+        </div>
+        <div class="pt-3 flex space-x-3">
+          <button type="button" onclick="closeServiceModal()" class="w-1/2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-2.5 rounded-lg text-sm transition">Batal</button>
+          <button type="submit" class="w-1/2 bg-brand-600 hover:bg-brand-700 text-white font-semibold py-2.5 rounded-lg text-sm transition shadow-sm">Simpan Layanan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    let globalData = { produk: [], layanan: [], pesanan: [], booking: [] };
+    let currentUser = null;
+
+    // Placeholder gambar lokal (tidak bergantung pada situs luar)
+    const PLACEHOLDER = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Crect width='300' height='300' fill='%23e5e7eb'/%3E%3Ctext x='150' y='155' font-size='20' text-anchor='middle' fill='%239ca3af'%3ENo Image%3C/text%3E%3C/svg%3E";
+
+    // Escape HTML supaya data dengan tanda petik / tag tidak merusak tampilan
+    function esc(v) {
+      return String(v === null || v === undefined ? '' : v)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
+    // Link WhatsApp: ubah awalan 0 jadi 62
+    function waNumber(raw) {
+      let n = String(raw || '').replace(/[^0-9]/g, '');
+      if (n.startsWith('0')) n = '62' + n.slice(1);
+      return n;
+    }
+
+    // Konversi link Google Drive di sisi browser (untuk preview di form)
+    function normalizeImageUrl(url) {
+      url = String(url || '').trim();
+      if (!url) return '';
+      let m = url.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/) ||
+              url.match(/drive\.google\.com\/(?:open|uc|thumbnail)\?.*?id=([a-zA-Z0-9_-]+)/) ||
+              url.match(/lh3\.googleusercontent\.com\/d\/([a-zA-Z0-9_-]+)/);
+      if (m) return 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w800';
+      return url;
+    }
+
+    // LOGIN HANDLER
+    function handleLogin(e) {
+      e.preventDefault();
+      const u = document.getElementById('loginUser').value;
+      const p = document.getElementById('loginPass').value;
+      const btn = document.getElementById('btnLogin');
+      const err = document.getElementById('loginError');
+
+      btn.disabled = true;
+      btn.innerText = "Memeriksa...";
+      err.classList.add('hidden');
+
+      google.script.run
+        .withSuccessHandler(res => {
+          btn.disabled = false;
+          btn.innerText = "Masuk Dashboard";
+          if (res.success) {
+            currentUser = res;
+            document.getElementById('adminRoleDisplay').innerText = `${res.nama} (${res.role})`;
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('appContainer').classList.remove('hidden');
+            loadDashboardData();
+          } else {
+            err.innerText = res.message;
+            err.classList.remove('hidden');
+          }
+        })
+        .withFailureHandler(error => {
+          btn.disabled = false;
+          btn.innerText = "Masuk Dashboard";
+          alert("Terjadi kesalahan sistem: " + error.message);
+        })
+        .loginAdmin(u, p);
+    }
+
+    function logout() {
+      currentUser = null;
+      document.getElementById('appContainer').classList.add('hidden');
+      document.getElementById('loginScreen').classList.remove('hidden');
+      document.getElementById('loginForm').reset();
+    }
+
+    // NAVIGATION TABS
+    function switchTab(targetTab) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.getElementById(`tab-${targetTab}`).classList.remove('hidden');
+
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('bg-brand-50', 'text-brand-600', 'font-semibold');
+        if (btn.dataset.target === targetTab) {
+          btn.classList.add('bg-brand-50', 'text-brand-600', 'font-semibold');
+        }
+      });
+    }
+
+    // LOAD DATA
+    function loadDashboardData() {
+      showLoading(true, "Memuat data terbaru...");
+      google.script.run
+        .withSuccessHandler(data => {
+          globalData = data;
+          renderDashboard();
+          showLoading(false);
+        })
+        .withFailureHandler(err => {
+          showLoading(false);
+          alert("Gagal memuat data: " + err.message);
+        })
+        .getAdminDashboardData();
+    }
+
+    function showLoading(show, text = "Memuat...") {
+      const el = document.getElementById('loadingOverlay');
+      document.getElementById('loadingText').innerText = text;
+      if (show) el.classList.remove('hidden');
+      else el.classList.add('hidden');
+    }
+
+    // RENDER DASHBOARD UI
+    function renderDashboard() {
+      // 1. Stats
+      const pesananBaruCount = globalData.pesanan.filter(p => p.Status === 'Baru').length;
+      const bookingPendingCount = globalData.booking.filter(b => b.Status === 'Menunggu Konfirmasi').length;
+
+      document.getElementById('statPesananBaru').innerText = pesananBaruCount;
+      document.getElementById('statBookingPending').innerText = bookingPendingCount;
+      document.getElementById('statTotalProduk').innerText = globalData.produk.filter(p => p.Status === 'Aktif').length;
+      document.getElementById('statTotalLayanan').innerText = globalData.layanan.filter(s => s.Status === 'Aktif').length;
+
+      const badge = document.getElementById('badgePesananBaru');
+      if (pesananBaruCount > 0) {
+        badge.innerText = pesananBaruCount;
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+
+      // 2. Table Pesanan
+      const tbPesanan = document.getElementById('tablePesananBody');
+      let htmlPesanan = '';
+      if (globalData.pesanan.length === 0) {
+        htmlPesanan = `<tr><td colspan="6" class="p-6 text-center text-gray-400">Belum ada pesanan masuk.</td></tr>`;
+      }
+      globalData.pesanan.forEach(p => {
+        let statusBadge = '';
+        if (p.Status === 'Baru') statusBadge = '<span class="px-2.5 py-1 bg-amber-50 text-amber-600 rounded-full text-xs font-semibold">Baru</span>';
+        else if (p.Status === 'Diproses') statusBadge = '<span class="px-2.5 py-1 bg-blue-50 text-blue-600 rounded-full text-xs font-semibold">Diproses</span>';
+        else if (p.Status === 'Selesai') statusBadge = '<span class="px-2.5 py-1 bg-emerald-50 text-emerald-600 rounded-full text-xs font-semibold">Selesai</span>';
+        else statusBadge = '<span class="px-2.5 py-1 bg-red-50 text-red-600 rounded-full text-xs font-semibold">Batal</span>';
+
+        htmlPesanan += `
+          <tr class="hover:bg-gray-50/50">
+            <td class="p-4 font-mono text-xs"><span class="font-bold text-gray-900">${esc(p.ID_Order)}</span><br><span class="text-gray-400">${esc(p.Timestamp)}</span></td>
+            <td class="p-4"><p class="font-semibold text-gray-900">${esc(p.Nama_Pelanggan)}</p><a href="https://wa.me/${waNumber(p.No_WA)}" target="_blank" class="text-xs text-emerald-600 hover:underline font-medium"><i class="fa-brands fa-whatsapp"></i> ${esc(p.No_WA)}</a></td>
+            <td class="p-4"><span class="font-medium text-gray-700">${esc(p.Metode_Ambil)}</span><br><span class="text-xs text-gray-500">${esc(p.Alamat)}</span></td>
+            <td class="p-4"><p class="text-xs text-gray-600 whitespace-pre-line">${esc(p.Detail_Item)}</p><p class="font-bold text-gray-900 mt-1">Rp ${Number(p.Total_Harga).toLocaleString('id-ID')}</p></td>
+            <td class="p-4">${statusBadge}</td>
+            <td class="p-4 text-center">
+              <select onchange="updateStatusOrder('${esc(p.ID_Order)}', this.value)" class="text-xs px-2 py-1.5 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium">
+                <option value="Baru" ${p.Status==='Baru'?'selected':''}>Baru</option>
+                <option value="Diproses" ${p.Status==='Diproses'?'selected':''}>Diproses</option>
+                <option value="Selesai" ${p.Status==='Selesai'?'selected':''}>Selesai</option>
+                <option value="Batal" ${p.Status==='Batal'?'selected':''}>Batal</option>
+              </select>
+            </td>
+          </tr>
+        `;
+      });
+      tbPesanan.innerHTML = htmlPesanan;
+
+      // 3. Table Booking
+      const tbBooking = document.getElementById('tableBookingBody');
+      let htmlBooking = '';
+      if (globalData.booking.length === 0) {
+        htmlBooking = `<tr><td colspan="6" class="p-6 text-center text-gray-400">Belum ada jadwal booking masuk.</td></tr>`;
+      }
+      globalData.booking.forEach(b => {
+        let bStatusBadge = '';
+        if (b.Status === 'Menunggu Konfirmasi') bStatusBadge = '<span class="px-2.5 py-1 bg-amber-50 text-amber-600 rounded-full text-xs font-semibold">Pending</span>';
+        else if (b.Status === 'Dikonfirmasi') bStatusBadge = '<span class="px-2.5 py-1 bg-blue-50 text-blue-600 rounded-full text-xs font-semibold">Dikonfirmasi</span>';
+        else if (b.Status === 'Selesai') bStatusBadge = '<span class="px-2.5 py-1 bg-emerald-50 text-emerald-600 rounded-full text-xs font-semibold">Selesai</span>';
+        else bStatusBadge = '<span class="px-2.5 py-1 bg-red-50 text-red-600 rounded-full text-xs font-semibold">Batal</span>';
+
+        htmlBooking += `
+          <tr class="hover:bg-gray-50/50">
+            <td class="p-4 font-mono text-xs"><span class="font-bold text-gray-900">${esc(b.ID_Booking)}</span><br><span class="text-gray-400">${esc(b.Timestamp)}</span></td>
+            <td class="p-4"><p class="font-semibold text-gray-900">${esc(b.Nama_Pemilik)}</p><a href="https://wa.me/${waNumber(b.No_WA)}" target="_blank" class="text-xs text-emerald-600 hover:underline font-medium"><i class="fa-brands fa-whatsapp"></i> ${esc(b.No_WA)}</a><br><span class="text-xs text-gray-500">Hewan: <b>${esc(b.Nama_Hewan)}</b> (${esc(b.Jenis_Hewan)})</span></td>
+            <td class="p-4"><span class="px-2 py-0.5 bg-brand-50 text-brand-700 rounded text-xs font-bold">${esc(b.Divisi)}</span><br><span class="font-medium text-gray-800 text-xs mt-1 block">${esc(b.Layanan)}</span></td>
+            <td class="p-4"><p class="font-bold text-gray-900">${esc(b.Tanggal)}</p><span class="text-xs text-gray-500">Pukul ${esc(b.Jam)} WIB</span><br><span class="text-xs italic text-gray-400">${esc(b.Opsi_Antar)}</span></td>
+            <td class="p-4">${bStatusBadge}</td>
+            <td class="p-4 text-center">
+              <select onchange="updateStatusBooking('${esc(b.ID_Booking)}', this.value)" class="text-xs px-2 py-1.5 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-brand-500 font-medium">
+                <option value="Menunggu Konfirmasi" ${b.Status==='Menunggu Konfirmasi'?'selected':''}>Pending</option>
+                <option value="Dikonfirmasi" ${b.Status==='Dikonfirmasi'?'selected':''}>Dikonfirmasi</option>
+                <option value="Selesai" ${b.Status==='Selesai'?'selected':''}>Selesai</option>
+                <option value="Batal" ${b.Status==='Batal'?'selected':''}>Batal</option>
+              </select>
+            </td>
+          </tr>
+        `;
+      });
+      tbBooking.innerHTML = htmlBooking;
+
+      // 4. Table Produk
+      const tbProduk = document.getElementById('tableProdukBody');
+      let htmlProduk = '';
+      if (globalData.produk.length === 0) {
+        htmlProduk = `<tr><td colspan="7" class="p-6 text-center text-gray-400">Belum ada produk.</td></tr>`;
+      }
+      globalData.produk.forEach(p => {
+        htmlProduk += `
+          <tr class="hover:bg-gray-50/50">
+            <td class="p-4"><img src="${esc(p.Foto_URL || PLACEHOLDER)}" referrerpolicy="no-referrer" class="w-12 h-12 object-cover rounded-xl border border-gray-100" onerror="this.onerror=null;this.src=PLACEHOLDER"></td>
+            <td class="p-4 font-semibold text-gray-900">${esc(p.Nama_Produk)}<br><span class="font-mono text-xs text-gray-400">${esc(p.ID_Produk)}</span></td>
+            <td class="p-4"><span class="text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded">${esc(p.Kategori)}</span><br><span class="text-xs text-gray-500 mt-1 block">Varian: ${esc(p.Varian || '-')}</span></td>
+            <td class="p-4 font-bold text-gray-900">Rp ${Number(p.Harga).toLocaleString('id-ID')}</td>
+            <td class="p-4 font-semibold ${Number(p.Stok) <= 3 ? 'text-red-500' : 'text-gray-700'}">${esc(p.Stok)}</td>
+            <td class="p-4"><span class="px-2.5 py-1 ${p.Status==='Aktif'?'bg-emerald-50 text-emerald-600':'bg-gray-100 text-gray-500'} rounded-full text-xs font-semibold">${esc(p.Status)}</span></td>
+            <td class="p-4 text-center">
+              <div class="flex items-center justify-center gap-1.5">
+                <button onclick="editProduct('${esc(p.ID_Produk)}')" class="px-3 py-1.5 bg-brand-50 hover:bg-brand-100 text-brand-700 rounded-lg text-xs font-semibold transition"><i class="fa-solid fa-pen"></i> Edit</button>
+                <button onclick="deleteProductConfirm('${esc(p.ID_Produk)}')" class="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg text-xs font-semibold transition"><i class="fa-solid fa-trash"></i> Hapus</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      });
+      tbProduk.innerHTML = htmlProduk;
+
+      // 5. Table Layanan
+      const tbLayanan = document.getElementById('tableLayananBody');
+      let htmlLayanan = '';
+      if (globalData.layanan.length === 0) {
+        htmlLayanan = `<tr><td colspan="7" class="p-6 text-center text-gray-400">Belum ada layanan.</td></tr>`;
+      }
+      globalData.layanan.forEach(s => {
+        htmlLayanan += `
+          <tr class="hover:bg-gray-50/50">
+            <td class="p-4"><span class="px-2.5 py-1 bg-brand-50 text-brand-700 rounded-full text-xs font-bold">${esc(s.Divisi)}</span></td>
+            <td class="p-4 font-semibold text-gray-900">${esc(s.Nama_Layanan)}<br><span class="font-mono text-xs text-gray-400">${esc(s.ID_Jasa)}</span></td>
+            <td class="p-4 text-xs text-gray-500 max-w-xs truncate">${esc(s.Deskripsi)}</td>
+            <td class="p-4 font-bold text-gray-900">Rp ${Number(s.Harga).toLocaleString('id-ID')}</td>
+            <td class="p-4 font-semibold text-gray-700">${esc(s.Kuota_Per_Jam)} / jam</td>
+            <td class="p-4"><span class="px-2.5 py-1 ${s.Status==='Aktif'?'bg-emerald-50 text-emerald-600':'bg-gray-100 text-gray-500'} rounded-full text-xs font-semibold">${esc(s.Status)}</span></td>
+            <td class="p-4 text-center">
+              <button onclick="editService('${esc(s.ID_Jasa)}')" class="px-3 py-1.5 bg-brand-50 hover:bg-brand-100 text-brand-700 rounded-lg text-xs font-semibold transition"><i class="fa-solid fa-pen"></i> Edit</button>
+            </td>
+          </tr>
+        `;
+      });
+      tbLayanan.innerHTML = htmlLayanan;
+    }
+
+    // STATUS UPDATERS
+    function updateStatusOrder(idOrder, status) {
+      showLoading(true, "Memperbarui status pesanan...");
+      google.script.run
+        .withSuccessHandler(res => {
+          showLoading(false);
+          if (!res.success) alert(res.message);
+          else loadDashboardData();
+        })
+        .withFailureHandler(err => {
+          showLoading(false);
+          alert("Gagal: " + err.message);
+        })
+        .updateOrderStatus(idOrder, status);
+    }
+
+    function updateStatusBooking(idBooking, status) {
+      showLoading(true, "Memperbarui status booking...");
+      google.script.run
+        .withSuccessHandler(res => {
+          showLoading(false);
+          if (!res.success) alert(res.message);
+          else loadDashboardData();
+        })
+        .withFailureHandler(err => {
+          showLoading(false);
+          alert("Gagal: " + err.message);
+        })
+        .updateBookingStatus(idBooking, status);
+    }
+
+    // PRODUCT MODAL & SAVE
+    function previewFoto() {
+      const url = normalizeImageUrl(document.getElementById('prodFotoURL').value);
+      const img = document.getElementById('prodFotoPreview');
+      if (!url) { img.classList.add('hidden'); return; }
+      img.onerror = function () { this.onerror = null; this.src = PLACEHOLDER; };
+      img.src = url;
+      img.classList.remove('hidden');
+    }
+
+    function openProductModal() {
+      document.getElementById('productModalTitle').innerText = "Tambah Produk Baru";
+      document.getElementById('productForm').reset();
+      document.getElementById('prodID').value = "";
+      document.getElementById('prodFotoURL').value = "";
+      document.getElementById('prodFotoPreview').classList.add('hidden');
+      document.getElementById('productModal').classList.remove('hidden');
+    }
+
+    function editProduct(id) {
+      const p = globalData.produk.find(x => String(x.ID_Produk) === String(id));
+      if (!p) return;
+      document.getElementById('productModalTitle').innerText = "Edit Produk";
+      document.getElementById('prodID').value = p.ID_Produk;
+      document.getElementById('prodNama').value = p.Nama_Produk;
+      document.getElementById('prodKategori').value = p.Kategori;
+      document.getElementById('prodVarian').value = p.Varian || "";
+      document.getElementById('prodHarga').value = p.Harga;
+      document.getElementById('prodStok').value = p.Stok;
+      document.getElementById('prodStatus').value = p.Status;
+      document.getElementById('prodFotoURL').value = p.Foto_URL || "";
+      previewFoto();
+      document.getElementById('productModal').classList.remove('hidden');
+    }
+
+    function deleteProductConfirm(id) {
+      const p = globalData.produk.find(x => String(x.ID_Produk) === String(id));
+      if (!p) return;
+      if (!confirm(`Hapus produk "${p.Nama_Produk}"?\nTindakan ini tidak bisa dibatalkan.`)) return;
+
+      showLoading(true, "Menghapus produk...");
+      google.script.run
+        .withSuccessHandler(res => {
+          showLoading(false);
+          if (res.success) loadDashboardData();
+          else alert(res.message);
+        })
+        .withFailureHandler(err => {
+          showLoading(false);
+          alert("Gagal menghapus: " + err.message);
+        })
+        .deleteProduct(id);
+    }
+
+    function closeProductModal() {
+      document.getElementById('productModal').classList.add('hidden');
+    }
+
+    function handleSaveProduct(e) {
+      e.preventDefault();
+      showLoading(true, "Menyimpan produk...");
+
+      const fotoURL = document.getElementById('prodFotoURL').value.trim();
+
+      google.script.run
+        .withSuccessHandler(res => {
+          showLoading(false);
+          if (res.success) {
+            closeProductModal();
+            loadDashboardData();
+          } else {
+            alert(res.message);
+          }
+        })
+        .withFailureHandler(err => {
+          showLoading(false);
+          alert("Gagal menyimpan: " + err.message);
+        })
+        .saveProduct({
+          ID_Produk: document.getElementById('prodID').value,
+          Nama_Produk: document.getElementById('prodNama').value,
+          Kategori: document.getElementById('prodKategori').value,
+          Varian: document.getElementById('prodVarian').value,
+          Harga: document.getElementById('prodHarga').value,
+          Stok: document.getElementById('prodStok').value,
+          Foto_URL: fotoURL,
+          Status: document.getElementById('prodStatus').value
+        });
+    }
+
+    // SERVICE MODAL & SAVE
+    function openServiceModal() {
+      document.getElementById('serviceModalTitle').innerText = "Tambah Layanan Baru";
+      document.getElementById('serviceForm').reset();
+      document.getElementById('srvID').value = "";
+      document.getElementById('serviceModal').classList.remove('hidden');
+    }
+
+    function editService(id) {
+      const s = globalData.layanan.find(x => String(x.ID_Jasa) === String(id));
+      if (!s) return;
+      document.getElementById('serviceModalTitle').innerText = "Edit Layanan";
+      document.getElementById('srvID').value = s.ID_Jasa;
+      document.getElementById('srvDivisi').value = s.Divisi;
+      document.getElementById('srvNama').value = s.Nama_Layanan;
+      document.getElementById('srvDeskripsi').value = s.Deskripsi;
+      document.getElementById('srvHarga').value = s.Harga;
+      document.getElementById('srvKuota').value = s.Kuota_Per_Jam;
+      document.getElementById('srvStatus').value = s.Status;
+      document.getElementById('serviceModal').classList.remove('hidden');
+    }
+
+    function closeServiceModal() {
+      document.getElementById('serviceModal').classList.add('hidden');
+    }
+
+    function handleSaveService(e) {
+      e.preventDefault();
+      showLoading(true, "Menyimpan layanan...");
+
+      const srvObj = {
+        ID_Jasa: document.getElementById('srvID').value,
+        Divisi: document.getElementById('srvDivisi').value,
+        Nama_Layanan: document.getElementById('srvNama').value,
+        Deskripsi: document.getElementById('srvDeskripsi').value,
+        Harga: document.getElementById('srvHarga').value,
+        Kuota_Per_Jam: document.getElementById('srvKuota').value,
+        Status: document.getElementById('srvStatus').value
+      };
+
+      google.script.run
+        .withSuccessHandler(res => {
+          showLoading(false);
+          if (res.success) {
+            closeServiceModal();
+            loadDashboardData();
+          } else {
+            alert(res.message);
+          }
+        })
+        .withFailureHandler(err => {
+          showLoading(false);
+          alert("Gagal menyimpan: " + err.message);
+        })
+        .saveService(srvObj);
+    }
+  </script>
+</body>
+</html>
