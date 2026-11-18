@@ -4,8 +4,15 @@
   // GANTI dengan URL Web App (berakhiran /exec) dari Deploy -> Manage deployments
   var API_URL = "https://script.google.com/macros/s/AKfycbwRT3V42H064njfGlg5zQfDRp1pFqtJ2YS9SH3bYd7AFHHgqPYF-Ha_rOS3ewUGjr-g/exec";
 
-  var token = ""; // diisi otomatis setelah loginAdmin sukses
-
+var token = "";
+try { token = localStorage.getItem("lsg_token") || ""; } catch (e) {}
+function saveToken(t) {
+  token = t;
+  try { t ? localStorage.setItem("lsg_token", t) : localStorage.removeItem("lsg_token"); } catch (e) {}
+}
+window.lsgClearToken = function () { saveToken(""); };
+window.lsgHasToken = function () { return !!token; };
+  
   function runner(ok, fail) {
     return new Proxy({}, {
       get: function (_, name) {
@@ -23,12 +30,19 @@
             .then(function (r) { return r.json(); })
             .then(function (j) {
               if (!j.ok) throw new Error(j.error || "Request gagal");
-              if (name === "loginAdmin" && j.data && j.data.token) token = j.data.token;
+              if (name === "loginAdmin" && j.data && j.data.token) saveToken(j.data.token);
               return j.data;
             })
             .then(
               function (d) { if (ok) ok(d); },
-              function (e) { if (fail) fail(e); else console.error(e); }
+              function (e) {
+  if (/Sesi habis/.test(e.message)) {
+    saveToken("");
+    window.dispatchEvent(new Event("lsg:session-expired"));
+    return;
+  }
+  if (fail) fail(e); else console.error(e);
+}
             );
         };
       }
