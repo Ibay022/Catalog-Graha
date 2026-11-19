@@ -6,14 +6,9 @@
   <title>Laras Satwa Graha - Katalog & Booking</title>
   <!-- Tailwind CSS & FontAwesome -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-  .no-scrollbar::-webkit-scrollbar { display: none; }
-  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-  @keyframes sheetUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-  .sheet-anim { animation: sheetUp .25s ease-out; }
-</style>
-       <script src="api.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Jembatan GitHub Pages -> Google Apps Script -->
+  <script src="api.js"></script>
   <script>
     tailwind.config = {
       theme: {
@@ -25,20 +20,25 @@
       }
     }
   </script>
+  <style>
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    @keyframes sheetUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+    .sheet-anim { animation: sheetUp .25s ease-out; }
+  </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans pb-24 antialiased">
+<body class="bg-gray-50 text-gray-800 font-sans pb-28 antialiased">
 
   <!-- TOP HEADER -->
   <header class="bg-white sticky top-0 z-30 border-b border-gray-100 shadow-sm">
-    <div class="max-w-md mx-auto px-4 py-3 flex items-center justify-between">
+    <div class="max-w-md mx-auto px-4 py-3 flex items-center">
       <div class="flex items-center space-x-2.5">
-        <img src="data:image/jpeg;base64,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UyuufU9W0vmmaxve5xDQFuZOZGCSKVr2Hsc1wI+oVu8L2vmqXXPRcZlQeXF+i5DXBzctOQrkutUREVUREREREREREREREREREREREREREREREREREREREREWhOGkrVfGocQwAHtKIV8JJHPdz/RbBzOEWjnsYC57mtaOZLjgK0leahq5Sz6luU+odRzTx2CKd0VHRsPC6pc04w0e2S5feKnqtJ1NJqrTMtRNpyrka2elcS7qwXcJBHhnsd7FdpX2m2WaglZn9pUzrk6pjghYZnRsewg/KO3hdzWjYpNU1ENPIyK0WSmnbIKWSIwumdzc53Cezn8o7BzJWgmjcHku/OJuCD3t7nfTdtw+q2b1kFth+XoRwt4fu6qTD28l9IpCx/kV8mvbI0PY4OB7wcharfgta0XYAgjIRfCnfxAg9y+6uVwRERFVERERERERERERERERERERERERERERERERERERFxaonjauUuLVf1jUVDouFWNqnW6obROa2pMThCXdgfj5SeR5Zx3LF5GbkySyPaNNxx9YOrjeZJC1mDnLuEZOcdw7T4LL0VqsWGVVNuOJJ3W+4WYCVjeETcWInCPnw4Z3v/ezy+i+0se4koqI3T2NrCx3VPgMjZAeNuObmkA8HHzweZHLkVlqIq3WEzN3NpKXhpf+Hat7WgHIkY5xxz7sE8h4Zz3Y55jSioFDCKt0b6gMb1rogQ0uxzLQeeM5wvqiKi+1MftHDyXKXFpv613ouUqhXhERFVVREREREREREREREREX/9k=" alt="Logo Laras Satwa Graha" class="w-10 h-10 object-contain rounded-xl">
+        <img class="js-logo w-10 h-10 object-contain rounded-xl" alt="Logo Laras Satwa Graha">
         <div>
           <h1 class="font-bold text-sm text-gray-900 leading-tight">Laras Satwa Graha</h1>
           <p class="text-[10px] text-gray-500">Petshop, Grooming & Klinik Hewan</p>
         </div>
       </div>
-    
     </div>
   </header>
 
@@ -53,7 +53,6 @@
 
     <!-- PAGE 1: KATALOG PRODUK -->
     <div id="page-katalog" class="space-y-4 page-section">
-      <!-- Search & Banner -->
       <div class="space-y-3">
         <div class="relative">
           <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-gray-400 text-sm"></i>
@@ -154,44 +153,48 @@
 
     <!-- PAGE 3: INFO TOKO & PROMO -->
     <div id="page-info" class="page-section hidden space-y-4 text-xs">
-      <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm space-y-3">
-        <div class="flex justify-center">
-          <img src="data:image/jpeg;base64,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UyuufU9W0vmmaxve5xDQFuZOZGCSKVr2Hsc1wI+oVu8L2vmqXXPRcZlQeXF+i5DXBzctOQrkutUREVUREREREREREREREREREREREREREREREREREREREREWhOGkrVfGocQwAHtKIV8JJHPdz/RbBzOEWjnsYC57mtaOZLjgK0leahq5Sz6luU+odRzTx2CKd0VHRsPC6pc04w0e2S5feKnqtJ1NJqrTMtRNpyrka2elcS7qwXcJBHhnsd7FdpX2m2WaglZn9pUzrk6pjghYZnRsewg/KO3hdzWjYpNU1ENPIyK0WSmnbIKWSIwumdzc53Cezn8o7BzJWgmjcHku/OJuCD3t7nfTdtw+q2b1kFth+XoRwt4fu6qTD28l9IpCx/kV8mvbI0PY4OB7wcharfgta0XYAgjIRfCnfxAg9y+6uVwRERFVERERERERERERERERERERERERERERERERERERFxaonjauUuLVf1jUVDouFWNqnW6obROa2pMThCXdgfj5SeR5Zx3LF5GbkySyPaNNxx9YOrjeZJC1mDnLuEZOcdw7T4LL0VqsWGVVNuOJJ3W+4WYCVjeETcWInCPnw4Z3v/ezy+i+0se4koqI3T2NrCx3VPgMjZAeNuObmkA8HHzweZHLkVlqIq3WEzN3NpKXhpf+Hat7WgHIkY5xxz7sE8h4Zz3Y55jSioFDCKt0b6gMb1rogQ0uxzLQeeM5wvqiKi+1MftHDyXKXFpv613ouUqhXhERFVVREREREREREREREREX/9k=" alt="Logo Laras Satwa Graha" class="w-28 h-28 object-contain">
+      <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm space-y-4">
+        <div class="flex flex-col items-center text-center space-y-2">
+          <img class="js-logo w-24 h-24 object-contain" alt="Logo Laras Satwa Graha">
+          <h3 class="font-bold text-sm text-gray-900">Laras Satwa Graha</h3>
+          <p class="text-gray-500 leading-relaxed">Melayani kebutuhan pakan, grooming, dan klinik kesehatan hewan kesayangan Anda.</p>
         </div>
-        <h3 class="font-bold text-sm text-gray-900 border-b border-gray-100 pb-2">📍 Informasi Toko</h3>
-        <p class="text-gray-600"><b>Laras Satwa Graha</b></p>
-         <p class="text-gray-500">melayani kebutuhan pakan, grooming, dan klinik kesehatan hewan kesayangan anda.</p>
-        
-          <p class="text-gray-600"><b>Antar Jemput Groooming</b> </p>
-        <p class="text-gray-500">1. Jemput anabul Start dari jam 08.00-10.00</p>
-        <p class="text-gray-500">2. Antar Anabul Start saat sore hari 15.00-16.00</p>
-         <p class="text-gray-500">3. Penerimaan Maksimal Walk in Grooming 14.00</p>
-         <p class="text-gray-500">4. Start Rp. 10.000 untuk area Graha</p>
-         <p class="text-gray-500"><b>• Delivery Order Petshop</b> </p>
-        <p class="text-gray-500">1. Minimal belanja Rp. 100.000</p>
-        <p class="text-gray-500">2. Start 08.00-16.00</p>
-        <p class="text-gray-500">3. Free Area Graha Raya</p>
-         <p class="text-gray-500">4. Berlaku kelipatan di luar area Graha Raya</p>
-        
-        
-        
-        <div class="space-y-1.5 pt-1 text-gray-700">
-          <p><i class="fa-solid fa-clock text-brand-500 w-5"></i> Buka Setiap Hari: 08.00 - 21.00 WIB</p>
+
+        <div class="border-t border-gray-100 pt-3 space-y-1.5 text-gray-700">
+          <p><i class="fa-solid fa-clock text-brand-500 w-5"></i> Buka setiap hari: 08.00 - 21.00 WIB</p>
           <p><i class="fa-solid fa-phone text-brand-500 w-5"></i> 081380802098</p>
-          <p><i class="fa-solid fa-location-dot text-brand-500 w-5"></i> Graha Raya </p>
+          <p><i class="fa-solid fa-location-dot text-brand-500 w-5"></i> Graha Raya</p>
+        </div>
+
+        <div class="border-t border-gray-100 pt-3">
+          <h4 class="font-bold text-gray-900 mb-1.5"><i class="fa-solid fa-scissors text-brand-500 w-5"></i> Antar Jemput Grooming</h4>
+          <ul class="list-disc pl-5 space-y-1 text-gray-500">
+            <li>Jemput anabul mulai jam 08.00 - 10.00</li>
+            <li>Antar anabul mulai sore hari jam 15.00 - 16.00</li>
+            <li>Penerimaan walk-in grooming maksimal jam 14.00</li>
+            <li>Mulai Rp 10.000 untuk area Graha</li>
+          </ul>
+        </div>
+
+        <div class="border-t border-gray-100 pt-3">
+          <h4 class="font-bold text-gray-900 mb-1.5"><i class="fa-solid fa-truck text-brand-500 w-5"></i> Delivery Order Petshop</h4>
+          <ul class="list-disc pl-5 space-y-1 text-gray-500">
+            <li>Minimal belanja Rp 100.000</li>
+            <li>Jam pengiriman 08.00 - 16.00</li>
+            <li>Gratis ongkir area Graha Raya</li>
+            <li>Berlaku kelipatan di luar area Graha Raya</li>
+          </ul>
         </div>
       </div>
+
       <div class="bg-brand-50 p-4 rounded-2xl border border-brand-100 text-brand-900 space-y-2">
         <h4 class="font-bold text-sm"><i class="fa-solid fa-gift"></i> Promo Loyalti Card</h4>
-        <p class="text-[11px] leading-relaxed">Dapatkan kesempatan membawa pulang motor listrik hanya dengan minimal belanja 150.000 berlaku kelipatan
-</p>
+        <p class="text-[11px] leading-relaxed">Dapatkan kesempatan membawa pulang motor listrik hanya dengan minimal belanja Rp 150.000, berlaku kelipatan.</p>
       </div>
-      <div class="bg-brand-50 p-4 rounded-2xl border border-brand-100 text-brand-900 space-y-2">
-        <h4 class="font-bold text-sm"><i class="fa-solid fa-gift"></i>Promo Grooming
-</h4>
-        <p class="text-[11px] leading-relaxed">Dapatkan mandi lengkap super premium dan free obat cacing, khusus untuk customer yang datang langsung ke outlet juga berkesempatan mendapatan snack.
 
-</p>
+      <div class="bg-brand-50 p-4 rounded-2xl border border-brand-100 text-brand-900 space-y-2">
+        <h4 class="font-bold text-sm"><i class="fa-solid fa-gift"></i> Promo Grooming</h4>
+        <p class="text-[11px] leading-relaxed">Dapatkan mandi lengkap super premium dan free obat cacing. Khusus customer yang datang langsung ke outlet juga berkesempatan mendapatkan snack.</p>
       </div>
     </div>
 
@@ -213,7 +216,7 @@
     </div>
   </div>
 
-  <!-- BOTTOM NAVIGATION BAR (ALFAGIFT STYLE) -->
+  <!-- BOTTOM NAVIGATION BAR -->
   <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white border-t border-gray-100 flex justify-around p-2 z-30 shadow-lg">
     <button onclick="switchPage('katalog')" id="navKatalog" class="nav-tab flex flex-col items-center text-brand-600 py-1 px-3 transition">
       <i class="fa-solid fa-store text-base mb-0.5"></i>
@@ -228,41 +231,43 @@
       <span class="text-[10px] font-semibold">Info Toko</span>
     </button>
   </nav>
-<!-- MODAL: DETAIL PRODUK -->
-<div id="produkModal" onclick="closeProdukModal()" class="fixed inset-0 bg-gray-900/50 z-50 flex items-end sm:items-center justify-center hidden">
-  <div onclick="event.stopPropagation()" class="sheet-anim bg-white rounded-t-3xl sm:rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl">
-    <div class="relative bg-white border-b border-gray-100">
-      <button onclick="closeProdukModal()" class="absolute top-3 right-3 w-8 h-8 bg-white/90 rounded-full shadow flex items-center justify-center text-gray-500 z-10">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-      <img id="pmFoto" src="" alt="" class="w-full aspect-square object-contain p-4 bg-white"
-           onerror="this.src='https://via.placeholder.com/400?text=No+Image'">
-    </div>
-    <div class="p-5 space-y-3">
-      <div class="flex items-center justify-between">
-        <span id="pmKategori" class="text-[10px] bg-brand-50 text-brand-700 px-2 py-0.5 rounded font-bold"></span>
-        <span id="pmStok" class="text-[11px] font-semibold"></span>
-      </div>
-      <h3 id="pmNama" class="font-bold text-base text-gray-900 leading-snug"></h3>
-      <p id="pmVarian" class="text-xs text-gray-500"></p>
-      <p id="pmDeskripsi" class="text-xs text-gray-600 leading-relaxed hidden"></p>
-      <p id="pmHarga" class="font-bold text-lg text-brand-700"></p>
 
-      <div class="flex items-center justify-between pt-3 border-t border-gray-100">
-        <span class="text-xs font-semibold text-gray-600">Jumlah</span>
-        <div class="flex items-center space-x-3 bg-gray-50 px-2 py-1.5 rounded-xl">
-          <button onclick="changeModalQty(-1)" class="w-7 h-7 bg-white text-brand-600 rounded-lg font-bold shadow-sm">-</button>
-          <span id="pmQty" class="text-sm font-bold w-6 text-center">1</span>
-          <button onclick="changeModalQty(1)" class="w-7 h-7 bg-brand-600 text-white rounded-lg font-bold shadow-sm">+</button>
+  <!-- MODAL: DETAIL PRODUK -->
+  <div id="produkModal" onclick="closeProdukModal()" class="fixed inset-0 bg-gray-900/50 z-50 flex items-end sm:items-center justify-center hidden">
+    <div onclick="event.stopPropagation()" class="sheet-anim bg-white rounded-t-3xl sm:rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+      <div class="relative bg-white border-b border-gray-100">
+        <button onclick="closeProdukModal()" class="absolute top-3 right-3 w-8 h-8 bg-white/90 rounded-full shadow flex items-center justify-center text-gray-500 z-10">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <img id="pmFoto" src="" alt="" class="w-full aspect-square object-contain p-4 bg-white"
+             onerror="this.src='https://via.placeholder.com/400?text=No+Image'">
+      </div>
+      <div class="p-5 space-y-3">
+        <div class="flex items-center justify-between">
+          <span id="pmKategori" class="text-[10px] bg-brand-50 text-brand-700 px-2 py-0.5 rounded font-bold"></span>
+          <span id="pmStok" class="text-[11px] font-semibold"></span>
         </div>
-      </div>
+        <h3 id="pmNama" class="font-bold text-base text-gray-900 leading-snug"></h3>
+        <p id="pmVarian" class="text-xs text-gray-500"></p>
+        <p id="pmDeskripsi" class="text-xs text-gray-600 leading-relaxed hidden"></p>
+        <p id="pmHarga" class="font-bold text-lg text-brand-700"></p>
 
-      <button id="pmBtnAdd" onclick="addFromModal()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 rounded-xl shadow-sm transition text-xs uppercase tracking-wider">
-        Tambah ke Keranjang
-      </button>
+        <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+          <span class="text-xs font-semibold text-gray-600">Jumlah</span>
+          <div class="flex items-center space-x-3 bg-gray-50 px-2 py-1.5 rounded-xl">
+            <button onclick="changeModalQty(-1)" class="w-7 h-7 bg-white text-brand-600 rounded-lg font-bold shadow-sm">-</button>
+            <span id="pmQty" class="text-sm font-bold w-6 text-center">1</span>
+            <button onclick="changeModalQty(1)" class="w-7 h-7 bg-brand-600 text-white rounded-lg font-bold shadow-sm">+</button>
+          </div>
+        </div>
+
+        <button id="pmBtnAdd" onclick="addFromModal()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 rounded-xl shadow-sm transition text-xs uppercase tracking-wider">
+          Tambah ke Keranjang
+        </button>
+      </div>
     </div>
   </div>
-</div>
+
   <!-- MODAL: KERANJANG & CHECKOUT WA -->
   <div id="cartModal" class="fixed inset-0 bg-gray-900/50 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 hidden">
     <div class="bg-white rounded-t-3xl sm:rounded-2xl max-w-md w-full p-5 shadow-2xl max-h-[85vh] overflow-y-auto space-y-4">
@@ -302,106 +307,126 @@
     </div>
   </div>
 
+  <!-- LOGO (dipakai di header & halaman info) -->
+  <script>
+    const LOGO_SRC = "data:image/jpeg;base64,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UyuufU9W0vmmaxve5xDQFuZOZGCSKVr2Hsc1wI+oVu8L2vmqXXPRcZlQeXF+i5DXBzctOQrkutUREVUREREREREREREREREREREREREREREREREREREREREREWhOGkrVfGocQwAHtKIV8JJHPdz/RbBzOEWjnsYC57mtaOZLjgK0leahq5Sz6luU+odRzTx2CKd0VHRsPC6pc04w0e2S5feKnqtJ1NJqrTMtRNpyrka2elcS7qwXcJBHhnsd7FdpX2m2WaglZn9pUzrk6pjghYZnRsewg/KO3hdzWjYpNU1ENPIyK0WSmnbIKWSIwumdzc53Cezn8o7BzJWgmjcHku/OJuCD3t7nfTdtw+q2b1kFth+XoRwt4fu6qTD28l9IpCx/kV8mvbI0PY4OB7wcharfgta0XYAgjIRfCnfxAg9y+6uVwRERFVERERERERERERERERERERERERERERERERERERFxaonjauUuLVf1jUVDouFWNqnW6obROa2pMThCXdgfj5SeR5Zx3LF5GbkySyPaNNxx9YOrjeZJC1mDnLuEZOcdw7T4LL0VqsWGVVNuOJJ3W+4WYCVjeETcWInCPnw4Z3v/ezy+i+0se4koqI3T2NrCx3VPgMjZAeNuObmkA8HHzweZHLkVlqIq3WEzN3NpKXhpf+Hat7WgHIkY5xxz7sE8h4Zz3Y55jSioFDCKt0b6gMb1rogQ0uxzLQeeM5wvqiKi+1MftHDyXKXFpv613ouUqhXhERFVVREREREREREREREREX/9k=";
+    document.querySelectorAll('.js-logo').forEach(function (img) { img.src = LOGO_SRC; });
+  </script>
+
   <!-- JAVASCRIPT APP LOGIC -->
   <script>
-    let catalogData = { produk: [], layanan: [], waAdmin: "6281234567890" };
-    let cart = {}; // { id: { ...item, qty } }
-    let currentKategori = 'Semua';
-    let currentDivisi = 'Grooming';
-    let selectedLayananObj = null;
-    let selectedJamBooking = '';
+// app.js - logika halaman katalog Laras Satwa Graha
+// Dimuat SETELAH api.js (api.js menyediakan google.script.run)
 
-    // INIT LOAD
-    window.onload = function() {
-      showLoading(true, "Memuat katalog & layanan...");
-      google.script.run
-        .withSuccessHandler(res => {
-          catalogData = res;
-          renderProduk();
-          renderLayanan();
-          showLoading(false);
-        })
-        .withFailureHandler(err => {
-          showLoading(false);
-          alert("Gagal memuat data: " + err.message);
-        })
-        .getPublicCatalogData();
+let catalogData = { produk: [], layanan: [], waAdmin: "6281234567890" };
+let cart = {}; // { id: { ...item, qty } }
+let currentKategori = 'Semua';
+let currentDivisi = 'Grooming';
+let selectedLayananObj = null;
+let selectedJamBooking = '';
+let modalProdId = null;
+let modalQty = 1;
 
-      // Set minimal date booking hari ini
-      const today = new Date().toISOString().split('T')[0];
-      const dateInput = document.getElementById('bkgTanggal');
-      if(dateInput) {
-        dateInput.min = today;
-        dateInput.value = today;
-      }
-    };
+const KAT_LABEL = {
+  'Semua': 'Semua',
+  'Dry Food': 'Dry Food',
+  'Wet Food': 'Wet Food',
+  'Pasir & Litter': 'Pasir',
+  'Vitamin & Obat': 'Vitamin',
+  'Aksesoris & Lainnya': 'Aksesoris'
+};
 
-    function showLoading(show, text = "Memuat...") {
-      const el = document.getElementById('loadingOverlay');
-      document.getElementById('loadingText').innerText = text;
-      if(show) el.classList.remove('hidden');
-      else el.classList.add('hidden');
-    }
-
-    // NAVIGATION TABS
-    function switchPage(page) {
-      document.querySelectorAll('.page-section').forEach(el => el.classList.add('hidden'));
-      document.getElementById(`page-${page}`).classList.remove('hidden');
-
-      document.querySelectorAll('.nav-tab').forEach(btn => {
-        btn.classList.remove('text-brand-600');
-        btn.classList.add('text-gray-400');
-      });
-
-      if(page === 'katalog') {
-        document.getElementById('navKatalog').classList.add('text-brand-600');
-        document.getElementById('navKatalog').classList.remove('text-gray-400');
-        if(Object.keys(cart).length > 0) document.getElementById('cartBar').classList.remove('hidden');
-      } else {
-        document.getElementById('cartBar').classList.add('hidden');
-        if(page === 'booking') {
-          document.getElementById('navBooking').classList.add('text-brand-600');
-          document.getElementById('navBooking').classList.remove('text-gray-400');
-        } else if(page === 'info') {
-          document.getElementById('navInfo').classList.add('text-brand-600');
-          document.getElementById('navInfo').classList.remove('text-gray-400');
-        }
-      }
-    }
-
-    // RENDER PRODUK
-    function filterKategori(kat) {
-      currentKategori = kat;
-      document.querySelectorAll('.cat-btn').forEach(btn => {
-        if(btn.innerText.includes(kat) || (kat === 'Semua' && btn.innerText === 'Semua')) {
-          btn.className = "cat-btn px-3.5 py-1.5 rounded-full font-medium bg-brand-600 text-white shrink-0 shadow-sm transition";
-        } else {
-          btn.className = "cat-btn px-3.5 py-1.5 rounded-full font-medium bg-white text-gray-600 border border-gray-200 shrink-0 transition";
-        }
-      });
+// ===== INIT =====
+window.onload = function () {
+  showLoading(true, "Memuat katalog & layanan...");
+  google.script.run
+    .withSuccessHandler(function (res) {
+      catalogData = res;
       renderProduk();
-    }
+      renderLayanan();
+      showLoading(false);
+    })
+    .withFailureHandler(function (err) {
+      showLoading(false);
+      alert("Gagal memuat data: " + err.message);
+    })
+    .getPublicCatalogData();
 
-    function filterProduk() {
-      renderProduk();
-    }
+  const today = new Date().toISOString().split('T')[0];
+  const dateInput = document.getElementById('bkgTanggal');
+  if (dateInput) {
+    dateInput.min = today;
+    dateInput.value = today;
+  }
+};
 
-    function renderProduk() {
+function showLoading(show, text) {
+  const el = document.getElementById('loadingOverlay');
+  document.getElementById('loadingText').innerText = text || "Memuat...";
+  if (show) el.classList.remove('hidden');
+  else el.classList.add('hidden');
+}
+
+// ===== NAVIGASI =====
+function switchPage(page) {
+  document.querySelectorAll('.page-section').forEach(function (el) { el.classList.add('hidden'); });
+  document.getElementById('page-' + page).classList.remove('hidden');
+
+  document.querySelectorAll('.nav-tab').forEach(function (btn) {
+    btn.classList.remove('text-brand-600');
+    btn.classList.add('text-gray-400');
+  });
+
+  if (page === 'katalog') {
+    document.getElementById('navKatalog').classList.add('text-brand-600');
+    document.getElementById('navKatalog').classList.remove('text-gray-400');
+    if (Object.keys(cart).length > 0) document.getElementById('cartBar').classList.remove('hidden');
+  } else {
+    document.getElementById('cartBar').classList.add('hidden');
+    if (page === 'booking') {
+      document.getElementById('navBooking').classList.add('text-brand-600');
+      document.getElementById('navBooking').classList.remove('text-gray-400');
+    } else if (page === 'info') {
+      document.getElementById('navInfo').classList.add('text-brand-600');
+      document.getElementById('navInfo').classList.remove('text-gray-400');
+    }
+  }
+}
+
+// ===== PRODUK =====
+function filterKategori(kat) {
+  currentKategori = kat;
+  const label = KAT_LABEL[kat] || kat;
+  document.querySelectorAll('.cat-btn').forEach(function (btn) {
+    if (btn.innerText.trim() === label) {
+      btn.className = "cat-btn px-3.5 py-1.5 rounded-full font-medium bg-brand-600 text-white shrink-0 shadow-sm transition";
+    } else {
+      btn.className = "cat-btn px-3.5 py-1.5 rounded-full font-medium bg-white text-gray-600 border border-gray-200 shrink-0 transition";
+    }
+  });
+  renderProduk();
+}
+
+function filterProduk() {
+  renderProduk();
+}
+
+function renderProduk() {
   const grid = document.getElementById('produkGrid');
   const keyword = document.getElementById('searchInput').value.toLowerCase();
 
-  const filtered = catalogData.produk.filter(p => {
+  const filtered = catalogData.produk.filter(function (p) {
     const matchKat = currentKategori === 'Semua' || p.kategori === currentKategori;
-    const matchKey = p.nama.toLowerCase().includes(keyword);
+    const matchKey = String(p.nama).toLowerCase().includes(keyword);
     return matchKat && matchKey;
   });
 
   if (filtered.length === 0) {
-    grid.innerHTML = `<div class="col-span-2 text-center py-10 text-gray-400 text-xs">Produk tidak ditemukan.</div>`;
+    grid.innerHTML = '<div class="col-span-2 text-center py-10 text-gray-400 text-xs">Produk tidak ditemukan.</div>';
     return;
   }
 
-  grid.innerHTML = filtered.map(p => {
+  grid.innerHTML = filtered.map(function (p) {
     const qtyInCart = cart[p.id] ? cart[p.id].qty : 0;
     const habis = p.stok <= 0;
     return `
@@ -411,7 +436,7 @@
             <img src="${p.foto}" alt="${p.nama}" loading="lazy"
                  class="w-full h-full object-contain p-1.5 ${habis ? 'opacity-40' : ''}"
                  onerror="this.src='https://via.placeholder.com/300?text=No+Image'">
-            ${habis ? `<span class="absolute top-2 left-2 text-[9px] bg-red-500 text-white px-2 py-0.5 rounded font-bold">Habis</span>` : ''}
+            ${habis ? '<span class="absolute top-2 left-2 text-[9px] bg-red-500 text-white px-2 py-0.5 rounded font-bold">Habis</span>' : ''}
           </div>
           <span class="text-[10px] bg-brand-50 text-brand-700 px-2 py-0.5 rounded font-bold">${p.kategori}</span>
           <h3 class="font-semibold text-xs text-gray-900 mt-1 line-clamp-2 min-h-[2rem]">${p.nama}</h3>
@@ -441,88 +466,9 @@
   }).join('');
 }
 
-      grid.innerHTML = '';
-      filtered.forEach(p => {
-        const qtyInCart = cart[p.id] ? cart[p.id].qty : 0;
-        grid.innerHTML += `
-          <div class="bg-white p-3 rounded-2xl border border-gray-100 shadow-sm flex flex-col justify-between">
-            <div>
-              <img src="${p.foto}" class="w-full h-32 object-cover rounded-xl mb-2.5 bg-gray-50 border border-gray-100" onerror="this.src='https://via.placeholder.com/300?text=No+Image'">
-              <span class="text-[10px] bg-brand-50 text-brand-700 px-2 py-0.5 rounded font-bold">${p.kategori}</span>
-              <h3 class="font-semibold text-xs text-gray-900 mt-1 line-clamp-2">${p.nama}</h3>
-              <p class="text-[10px] text-gray-400 mt-0.5">Varian: ${p.varian || 'Standar'}</p>
-            </div>
-            <div class="mt-3 pt-2 border-t border-gray-100 flex items-center justify-between">
-              <div>
-                <p class="font-bold text-xs text-gray-900">Rp ${Number(p.harga).toLocaleString('id-ID')}</p>
-                <p class="text-[9px] ${p.stok <= 3 ? 'text-red-500 font-semibold' : 'text-gray-400'}">Stok: ${p.stok}</p>
-              </div>
-              <div>
-                ${qtyInCart === 0 ? `
-                  <button onclick="updateCart('${p.id}', 1)" ${p.stok <= 0 ? 'disabled' : ''} class="px-3 py-1.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold shadow-sm transition ${p.stok <= 0 ? 'opacity-50 cursor-not-allowed' : ''}">
-                    + Beli
-                  </button>
-                ` : `
-                  <div class="flex items-center space-x-1.5 bg-brand-50 px-2 py-1 rounded-xl">
-                    <button onclick="updateCart('${p.id}', -1)" class="w-5 h-5 bg-white text-brand-600 rounded-lg font-bold shadow-sm flex items-center justify-center text-xs">-</button>
-                    <span class="text-xs font-bold text-brand-700">${qtyInCart}</span>
-                    <button onclick="updateCart('${p.id}', 1)" class="w-5 h-5 bg-brand-600 text-white rounded-lg font-bold shadow-sm flex items-center justify-center text-xs">+</button>
-                  </div>
-                `}
-              </div>
-            </div>
-          </div>
-        `;
-      });
-    }
-
-    // CART LOGIC
-    function updateCart(id, delta) {
-      const produk = catalogData.produk.find(p => p.id === id);
-      if(!produk) return;
-
-      if(!cart[id]) {
-        if(delta > 0) {
-          cart[id] = { ...produk, qty: 1 };
-        }
-      } else {
-        cart[id].qty += delta;
-        if(cart[id].qty <= 0) {
-          delete cart[id];
-        } else if(cart[id].qty > produk.stok) {
-          alert("Stok produk tidak mencukupi!");
-          cart[id].qty = produk.stok;
-        }
-      }
-
-      renderProduk();
-      updateCartSummary();
-    }
-
-    function updateCartSummary() {
-      let totalCount = 0;
-      let totalPrice = 0;
-
-      Object.values(cart).forEach(item => {
-        totalCount += item.qty;
-        totalPrice += item.qty * item.harga;
-      });
-
-      document.getElementById('cartCount').innerText = totalCount;
-      document.getElementById('cartTotal').innerText = `Rp ${totalPrice.toLocaleString('id-ID')}`;
-
-      const cartBar = document.getElementById('cartBar');
-      if(totalCount > 0) {
-        cartBar.classList.remove('hidden');
-      } else {
-        cartBar.classList.add('hidden');
-      }
-    }
-    let modalProdId = null;
-let modalQty = 1;
-
+// ===== POP UP DETAIL PRODUK =====
 function openProdukModal(id) {
-  const p = catalogData.produk.find(x => String(x.id) === String(id));
+  const p = catalogData.produk.find(function (x) { return String(x.id) === String(id); });
   if (!p) return;
   modalProdId = p.id;
   modalQty = cart[p.id] ? cart[p.id].qty : 1;
@@ -557,228 +503,265 @@ function closeProdukModal() {
 }
 
 function changeModalQty(delta) {
-  const p = catalogData.produk.find(x => x.id === modalProdId);
+  const p = catalogData.produk.find(function (x) { return x.id === modalProdId; });
   if (!p) return;
   modalQty = Math.min(Math.max(1, modalQty + delta), Math.max(1, p.stok));
   document.getElementById('pmQty').innerText = modalQty;
 }
 
 function addFromModal() {
-  const p = catalogData.produk.find(x => x.id === modalProdId);
+  const p = catalogData.produk.find(function (x) { return x.id === modalProdId; });
   if (!p || p.stok <= 0) return;
-  cart[p.id] = { ...p, qty: modalQty };
+  cart[p.id] = Object.assign({}, p, { qty: modalQty });
   closeProdukModal();
   renderProduk();
   updateCartSummary();
 }
 
-    function openCartModal() {
-      const listEl = document.getElementById('cartItemList');
-      listEl.innerHTML = '';
+// ===== KERANJANG =====
+function updateCart(id, delta) {
+  const produk = catalogData.produk.find(function (p) { return String(p.id) === String(id); });
+  if (!produk) return;
 
-      Object.values(cart).forEach(item => {
-        listEl.innerHTML += `
-          <div class="py-2.5 flex items-center justify-between">
-            <div>
-              <p class="font-semibold text-gray-900">${item.nama}</p>
-              <p class="text-gray-400 text-[10px]">${item.qty} x Rp ${Number(item.harga).toLocaleString('id-ID')}</p>
-            </div>
-            <p class="font-bold text-gray-900">Rp ${Number(item.qty * item.harga).toLocaleString('id-ID')}</p>
-          </div>
-        `;
-      });
-
-      document.getElementById('cartModal').classList.remove('hidden');
+  if (!cart[produk.id]) {
+    if (delta > 0) cart[produk.id] = Object.assign({}, produk, { qty: 1 });
+  } else {
+    cart[produk.id].qty += delta;
+    if (cart[produk.id].qty <= 0) {
+      delete cart[produk.id];
+    } else if (cart[produk.id].qty > produk.stok) {
+      alert("Stok produk tidak mencukupi!");
+      cart[produk.id].qty = produk.stok;
     }
+  }
 
-    function closeCartModal() {
-      document.getElementById('cartModal').classList.add('hidden');
-    }
+  renderProduk();
+  updateCartSummary();
+}
 
-    function toggleAlamat() {
-      const metode = document.getElementById('orderMetode').value;
-      const box = document.getElementById('alamatBox');
-      if(metode.includes('Kurir')) box.classList.remove('hidden');
-      else box.classList.add('hidden');
-    }
+function updateCartSummary() {
+  let totalCount = 0;
+  let totalPrice = 0;
 
-    function checkoutWhatsApp() {
-      const nama = document.getElementById('orderNama').value;
-      const wa = document.getElementById('orderWa').value;
-      const metode = document.getElementById('orderMetode').value;
-      const alamat = document.getElementById('orderAlamat').value || '-';
+  Object.values(cart).forEach(function (item) {
+    totalCount += item.qty;
+    totalPrice += item.qty * item.harga;
+  });
 
-      if(!nama || !wa) {
-        alert("Mohon isi Nama dan Nomor WhatsApp Anda!");
-        return;
-      }
+  document.getElementById('cartCount').innerText = totalCount;
+  document.getElementById('cartTotal').innerText = 'Rp ' + totalPrice.toLocaleString('id-ID');
 
-      let detailText = "";
-      let totalHarga = 0;
-      let itemsArray = [];
+  const cartBar = document.getElementById('cartBar');
+  if (totalCount > 0) cartBar.classList.remove('hidden');
+  else cartBar.classList.add('hidden');
+}
 
-      Object.values(cart).forEach(item => {
-        detailText += `- ${item.nama} (${item.qty}x) = Rp ${(item.qty * item.harga).toLocaleString('id-ID')}\n`;
-        totalHarga += item.qty * item.harga;
-        itemsArray.push({ id: item.id, qty: item.qty });
-      });
+function openCartModal() {
+  const listEl = document.getElementById('cartItemList');
+  listEl.innerHTML = Object.values(cart).map(function (item) {
+    return `
+      <div class="py-2.5 flex items-center justify-between">
+        <div>
+          <p class="font-semibold text-gray-900">${item.nama}</p>
+          <p class="text-gray-400 text-[10px]">${item.qty} x Rp ${Number(item.harga).toLocaleString('id-ID')}</p>
+        </div>
+        <p class="font-bold text-gray-900">Rp ${Number(item.qty * item.harga).toLocaleString('id-ID')}</p>
+      </div>`;
+  }).join('');
 
-      showLoading(true, "Memproses pesanan...");
-      google.script.run
-        .withSuccessHandler(res => {
-          showLoading(false);
-          if(res.success) {
-            closeCartModal();
-            const waText = `Halo Admin Laras Satwa Graha,\n\nSaya ingin memesan produk:\n*ID Order:* ${res.idOrder}\n*Nama:* ${nama}\n*Metode:* ${metode}\n*Alamat:* ${alamat}\n\n*Rincian Belanja:*\n${detailText}\n*Total:* Rp ${totalHarga.toLocaleString('id-ID')}\n\nMohon segera diproses, terima kasih!`;
-            window.open(`https://wa.me/${catalogData.waAdmin}?text=${encodeURIComponent(waText)}`, '_blank');
-            cart = {};
-            updateCartSummary();
-            renderProduk();
-          } else {
-            alert("Gagal memproses pesanan: " + res.message);
-          }
-        })
-        .withFailureHandler(err => {
-          showLoading(false);
-          alert("Kesalahan sistem: " + err.message);
-        })
-        .submitOrder({
-          nama: nama,
-          wa: wa,
-          metodeAmbil: metode,
-          alamat: alamat,
-          detailText: detailText,
-          totalHarga: totalHarga,
-          items: itemsArray
-        });
-    }
+  document.getElementById('cartModal').classList.remove('hidden');
+}
 
-    // BOOKING & LAYANAN LOGIC
-    function switchDivisi(div) {
-      currentDivisi = div;
-      if(div === 'Grooming') {
-        document.getElementById('btnDivGrooming').className = "py-2.5 rounded-lg bg-white text-brand-600 shadow-sm transition";
-        document.getElementById('btnDivKlinik').className = "py-2.5 rounded-lg text-gray-600 transition";
+function closeCartModal() {
+  document.getElementById('cartModal').classList.add('hidden');
+}
+
+function toggleAlamat() {
+  const metode = document.getElementById('orderMetode').value;
+  const box = document.getElementById('alamatBox');
+  if (metode.includes('Kurir')) box.classList.remove('hidden');
+  else box.classList.add('hidden');
+}
+
+function checkoutWhatsApp() {
+  const nama = document.getElementById('orderNama').value;
+  const wa = document.getElementById('orderWa').value;
+  const metode = document.getElementById('orderMetode').value;
+  const alamat = document.getElementById('orderAlamat').value || '-';
+
+  if (!nama || !wa) {
+    alert("Mohon isi Nama dan Nomor WhatsApp Anda!");
+    return;
+  }
+
+  let detailText = "";
+  let totalHarga = 0;
+  const itemsArray = [];
+
+  Object.values(cart).forEach(function (item) {
+    detailText += '- ' + item.nama + ' (' + item.qty + 'x) = Rp ' + (item.qty * item.harga).toLocaleString('id-ID') + '\n';
+    totalHarga += item.qty * item.harga;
+    itemsArray.push({ id: item.id, qty: item.qty });
+  });
+
+  showLoading(true, "Memproses pesanan...");
+  google.script.run
+    .withSuccessHandler(function (res) {
+      showLoading(false);
+      if (res.success) {
+        closeCartModal();
+        const waText = 'Halo Admin Laras Satwa Graha,\n\nSaya ingin memesan produk:\n*ID Order:* ' + res.idOrder +
+          '\n*Nama:* ' + nama + '\n*Metode:* ' + metode + '\n*Alamat:* ' + alamat +
+          '\n\n*Rincian Belanja:*\n' + detailText + '\n*Total:* Rp ' + totalHarga.toLocaleString('id-ID') +
+          '\n\nMohon segera diproses, terima kasih!';
+        window.open('https://wa.me/' + catalogData.waAdmin + '?text=' + encodeURIComponent(waText), '_blank');
+        cart = {};
+        updateCartSummary();
+        renderProduk();
       } else {
-        document.getElementById('btnDivKlinik').className = "py-2.5 rounded-lg bg-white text-brand-600 shadow-sm transition";
-        document.getElementById('btnDivGrooming').className = "py-2.5 rounded-lg text-gray-600 transition";
+        alert("Gagal memproses pesanan: " + res.message);
       }
-      renderLayanan();
-      document.getElementById('formBookingContainer').classList.add('hidden');
-    }
+    })
+    .withFailureHandler(function (err) {
+      showLoading(false);
+      alert("Kesalahan sistem: " + err.message);
+    })
+    .submitOrder({
+      nama: nama,
+      wa: wa,
+      metodeAmbil: metode,
+      alamat: alamat,
+      detailText: detailText,
+      totalHarga: totalHarga,
+      items: itemsArray
+    });
+}
 
-    function renderLayanan() {
-      const list = document.getElementById('listLayanan');
-      const filtered = catalogData.layanan.filter(s => s.divisi === currentDivisi);
+// ===== BOOKING & LAYANAN =====
+function switchDivisi(div) {
+  currentDivisi = div;
+  if (div === 'Grooming') {
+    document.getElementById('btnDivGrooming').className = "py-2.5 rounded-lg bg-white text-brand-600 shadow-sm transition";
+    document.getElementById('btnDivKlinik').className = "py-2.5 rounded-lg text-gray-600 transition";
+  } else {
+    document.getElementById('btnDivKlinik').className = "py-2.5 rounded-lg bg-white text-brand-600 shadow-sm transition";
+    document.getElementById('btnDivGrooming').className = "py-2.5 rounded-lg text-gray-600 transition";
+  }
+  renderLayanan();
+  document.getElementById('formBookingContainer').classList.add('hidden');
+}
 
-      if(filtered.length === 0) {
-        list.innerHTML = `<div class="text-center py-8 text-gray-400 text-xs">Belum ada layanan ${currentDivisi} tersedia.</div>`;
-        return;
+function renderLayanan() {
+  const list = document.getElementById('listLayanan');
+  const filtered = catalogData.layanan.filter(function (s) { return s.divisi === currentDivisi; });
+
+  if (filtered.length === 0) {
+    list.innerHTML = '<div class="text-center py-8 text-gray-400 text-xs">Belum ada layanan ' + currentDivisi + ' tersedia.</div>';
+    return;
+  }
+
+  list.innerHTML = filtered.map(function (s) {
+    return `
+      <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between">
+        <div>
+          <span class="text-[9px] bg-brand-50 text-brand-700 px-2 py-0.5 rounded font-bold">${s.divisi}</span>
+          <h3 class="font-semibold text-xs text-gray-900 mt-1">${s.nama}</h3>
+          <p class="text-[10px] text-gray-500 mt-0.5">${s.deskripsi}</p>
+          <p class="font-bold text-xs text-gray-900 mt-2">Rp ${Number(s.harga).toLocaleString('id-ID')}</p>
+        </div>
+        <button onclick='selectLayanan(${JSON.stringify(s)})' class="px-3.5 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold shadow-sm transition shrink-0">
+          Booking
+        </button>
+      </div>`;
+  }).join('');
+}
+
+function selectLayanan(s) {
+  selectedLayananObj = s;
+  document.getElementById('selectedLayananName').value = s.divisi + ' - ' + s.nama + ' (Rp ' + Number(s.harga).toLocaleString('id-ID') + ')';
+  document.getElementById('formBookingContainer').classList.remove('hidden');
+  document.getElementById('formBookingContainer').scrollIntoView({ behavior: 'smooth' });
+  fetchSlots();
+}
+
+function fetchSlots() {
+  if (!selectedLayananObj) return;
+  const tgl = document.getElementById('bkgTanggal').value;
+  if (!tgl) return;
+
+  const slotContainer = document.getElementById('slotContainer');
+  slotContainer.innerHTML = '<p class="text-xs text-gray-400 col-span-3">Memeriksa kuota slot...</p>';
+
+  google.script.run
+    .withSuccessHandler(function (slots) {
+      slotContainer.innerHTML = slots.map(function (slot) {
+        const btnClass = slot.tersedia
+          ? 'py-2 rounded-xl border text-xs font-semibold transition ' + (selectedJamBooking === slot.jam ? 'bg-brand-600 text-white border-brand-600 shadow-sm' : 'bg-white text-gray-700 border-gray-200 hover:border-brand-500')
+          : 'py-2 rounded-xl border text-xs font-semibold bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed';
+        return '<button type="button" ' + (slot.tersedia ? 'onclick="setJamBooking(\'' + slot.jam + '\')"' : 'disabled') + ' class="' + btnClass + '">' +
+          slot.jam + '<br><span class="text-[9px] ' + (slot.tersedia ? 'text-gray-500' : 'text-red-400') + '">' +
+          (slot.tersedia ? 'Sisa ' + slot.sisa : 'Penuh') + '</span></button>';
+      }).join('');
+    })
+    .withFailureHandler(function () {
+      slotContainer.innerHTML = '<p class="text-xs text-red-500 col-span-3">Gagal memuat slot jam.</p>';
+    })
+    .checkAvailableSlots(tgl, selectedLayananObj.divisi, selectedLayananObj.kuota);
+}
+
+function setJamBooking(jam) {
+  selectedJamBooking = jam;
+  fetchSlots();
+}
+
+function submitBookingProcess() {
+  const namaPemilik = document.getElementById('bkgNama').value;
+  const wa = document.getElementById('bkgWa').value;
+  const namaHewan = document.getElementById('bkgNamaHewan').value;
+  const jenisHewan = document.getElementById('bkgJenisHewan').value;
+  const tanggal = document.getElementById('bkgTanggal').value;
+  const opsiAntar = document.getElementById('bkgOpsiAntar').value;
+
+  if (!namaPemilik || !wa || !namaHewan || !tanggal || !selectedJamBooking) {
+    alert("Mohon lengkapi seluruh formulir dan pilih jam kedatangan!");
+    return;
+  }
+
+  showLoading(true, "Menyimpan jadwal booking...");
+  google.script.run
+    .withSuccessHandler(function (res) {
+      showLoading(false);
+      if (res.success) {
+        const waText = 'Halo Admin Laras Satwa Graha,\n\nSaya ingin konfirmasi booking layanan:\n*ID Booking:* ' + res.idBooking +
+          '\n*Divisi:* ' + selectedLayananObj.divisi + '\n*Layanan:* ' + selectedLayananObj.nama +
+          '\n*Nama Pemilik:* ' + namaPemilik + '\n*Nama Hewan:* ' + namaHewan + ' (' + jenisHewan + ')' +
+          '\n*Jadwal:* ' + tanggal + ' Pukul ' + selectedJamBooking + ' WIB\n*Opsi:* ' + opsiAntar +
+          '\n\nMohon bantuannya untuk konfirmasi jadwal, terima kasih!';
+        window.open('https://wa.me/' + catalogData.waAdmin + '?text=' + encodeURIComponent(waText), '_blank');
+
+        alert("Booking berhasil dicatatkan! Mengalihkan ke WhatsApp admin...");
+        switchPage('katalog');
+      } else {
+        alert("Gagal booking: " + res.message);
       }
+    })
+    .withFailureHandler(function (err) {
+      showLoading(false);
+      alert("Kesalahan sistem: " + err.message);
+    })
+    .submitBooking({
+      namaPemilik: namaPemilik,
+      wa: wa,
+      namaHewan: namaHewan,
+      jenisHewan: jenisHewan,
+      divisi: selectedLayananObj.divisi,
+      layanan: selectedLayananObj.nama,
+      tanggal: tanggal,
+      jam: selectedJamBooking,
+      opsiAntar: opsiAntar
+    });
+}
 
-      list.innerHTML = '';
-      filtered.forEach(s => {
-        list.innerHTML += `
-          <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between">
-            <div>
-              <span class="text-[9px] bg-brand-50 text-brand-700 px-2 py-0.5 rounded font-bold">${s.divisi}</span>
-              <h3 class="font-semibold text-xs text-gray-900 mt-1">${s.nama}</h3>
-              <p class="text-[10px] text-gray-500 mt-0.5">${s.deskripsi}</p>
-              <p class="font-bold text-xs text-gray-900 mt-2">Rp ${Number(s.harga).toLocaleString('id-ID')}</p>
-            </div>
-            <button onclick='selectLayanan(${JSON.stringify(s)})' class="px-3.5 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold shadow-sm transition shrink-0">
-              Booking
-            </button>
-          </div>
-        `;
-      });
-    }
-
-    function selectLayanan(s) {
-      selectedLayananObj = s;
-      document.getElementById('selectedLayananName').value = `${s.divisi} - ${s.nama} (Rp ${Number(s.harga).toLocaleString('id-ID')})`;
-      document.getElementById('formBookingContainer').classList.remove('hidden');
-      document.getElementById('formBookingContainer').scrollIntoView({ behavior: 'smooth' });
-      fetchSlots();
-    }
-
-    function fetchSlots() {
-      if(!selectedLayananObj) return;
-      const tgl = document.getElementById('bkgTanggal').value;
-      if(!tgl) return;
-
-      const slotContainer = document.getElementById('slotContainer');
-      slotContainer.innerHTML = `<p class="text-xs text-gray-400 col-span-3">Memeriksa kuota slot...</p>`;
-
-      google.script.run
-        .withSuccessHandler(slots => {
-          slotContainer.innerHTML = '';
-          slots.forEach(slot => {
-            const btnClass = slot.tersedia ? 
-              `py-2 rounded-xl border text-xs font-semibold transition ${selectedJamBooking === slot.jam ? 'bg-brand-600 text-white border-brand-600 shadow-sm' : 'bg-white text-gray-700 border-gray-200 hover:border-brand-500'}` : 
-              `py-2 rounded-xl border text-xs font-semibold bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed`;
-            
-            slotContainer.innerHTML += `
-              <button type="button" ${slot.tersedia ? `onclick="setJamBooking('${slot.jam}')"` : 'disabled'} class="${btnClass}">
-                ${slot.jam}<br><span class="text-[9px] ${slot.tersedia ? 'text-gray-500' : 'text-red-400'}">${slot.tersedia ? `Sisa ${slot.sisa}` : 'Penuh'}</span>
-              </button>
-            `;
-          });
-        })
-        .withFailureHandler(err => {
-          slotContainer.innerHTML = `<p class="text-xs text-red-500 col-span-3">Gagal memuat slot jam.</p>`;
-        })
-        .checkAvailableSlots(tgl, selectedLayananObj.divisi, selectedLayananObj.kuota);
-    }
-
-    function setJamBooking(jam) {
-      selectedJamBooking = jam;
-      fetchSlots(); // Re-render untuk update warna tombol aktif
-    }
-
-    function submitBookingProcess() {
-      const namaPemilik = document.getElementById('bkgNama').value;
-      const wa = document.getElementById('bkgWa').value;
-      const namaHewan = document.getElementById('bkgNamaHewan').value;
-      const jenisHewan = document.getElementById('bkgJenisHewan').value;
-      const tanggal = document.getElementById('bkgTanggal').value;
-      const opsiAntar = document.getElementById('bkgOpsiAntar').value;
-
-      if(!namaPemilik || !wa || !namaHewan || !tanggal || !selectedJamBooking) {
-        alert("Mohon lengkapi seluruh formulir dan pilih jam kedatangan!");
-        return;
-      }
-
-      showLoading(true, "Menyimpan jadwal booking...");
-      google.script.run
-        .withSuccessHandler(res => {
-          showLoading(false);
-          if(res.success) {
-            const waText = `Halo Admin Laras Satwa Graha,\n\nSaya ingin konfirmasi booking layanan:\n*ID Booking:* ${res.idBooking}\n*Divisi:* ${selectedLayananObj.divisi}\n*Layanan:* ${selectedLayananObj.nama}\n*Nama Pemilik:* ${namaPemilik}\n*Nama Hewan:* ${namaHewan} (${jenisHewan})\n*Jadwal:* ${tanggal} Pukul ${selectedJamBooking} WIB\n*Opsi:* ${opsiAntar}\n\nMohon bantuannya untuk konfirmasi jadwal, terima kasih!`;
-            window.open(`https://wa.me/${catalogData.waAdmin}?text=${encodeURIComponent(waText)}`, '_blank');
-            
-            alert("Booking berhasil dicatatkan! Mengalihkan ke WhatsApp admin...");
-            switchPage('katalog');
-          } else {
-            alert("Gagal booking: " + res.message);
-          }
-        })
-        .withFailureHandler(err => {
-          showLoading(false);
-          alert("Kesalahan sistem: " + err.message);
-        })
-        .submitBooking({
-          namaPemilik: namaPemilik,
-          wa: wa,
-          namaHewan: namaHewan,
-          jenisHewan: jenisHewan,
-          divisi: selectedLayananObj.divisi,
-          layanan: selectedLayananObj.nama,
-          tanggal: tanggal,
-          jam: selectedJamBooking,
-          opsiAntar: opsiAntar
-        });
-    }
   </script>
 </body>
 </html>
