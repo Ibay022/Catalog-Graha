@@ -518,6 +518,59 @@
         cartBar.classList.add('hidden');
       }
     }
+    let modalProdId = null;
+let modalQty = 1;
+
+function openProdukModal(id) {
+  const p = catalogData.produk.find(x => String(x.id) === String(id));
+  if (!p) return;
+  modalProdId = p.id;
+  modalQty = cart[p.id] ? cart[p.id].qty : 1;
+
+  document.getElementById('pmFoto').src = p.foto;
+  document.getElementById('pmKategori').innerText = p.kategori;
+  document.getElementById('pmNama').innerText = p.nama;
+  document.getElementById('pmVarian').innerText = 'Varian: ' + (p.varian || 'Standar');
+  document.getElementById('pmHarga').innerText = 'Rp ' + Number(p.harga).toLocaleString('id-ID');
+
+  const desc = document.getElementById('pmDeskripsi');
+  if (p.deskripsi) { desc.innerText = p.deskripsi; desc.classList.remove('hidden'); }
+  else desc.classList.add('hidden');
+
+  const stokEl = document.getElementById('pmStok');
+  stokEl.innerText = p.stok <= 0 ? 'Stok habis' : 'Stok: ' + p.stok;
+  stokEl.className = 'text-[11px] font-semibold ' + (p.stok <= 3 ? 'text-red-500' : 'text-gray-500');
+
+  const btn = document.getElementById('pmBtnAdd');
+  btn.disabled = p.stok <= 0;
+  btn.classList.toggle('opacity-50', p.stok <= 0);
+  btn.classList.toggle('cursor-not-allowed', p.stok <= 0);
+
+  document.getElementById('pmQty').innerText = modalQty;
+  document.getElementById('produkModal').classList.remove('hidden');
+  document.body.classList.add('overflow-hidden');
+}
+
+function closeProdukModal() {
+  document.getElementById('produkModal').classList.add('hidden');
+  document.body.classList.remove('overflow-hidden');
+}
+
+function changeModalQty(delta) {
+  const p = catalogData.produk.find(x => x.id === modalProdId);
+  if (!p) return;
+  modalQty = Math.min(Math.max(1, modalQty + delta), Math.max(1, p.stok));
+  document.getElementById('pmQty').innerText = modalQty;
+}
+
+function addFromModal() {
+  const p = catalogData.produk.find(x => x.id === modalProdId);
+  if (!p || p.stok <= 0) return;
+  cart[p.id] = { ...p, qty: modalQty };
+  closeProdukModal();
+  renderProduk();
+  updateCartSummary();
+}
 
     function openCartModal() {
       const listEl = document.getElementById('cartItemList');
