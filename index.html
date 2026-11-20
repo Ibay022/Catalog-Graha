@@ -138,11 +138,7 @@
               </select>
             </div>
           </div>
-          <div>
-            <label class="block font-semibold text-gray-600 mb-1">Pilih Jam Kedatangan (Slot Tersedia)</label>
-            <div id="slotContainer" class="grid grid-cols-3 gap-2 pt-1">
-              <p class="text-xs text-gray-400 col-span-3">Pilih tanggal terlebih dahulu.</p>
-            </div>
+          
           </div>
           <button onclick="submitBookingProcess()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 rounded-xl shadow-sm transition text-xs uppercase tracking-wider mt-2">
             Konfirmasi Booking Sekarang
@@ -716,28 +712,7 @@ function selectLayanan(s) {
 }
 
 function fetchSlots() {
-  if (!selectedLayananObj) return;
-  const tgl = document.getElementById('bkgTanggal').value;
-  if (!tgl) return;
-
-  const slotContainer = document.getElementById('slotContainer');
-  slotContainer.innerHTML = '<p class="text-xs text-gray-400 col-span-3">Memeriksa kuota slot...</p>';
-
-  google.script.run
-    .withSuccessHandler(function (slots) {
-      slotContainer.innerHTML = slots.map(function (slot) {
-        const btnClass = slot.tersedia
-          ? 'py-2 rounded-xl border text-xs font-semibold transition ' + (selectedJamBooking === slot.jam ? 'bg-brand-600 text-white border-brand-600 shadow-sm' : 'bg-white text-gray-700 border-gray-200 hover:border-brand-500')
-          : 'py-2 rounded-xl border text-xs font-semibold bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed';
-        return '<button type="button" ' + (slot.tersedia ? 'onclick="setJamBooking(\'' + slot.jam + '\')"' : 'disabled') + ' class="' + btnClass + '">' +
-          slot.jam + '<br><span class="text-[9px] ' + (slot.tersedia ? 'text-gray-500' : 'text-red-400') + '">' +
-          (slot.tersedia ? 'Sisa ' + slot.sisa : 'Penuh') + '</span></button>';
-      }).join('');
-    })
-    .withFailureHandler(function () {
-      slotContainer.innerHTML = '<p class="text-xs text-red-500 col-span-3">Gagal memuat slot jam.</p>';
-    })
-    .checkAvailableSlots(tgl, selectedLayananObj.divisi, selectedLayananObj.kuota);
+  // Pilihan jam dihilangkan, jadi tidak ada slot yang perlu dicek
 }
 
 function setJamBooking(jam) {
@@ -753,8 +728,8 @@ function submitBookingProcess() {
   const tanggal = document.getElementById('bkgTanggal').value;
   const opsiAntar = document.getElementById('bkgOpsiAntar').value;
 
-  if (!namaPemilik || !wa || !namaHewan || !tanggal || !selectedJamBooking) {
-    alert("Mohon lengkapi seluruh formulir dan pilih jam kedatangan!");
+  if (!namaPemilik || !wa || !namaHewan || !tanggal) {
+  alert("Mohon lengkapi seluruh formulir!");
     return;
   }
 
@@ -766,7 +741,7 @@ function submitBookingProcess() {
         const waText = 'Halo Admin Laras Satwa Graha,\n\nSaya ingin konfirmasi booking layanan:\n*ID Booking:* ' + res.idBooking +
           '\n*Divisi:* ' + selectedLayananObj.divisi + '\n*Layanan:* ' + selectedLayananObj.nama +
           '\n*Nama Pemilik:* ' + namaPemilik + '\n*Nama Hewan:* ' + namaHewan + ' (' + jenisHewan + ')' +
-          '\n*Jadwal:* ' + tanggal + ' Pukul ' + selectedJamBooking + ' WIB\n*Opsi:* ' + opsiAntar +
+          '\n*Tanggal Kedatangan:* ' + tanggal + '\n*Opsi:* ' + opsiAntar +
           '\n\nMohon bantuannya untuk konfirmasi jadwal, terima kasih!';
         window.open('https://wa.me/' + catalogData.waAdmin + '?text=' + encodeURIComponent(waText), '_blank');
 
@@ -788,7 +763,7 @@ function submitBookingProcess() {
       divisi: selectedLayananObj.divisi,
       layanan: selectedLayananObj.nama,
       tanggal: tanggal,
-      jam: selectedJamBooking,
+      jam: '-',
       opsiAntar: opsiAntar
     });
 }
