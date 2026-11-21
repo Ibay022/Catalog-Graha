@@ -651,10 +651,10 @@ function checkoutWhatsApp() {
           '\n*Nama:* ' + nama + '\n*Metode:* ' + metode + '\n*Alamat:* ' + alamat +
           '\n\n*Rincian Belanja:*\n' + detailText + '\n*Total:* Rp ' + totalHarga.toLocaleString('id-ID') +
           '\n\nMohon segera diproses, terima kasih!';
-        window.open('https://wa.me/' + catalogData.waAdmin + '?text=' + encodeURIComponent(waText), '_blank');
         cart = {};
-        updateCartSummary();
-        renderProduk();
+updateCartSummary();
+renderProduk();
+window.location.href = 'https://wa.me/' + catalogData.waAdmin + '?text=' + encodeURIComponent(waText);
       } else {
         alert("Gagal memproses pesanan: " + res.message);
       }
@@ -753,10 +753,9 @@ function submitBookingProcess() {
           '\n*Nama Pemilik:* ' + namaPemilik + '\n*Nama Hewan:* ' + namaHewan + ' (' + jenisHewan + ')' +
           '\n*Tanggal Kedatangan:* ' + tanggal + '\n*Opsi:* ' + opsiAntar +
           '\n\nMohon bantuannya untuk konfirmasi jadwal, terima kasih!';
-        window.open('https://wa.me/' + catalogData.waAdmin + '?text=' + encodeURIComponent(waText), '_blank');
-
         alert("Booking berhasil dicatatkan! Mengalihkan ke WhatsApp admin...");
-        switchPage('katalog');
+switchPage('katalog');
+window.location.href = 'https://wa.me/' + catalogData.waAdmin + '?text=' + encodeURIComponent(waText);
       } else {
         alert("Gagal booking: " + res.message);
       }
