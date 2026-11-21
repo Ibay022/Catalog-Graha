@@ -41,7 +41,7 @@
 
   <!-- TOP HEADER -->
   <header class="bg-white sticky top-0 z-30 border-b border-gray-100 shadow-sm">
-    <div class="max-w-md mx-auto px-4 py-3 flex items-center">
+    <div class="max-w-md md:max-w-3xl lg:max-w-5xl mx-auto px-4 py-3 flex items-center">
       <div class="flex items-center space-x-2.5">
         <img class="js-logo w-10 h-10 object-contain rounded-xl" alt="Logo Laras Satwa Graha">
         <div>
@@ -59,7 +59,7 @@
   </div>
 
   <!-- MAIN CONTAINER (MOBILE FIRST MAX-W-MD) -->
-  <main class="max-w-md mx-auto p-4">
+  <main class="max-w-md md:max-w-3xl lg:max-w-5xl mx-auto p-4">
 
     <!-- PAGE 1: KATALOG PRODUK -->
     <div id="page-katalog" class="space-y-4 page-section">
@@ -80,13 +80,13 @@
       </div>
 
       <!-- Grid Produk (2 Kolom) -->
-      <div id="produkGrid" class="grid grid-cols-2 gap-3">
+      <div id="produkGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
         <!-- Injected via JS -->
       </div>
     </div>
 
     <!-- PAGE 2: BOOKING LAYANAN -->
-    <div id="page-booking" class="page-section hidden space-y-4">
+    <div id="page-booking" class="page-section hidden space-y-4 md:max-w-xl md:mx-auto">
       <div>
         <h2 class="font-bold text-base text-gray-900">Booking Grooming & Klinik</h2>
         <p class="text-xs text-gray-500">Pilih jadwal layanan hewan kesayangan Anda tanpa antre.</p>
@@ -158,7 +158,7 @@
     </div>
 
     <!-- PAGE 3: INFO TOKO & PROMO -->
-    <div id="page-info" class="page-section hidden space-y-4 text-xs">
+    <div id="page-info" class="page-section hidden space-y-4 text-xs md:max-w-xl md:mx-auto">
       <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm space-y-4">
         <div class="flex flex-col items-center text-center space-y-2">
           <img class="js-logo w-24 h-24 object-contain" alt="Logo Laras Satwa Graha">
@@ -207,7 +207,7 @@
   </main>
 
   <!-- FLOATING BOTTOM BAR (CART SUMMARY) -->
-  <div id="cartBar" class="fixed bottom-16 left-0 right-0 max-w-md mx-auto px-4 hidden z-20">
+  <div id="cartBar" class="fixed bottom-16 left-0 right-0 max-w-md md:max-w-xl mx-auto px-4 hidden z-20">
     <div class="bg-gray-900 text-white p-3.5 rounded-2xl shadow-xl flex items-center justify-between">
       <div class="flex items-center space-x-3">
         <div class="w-9 h-9 bg-brand-500 rounded-xl flex items-center justify-center font-bold text-sm" id="cartCount">0</div>
@@ -223,7 +223,7 @@
   </div>
 
   <!-- BOTTOM NAVIGATION BAR -->
-  <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white border-t border-gray-100 flex justify-around p-2 z-30 shadow-lg">
+  <nav class="fixed bottom-0 left-0 right-0 max-w-md md:max-w-xl mx-auto bg-white border-t border-gray-100 md:rounded-t-2xl flex justify-around p-2 z-30 shadow-lg">
     <button onclick="switchPage('katalog')" id="navKatalog" class="nav-tab flex flex-col items-center text-brand-600 py-1 px-3 transition">
       <i class="fa-solid fa-store text-base mb-0.5"></i>
       <span class="text-[10px] font-semibold">Katalog</span>
