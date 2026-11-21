@@ -5,15 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Laras Satwa Graha - Katalog & Booking</title>
   <!-- Logo di tab browser & ikon di HP -->
-<link rel="icon" type="image/png" href="Logo.png">
-<link rel="apple-touch-icon" href="Logo.png">
+  <link rel="icon" type="image/png" href="Logo.png">
+  <link rel="apple-touch-icon" href="Logo.png">
 
-<!-- Preview saat link dibagikan (WhatsApp, dll) -->
-<meta property="og:type" content="website">
-<meta property="og:title" content="Laras Satwa Graha - Katalog & Booking">
-<meta property="og:description" content="Petshop, Grooming & Klinik Hewan di Graha Raya. Belanja dan booking layanan langsung dari HP.">
-<meta property="og:image" content="https://ibay022.github.io/Catalog-Graha/Logo.png">
-<meta property="og:url" content="https://ibay022.github.io/Catalog-Graha/">
+  <!-- Preview saat link dibagikan (WhatsApp, dll) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Laras Satwa Graha - Katalog & Booking">
+  <meta property="og:description" content="Petshop, Grooming & Klinik Hewan di Graha Raya. Belanja dan booking layanan langsung dari HP.">
+  <meta property="og:image" content="https://ibay022.github.io/Catalog-Graha/Logo.png">
+  <meta property="og:url" content="https://ibay022.github.io/Catalog-Graha/">
+
   <!-- Tailwind CSS & FontAwesome -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -58,7 +59,7 @@
     <p class="text-xs font-medium text-gray-600" id="loadingText">Memuat katalog...</p>
   </div>
 
-  <!-- MAIN CONTAINER (MOBILE FIRST MAX-W-MD) -->
+  <!-- MAIN CONTAINER -->
   <main class="max-w-md md:max-w-3xl lg:max-w-5xl mx-auto p-4">
 
     <!-- PAGE 1: KATALOG PRODUK -->
@@ -70,16 +71,17 @@
         </div>
         <!-- Kategori Chips -->
         <div class="flex space-x-2 overflow-x-auto pb-1 no-scrollbar text-xs">
-          <button onclick="filterKategori('Semua')" class="cat-btn px-3.5 py-1.5 rounded-full font-medium bg-brand-600 text-white shrink-0 shadow-sm transition">Semua</button>
-          <button onclick="filterKategori('Dry Food')" class="cat-btn px-3.5 py-1.5 rounded-full font-medium bg-white text-gray-600 border border-gray-200 shrink-0 transition">Dry Food</button>
-          <button onclick="filterKategori('Wet Food')" class="cat-btn px-3.5 py-1.5 rounded-full font-medium bg-white text-gray-600 border border-gray-200 shrink-0 transition">Wet Food</button>
-          <button onclick="filterKategori('Pasir & Litter')" class="cat-btn px-3.5 py-1.5 rounded-full font-medium bg-white text-gray-600 border border-gray-200 shrink-0 transition">Pasir</button>
-          <button onclick="filterKategori('Vitamin & Obat')" class="cat-btn px-3.5 py-1.5 rounded-full font-medium bg-white text-gray-600 border border-gray-200 shrink-0 transition">Vitamin</button>
-          <button onclick="filterKategori('Aksesoris & Lainnya')" class="cat-btn px-3.5 py-1.5 rounded-full font-medium bg-white text-gray-600 border border-gray-200 shrink-0 transition">Aksesoris</button>
+          <button data-kat="Semua" onclick="filterKategori('Semua')" class="cat-btn px-3.5 py-1.5 rounded-full font-medium bg-brand-600 text-white shrink-0 shadow-sm transition">Semua</button>
+          <button id="chipPromo" data-kat="Promo" onclick="filterKategori('Promo')" style="display:none" class="cat-btn px-3.5 py-1.5 rounded-full font-medium bg-white text-red-600 border border-red-200 shrink-0 transition"><i class="fa-solid fa-fire mr-1"></i>Promo</button>
+          <button data-kat="Dry Food" onclick="filterKategori('Dry Food')" class="cat-btn px-3.5 py-1.5 rounded-full font-medium bg-white text-gray-600 border border-gray-200 shrink-0 transition">Dry Food</button>
+          <button data-kat="Wet Food" onclick="filterKategori('Wet Food')" class="cat-btn px-3.5 py-1.5 rounded-full font-medium bg-white text-gray-600 border border-gray-200 shrink-0 transition">Wet Food</button>
+          <button data-kat="Pasir & Litter" onclick="filterKategori('Pasir & Litter')" class="cat-btn px-3.5 py-1.5 rounded-full font-medium bg-white text-gray-600 border border-gray-200 shrink-0 transition">Pasir</button>
+          <button data-kat="Vitamin & Obat" onclick="filterKategori('Vitamin & Obat')" class="cat-btn px-3.5 py-1.5 rounded-full font-medium bg-white text-gray-600 border border-gray-200 shrink-0 transition">Vitamin</button>
+          <button data-kat="Aksesoris & Lainnya" onclick="filterKategori('Aksesoris & Lainnya')" class="cat-btn px-3.5 py-1.5 rounded-full font-medium bg-white text-gray-600 border border-gray-200 shrink-0 transition">Aksesoris</button>
         </div>
       </div>
 
-      <!-- Grid Produk (2 Kolom) -->
+      <!-- Grid Produk -->
       <div id="produkGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
         <!-- Injected via JS -->
       </div>
@@ -138,7 +140,7 @@
           <div class="grid grid-cols-2 gap-2">
             <div>
               <label class="block font-semibold text-gray-600 mb-1">Tanggal Kedatangan</label>
-              <input type="date" id="bkgTanggal" onchange="fetchSlots()" class="w-full px-3 py-2 rounded-lg border border-gray-200 focus:outline-none">
+              <input type="date" id="bkgTanggal" class="w-full px-3 py-2 rounded-lg border border-gray-200 focus:outline-none">
             </div>
             <div>
               <label class="block font-semibold text-gray-600 mb-1">Opsi Antar-Jemput</label>
@@ -147,8 +149,6 @@
                 <option value="Antar-Jemput Petshop">Antar-Jemput (+Ongkir)</option>
               </select>
             </div>
-          </div>
-          
           </div>
           <button onclick="submitBookingProcess()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 rounded-xl shadow-sm transition text-xs uppercase tracking-wider mt-2">
             Konfirmasi Booking Sekarang
@@ -245,6 +245,7 @@
         <button onclick="closeProdukModal()" class="absolute top-3 right-3 w-8 h-8 bg-white/90 rounded-full shadow flex items-center justify-center text-gray-500 z-10">
           <i class="fa-solid fa-xmark"></i>
         </button>
+        <span id="pmBadge" class="hidden absolute top-3 left-3 text-[10px] bg-red-600 text-white px-2.5 py-1 rounded-lg font-bold z-10"></span>
         <img id="pmFoto" src="" alt="" class="w-full aspect-square object-contain p-4 bg-white"
              onerror="this.src='https://via.placeholder.com/400?text=No+Image'">
       </div>
@@ -256,7 +257,10 @@
         <h3 id="pmNama" class="font-bold text-base text-gray-900 leading-snug"></h3>
         <p id="pmVarian" class="text-xs text-gray-500"></p>
         <p id="pmDeskripsi" class="text-xs text-gray-600 leading-relaxed hidden"></p>
-        <p id="pmHarga" class="font-bold text-lg text-brand-700"></p>
+        <div class="flex items-end gap-2">
+          <p id="pmHarga" class="font-bold text-lg text-brand-700"></p>
+          <p id="pmHargaCoret" class="hidden text-xs text-gray-400 line-through pb-0.5"></p>
+        </div>
 
         <div class="flex items-center justify-between pt-3 border-t border-gray-100">
           <span class="text-xs font-semibold text-gray-600">Jumlah</span>
@@ -281,12 +285,37 @@
         <h3 class="font-bold text-sm text-gray-900">🛒 Keranjang Belanja Anda</h3>
         <button onclick="closeCartModal()" class="text-gray-400 hover:text-gray-600 text-base"><i class="fa-solid fa-xmark"></i></button>
       </div>
+
       <div id="cartItemList" class="divide-y divide-gray-100 max-h-48 overflow-y-auto text-xs">
         <!-- Injected via JS -->
-      </div><div class="flex items-center justify-between py-3 border-t border-gray-200">
-  <span class="text-xs font-semibold text-gray-600">Total Belanja</span>
-  <span id="cartModalTotal" class="font-bold text-base text-brand-700">Rp 0</span>
-</div>
+      </div>
+
+      <!-- Kode Voucher -->
+      <div class="space-y-1.5 text-xs border-t border-gray-100 pt-3">
+        <label class="block font-semibold text-gray-600">Kode Voucher</label>
+        <div class="flex gap-2">
+          <input type="text" id="voucherInput" placeholder="Masukkan kode voucher" autocomplete="off" autocapitalize="characters" class="flex-1 min-w-0 px-3 py-2 rounded-lg border border-gray-200 focus:outline-none">
+          <button type="button" id="voucherBtn" onclick="voucherAction()" class="px-4 py-2 bg-gray-900 hover:bg-gray-800 text-white rounded-lg font-semibold text-xs shrink-0 transition">Pakai</button>
+        </div>
+        <p id="voucherMsg" class="hidden text-[11px]"></p>
+      </div>
+
+      <!-- Ringkasan Harga -->
+      <div class="py-3 border-t border-gray-200 space-y-1 text-xs">
+        <div class="flex justify-between text-gray-500">
+          <span>Subtotal</span>
+          <span id="cartSubtotal">Rp 0</span>
+        </div>
+        <div id="rowVoucher" class="hidden justify-between text-emerald-600 font-semibold">
+          <span>Potongan voucher</span>
+          <span id="cartPotongan">- Rp 0</span>
+        </div>
+        <div class="flex justify-between items-center pt-1.5">
+          <span class="font-semibold text-gray-600">Total Bayar</span>
+          <span id="cartModalTotal" class="font-bold text-base text-brand-700">Rp 0</span>
+        </div>
+      </div>
+
       <div class="pt-2 space-y-3 text-xs border-t border-gray-100">
         <div>
           <label class="block font-semibold text-gray-600 mb-1">Nama Pemilik / Pembeli</label>
@@ -311,7 +340,8 @@
         </div>
         <button onclick="checkoutWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-xl shadow-sm transition text-xs uppercase tracking-wider flex items-center justify-center space-x-2">
           <i class="fa-brands fa-whatsapp text-base"></i><span>Kirim Pesanan via WhatsApp</span>
-        </button> <button type="button" onclick="cancelOrder()" class="w-full text-red-600 hover:text-red-700 font-semibold py-2 text-xs transition">
+        </button>
+        <button type="button" onclick="cancelOrder()" class="w-full text-red-600 hover:text-red-700 font-semibold py-2 text-xs transition">
           <i class="fa-solid fa-trash-can mr-1"></i> Batalkan Pesanan
         </button>
       </div>
@@ -326,42 +356,39 @@
 
   <!-- JAVASCRIPT APP LOGIC -->
   <script>
-// app.js - logika halaman katalog Laras Satwa Graha
+// Logika halaman katalog Laras Satwa Graha
 // Dimuat SETELAH api.js (api.js menyediakan google.script.run)
 
 let catalogData = { produk: [], layanan: [], waAdmin: "6281234567890" };
-let cart = {}; // { id: { ...item, qty } }
+let cart = {};            // { id: { ...produk, qty } }
+let voucher = null;       // { kode, nominal } setelah kode divalidasi server
 let currentKategori = 'Semua';
 let currentDivisi = 'Grooming';
 let selectedLayananObj = null;
-let selectedJamBooking = '';
 let modalProdId = null;
 let modalQty = 1;
 
-const KAT_LABEL = {
-  'Semua': 'Semua',
-  'Dry Food': 'Dry Food',
-  'Wet Food': 'Wet Food',
-  'Pasir & Litter': 'Pasir',
-  'Vitamin & Obat': 'Vitamin',
-  'Aksesoris & Lainnya': 'Aksesoris'
-};
+// ===== HELPER =====
+function esc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+function rp(n) { return 'Rp ' + Number(n).toLocaleString('id-ID'); }
+function isPromo(p) { return Number(p.hargaPromo) > 0; }
+function hargaJual(p) { return isPromo(p) ? Number(p.hargaPromo) : Number(p.harga); }
+function persenDiskon(p) { return Math.round((1 - Number(p.hargaPromo) / Number(p.harga)) * 100); }
+
+// Subtotal (harga jual x qty), potongan voucher, dan total bayar
+function getCartTotals() {
+  const subtotal = Object.values(cart).reduce(function (s, i) { return s + i.qty * hargaJual(i); }, 0);
+  const potongan = voucher ? Math.min(voucher.nominal, subtotal) : 0;
+  return { subtotal: subtotal, potongan: potongan, total: subtotal - potongan };
+}
 
 // ===== INIT =====
 window.onload = function () {
-  showLoading(true, "Memuat katalog & layanan...");
-  google.script.run
-    .withSuccessHandler(function (res) {
-      catalogData = res;
-      renderProduk();
-      renderLayanan();
-      showLoading(false);
-    })
-    .withFailureHandler(function (err) {
-      showLoading(false);
-      alert("Gagal memuat data: " + err.message);
-    })
-    .getPublicCatalogData();
+  loadCatalog(true);
 
   const today = new Date().toISOString().split('T')[0];
   const dateInput = document.getElementById('bkgTanggal');
@@ -370,6 +397,25 @@ window.onload = function () {
     dateInput.value = today;
   }
 };
+
+function loadCatalog(withSpinner) {
+  if (withSpinner) showLoading(true, "Memuat katalog & layanan...");
+  google.script.run
+    .withSuccessHandler(function (res) {
+      catalogData = res;
+      document.getElementById('chipPromo').style.display = catalogData.produk.some(isPromo) ? '' : 'none';
+      renderProduk();
+      renderLayanan();
+      if (withSpinner) showLoading(false);
+    })
+    .withFailureHandler(function (err) {
+      if (withSpinner) {
+        showLoading(false);
+        alert("Gagal memuat data: " + err.message);
+      }
+    })
+    .getPublicCatalogData();
+}
 
 function showLoading(show, text) {
   const el = document.getElementById('loadingOverlay');
@@ -405,15 +451,18 @@ function switchPage(page) {
 }
 
 // ===== PRODUK =====
+function chipClass(kat, aktif) {
+  const base = 'cat-btn px-3.5 py-1.5 rounded-full font-medium shrink-0 transition ';
+  if (kat === 'Promo') {
+    return base + (aktif ? 'bg-red-600 text-white shadow-sm' : 'bg-white text-red-600 border border-red-200');
+  }
+  return base + (aktif ? 'bg-brand-600 text-white shadow-sm' : 'bg-white text-gray-600 border border-gray-200');
+}
+
 function filterKategori(kat) {
   currentKategori = kat;
-  const label = KAT_LABEL[kat] || kat;
   document.querySelectorAll('.cat-btn').forEach(function (btn) {
-    if (btn.innerText.trim() === label) {
-      btn.className = "cat-btn px-3.5 py-1.5 rounded-full font-medium bg-brand-600 text-white shrink-0 shadow-sm transition";
-    } else {
-      btn.className = "cat-btn px-3.5 py-1.5 rounded-full font-medium bg-white text-gray-600 border border-gray-200 shrink-0 transition";
-    }
+    btn.className = chipClass(btn.dataset.kat, btn.dataset.kat === kat);
   });
   renderProduk();
 }
@@ -427,48 +476,61 @@ function renderProduk() {
   const keyword = document.getElementById('searchInput').value.toLowerCase();
 
   const filtered = catalogData.produk.filter(function (p) {
-    const matchKat = currentKategori === 'Semua' || p.kategori === currentKategori;
+    const matchKat = currentKategori === 'Semua'
+      || (currentKategori === 'Promo' ? isPromo(p) : p.kategori === currentKategori);
     const matchKey = String(p.nama).toLowerCase().includes(keyword);
     return matchKat && matchKey;
   });
 
+  // Di "Semua", produk promo tampil paling atas
+  if (currentKategori === 'Semua') {
+    filtered.sort(function (a, b) { return (isPromo(b) ? 1 : 0) - (isPromo(a) ? 1 : 0); });
+  }
+
   if (filtered.length === 0) {
-    grid.innerHTML = '<div class="col-span-2 text-center py-10 text-gray-400 text-xs">Produk tidak ditemukan.</div>';
+    grid.innerHTML = '<div class="col-span-full text-center py-10 text-gray-400 text-xs">Produk tidak ditemukan.</div>';
     return;
   }
 
   grid.innerHTML = filtered.map(function (p) {
     const qtyInCart = cart[p.id] ? cart[p.id].qty : 0;
     const habis = p.stok <= 0;
+    const promo = isPromo(p);
     return `
-      <div onclick="openProdukModal('${p.id}')" class="bg-white p-3 rounded-2xl border border-gray-100 shadow-sm flex flex-col justify-between cursor-pointer active:scale-[0.98] transition">
+      <div onclick="openProdukModal('${esc(p.id)}')" class="bg-white p-3 rounded-2xl border border-gray-100 shadow-sm flex flex-col justify-between cursor-pointer active:scale-[0.98] transition">
         <div>
           <div class="relative w-full aspect-square rounded-xl mb-2.5 bg-white border border-gray-100 overflow-hidden">
-            <img src="${p.foto}" alt="${p.nama}" loading="lazy"
+            <img src="${esc(p.foto)}" alt="${esc(p.nama)}" loading="lazy"
                  class="w-full h-full object-contain p-1.5 ${habis ? 'opacity-40' : ''}"
                  onerror="this.src='https://via.placeholder.com/300?text=No+Image'">
-            ${habis ? '<span class="absolute top-2 left-2 text-[9px] bg-red-500 text-white px-2 py-0.5 rounded font-bold">Habis</span>' : ''}
+            ${promo ? `<span class="absolute top-2 left-2 text-[9px] bg-red-600 text-white px-2 py-0.5 rounded-md font-bold">PROMO -${persenDiskon(p)}%</span>` : ''}
+            ${habis ? '<span class="absolute top-2 right-2 text-[9px] bg-gray-800 text-white px-2 py-0.5 rounded-md font-bold">Habis</span>' : ''}
           </div>
-          <span class="text-[10px] bg-brand-50 text-brand-700 px-2 py-0.5 rounded font-bold">${p.kategori}</span>
-          <h3 class="font-semibold text-xs text-gray-900 mt-1 line-clamp-2 min-h-[2rem]">${p.nama}</h3>
-          <p class="text-[10px] text-gray-400 mt-0.5 truncate">Varian: ${p.varian || 'Standar'}</p>
+          <span class="text-[10px] bg-brand-50 text-brand-700 px-2 py-0.5 rounded font-bold">${esc(p.kategori)}</span>
+          <h3 class="font-semibold text-xs text-gray-900 mt-1 line-clamp-2 min-h-[2rem]">${esc(p.nama)}</h3>
+          <p class="text-[10px] text-gray-400 mt-0.5 truncate">Varian: ${esc(p.varian || 'Standar')}</p>
         </div>
         <div class="mt-3 pt-2 border-t border-gray-100 flex items-center justify-between gap-2">
           <div class="min-w-0">
-            <p class="font-bold text-xs text-gray-900">Rp ${Number(p.harga).toLocaleString('id-ID')}</p>
+            ${promo ? `
+              <p class="text-[10px] text-gray-400 line-through leading-none">${rp(p.harga)}</p>
+              <p class="font-bold text-xs text-red-600">${rp(p.hargaPromo)}</p>
+            ` : `
+              <p class="font-bold text-xs text-gray-900">${rp(p.harga)}</p>
+            `}
             <p class="text-[9px] ${p.stok <= 3 ? 'text-red-500 font-semibold' : 'text-gray-400'}">Stok: ${p.stok}</p>
           </div>
           <div onclick="event.stopPropagation()">
             ${qtyInCart === 0 ? `
-              <button onclick="updateCart('${p.id}', 1)" ${habis ? 'disabled' : ''}
+              <button onclick="updateCart('${esc(p.id)}', 1)" ${habis ? 'disabled' : ''}
                 class="px-3 py-1.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold shadow-sm transition ${habis ? 'opacity-50 cursor-not-allowed' : ''}">
                 + Beli
               </button>
             ` : `
               <div class="flex items-center space-x-1.5 bg-brand-50 px-2 py-1 rounded-xl">
-                <button onclick="updateCart('${p.id}', -1)" class="w-5 h-5 bg-white text-brand-600 rounded-lg font-bold shadow-sm flex items-center justify-center text-xs">-</button>
+                <button onclick="updateCart('${esc(p.id)}', -1)" class="w-5 h-5 bg-white text-brand-600 rounded-lg font-bold shadow-sm flex items-center justify-center text-xs">-</button>
                 <span class="text-xs font-bold text-brand-700">${qtyInCart}</span>
-                <button onclick="updateCart('${p.id}', 1)" class="w-5 h-5 bg-brand-600 text-white rounded-lg font-bold shadow-sm flex items-center justify-center text-xs">+</button>
+                <button onclick="updateCart('${esc(p.id)}', 1)" class="w-5 h-5 bg-brand-600 text-white rounded-lg font-bold shadow-sm flex items-center justify-center text-xs">+</button>
               </div>
             `}
           </div>
@@ -488,7 +550,22 @@ function openProdukModal(id) {
   document.getElementById('pmKategori').innerText = p.kategori;
   document.getElementById('pmNama').innerText = p.nama;
   document.getElementById('pmVarian').innerText = 'Varian: ' + (p.varian || 'Standar');
-  document.getElementById('pmHarga').innerText = 'Rp ' + Number(p.harga).toLocaleString('id-ID');
+
+  const hargaEl = document.getElementById('pmHarga');
+  const coretEl = document.getElementById('pmHargaCoret');
+  const badgeEl = document.getElementById('pmBadge');
+  hargaEl.innerText = rp(hargaJual(p));
+  if (isPromo(p)) {
+    hargaEl.className = 'font-bold text-lg text-red-600';
+    coretEl.innerText = rp(p.harga);
+    coretEl.classList.remove('hidden');
+    badgeEl.innerText = 'PROMO -' + persenDiskon(p) + '%';
+    badgeEl.classList.remove('hidden');
+  } else {
+    hargaEl.className = 'font-bold text-lg text-brand-700';
+    coretEl.classList.add('hidden');
+    badgeEl.classList.add('hidden');
+  }
 
   const desc = document.getElementById('pmDeskripsi');
   if (p.deskripsi) { desc.innerText = p.deskripsi; desc.classList.remove('hidden'); }
@@ -546,21 +623,16 @@ function updateCart(id, delta) {
     }
   }
 
+  if (Object.keys(cart).length === 0) resetVoucher();
   renderProduk();
   updateCartSummary();
 }
 
 function updateCartSummary() {
-  let totalCount = 0;
-  let totalPrice = 0;
-
-  Object.values(cart).forEach(function (item) {
-    totalCount += item.qty;
-    totalPrice += item.qty * item.harga;
-  });
+  const totalCount = Object.values(cart).reduce(function (s, i) { return s + i.qty; }, 0);
 
   document.getElementById('cartCount').innerText = totalCount;
-  document.getElementById('cartTotal').innerText = 'Rp ' + totalPrice.toLocaleString('id-ID');
+  document.getElementById('cartTotal').innerText = rp(getCartTotals().subtotal);
 
   const cartBar = document.getElementById('cartBar');
   if (totalCount > 0) cartBar.classList.remove('hidden');
@@ -569,24 +641,34 @@ function updateCartSummary() {
 
 function renderCartList() {
   const listEl = document.getElementById('cartItemList');
-  let total = 0;
 
   listEl.innerHTML = Object.values(cart).map(function (item) {
-    total += item.qty * item.harga;
+    const promo = isPromo(item);
     return `
       <div class="py-2.5 flex items-center justify-between gap-3">
         <div class="min-w-0">
-          <p class="font-semibold text-gray-900">${item.nama}</p>
-          <p class="text-gray-400 text-[10px]">${item.qty} x Rp ${Number(item.harga).toLocaleString('id-ID')}</p>
-          <button type="button" onclick="removeCartItem('${item.id}')" class="text-[11px] text-red-600 font-semibold mt-1 hover:text-red-700">
+          <p class="font-semibold text-gray-900">${esc(item.nama)}</p>
+          <p class="text-gray-400 text-[10px]">
+            ${item.qty} x ${rp(hargaJual(item))}
+            ${promo ? `<span class="line-through ml-1">${rp(item.harga)}</span> <span class="text-red-600 font-semibold">PROMO</span>` : ''}
+          </p>
+          <button type="button" onclick="removeCartItem('${esc(item.id)}')" class="text-[11px] text-red-600 font-semibold mt-1 hover:text-red-700">
             Hapus
           </button>
         </div>
-        <p class="font-bold text-gray-900 shrink-0">Rp ${Number(item.qty * item.harga).toLocaleString('id-ID')}</p>
+        <p class="font-bold text-gray-900 shrink-0">${rp(item.qty * hargaJual(item))}</p>
       </div>`;
   }).join('');
 
-  document.getElementById('cartModalTotal').innerText = 'Rp ' + total.toLocaleString('id-ID');
+  const t = getCartTotals();
+  document.getElementById('cartSubtotal').innerText = rp(t.subtotal);
+  document.getElementById('cartPotongan').innerText = '- ' + rp(t.potongan);
+  const rowV = document.getElementById('rowVoucher');
+  rowV.classList.toggle('hidden', t.potongan <= 0);
+  rowV.classList.toggle('flex', t.potongan > 0);
+  document.getElementById('cartModalTotal').innerText = rp(t.total);
+
+  renderVoucherState();
 }
 
 function openCartModal() {
@@ -594,23 +676,29 @@ function openCartModal() {
   document.getElementById('cartModal').classList.remove('hidden');
 }
 
+function closeCartModal() {
+  document.getElementById('cartModal').classList.add('hidden');
+}
+
 function removeCartItem(id) {
   delete cart[id];
   renderProduk();
   updateCartSummary();
-  if (Object.keys(cart).length === 0) closeCartModal();
-  else renderCartList();
+  if (Object.keys(cart).length === 0) {
+    resetVoucher();
+    closeCartModal();
+  } else {
+    renderCartList();
+  }
 }
 
 function cancelOrder() {
   if (!confirm('Batalkan semua pesanan di keranjang?')) return;
   cart = {};
+  resetVoucher();
   renderProduk();
   updateCartSummary();
   closeCartModal();
-}
-function closeCartModal() {
-  document.getElementById('cartModal').classList.add('hidden');
 }
 
 function toggleAlamat() {
@@ -620,9 +708,75 @@ function toggleAlamat() {
   else box.classList.add('hidden');
 }
 
+// ===== VOUCHER =====
+function setVoucherMsg(text, ok) {
+  const el = document.getElementById('voucherMsg');
+  if (!text) { el.classList.add('hidden'); el.innerText = ''; return; }
+  el.innerText = text;
+  el.className = 'text-[11px] ' + (ok ? 'text-emerald-600 font-semibold' : 'text-red-600');
+}
+
+function renderVoucherState() {
+  const input = document.getElementById('voucherInput');
+  const btn = document.getElementById('voucherBtn');
+  if (voucher) {
+    input.value = voucher.kode;
+    input.readOnly = true;
+    btn.innerText = 'Lepas';
+    btn.className = 'px-4 py-2 bg-white text-red-600 border border-red-200 rounded-lg font-semibold text-xs shrink-0 transition';
+    setVoucherMsg('Voucher dipakai, potongan ' + rp(getCartTotals().potongan), true);
+  } else {
+    input.readOnly = false;
+    btn.innerText = 'Pakai';
+    btn.className = 'px-4 py-2 bg-gray-900 hover:bg-gray-800 text-white rounded-lg font-semibold text-xs shrink-0 transition';
+  }
+}
+
+function resetVoucher() {
+  voucher = null;
+  const input = document.getElementById('voucherInput');
+  input.value = '';
+  input.readOnly = false;
+  setVoucherMsg('', false);
+}
+
+function voucherAction() {
+  if (voucher) {
+    resetVoucher();
+    renderCartList();
+    return;
+  }
+
+  const kode = document.getElementById('voucherInput').value.trim().toUpperCase().replace(/\s+/g, '');
+  if (!kode) { setVoucherMsg('Masukkan kode voucher dulu', false); return; }
+
+  const btn = document.getElementById('voucherBtn');
+  btn.disabled = true;
+  btn.innerText = 'Cek...';
+
+  google.script.run
+    .withSuccessHandler(function (res) {
+      btn.disabled = false;
+      if (res && res.valid) {
+        voucher = { kode: res.kode, nominal: Number(res.nominal) };
+        renderCartList();
+      } else {
+        btn.innerText = 'Pakai';
+        setVoucherMsg((res && res.message) || 'Voucher tidak valid', false);
+      }
+    })
+    .withFailureHandler(function (err) {
+      btn.disabled = false;
+      btn.innerText = 'Pakai';
+      setVoucherMsg('Gagal mengecek voucher: ' + err.message, false);
+    })
+    .cekVoucher(kode);
+}
+
+// ===== CHECKOUT =====
 function checkoutWhatsApp() {
-  const nama = document.getElementById('orderNama').value;
-  const wa = document.getElementById('orderWa').value;
+  const nama = document.getElementById('orderNama').value.trim();
+  const wa = document.getElementById('orderWa').value.trim();
   const metode = document.getElementById('orderMetode').value;
   const alamat = document.getElementById('orderAlamat').value || '-';
 
@@ -631,15 +785,11 @@ function checkoutWhatsApp() {
     return;
   }
 
-  let detailText = "";
-  let totalHarga = 0;
-  const itemsArray = [];
-
-  Object.values(cart).forEach(function (item) {
-    detailText += '- ' + item.nama + ' (' + item.qty + 'x) = Rp ' + (item.qty * item.harga).toLocaleString('id-ID') + '\n';
-    totalHarga += item.qty * item.harga;
-    itemsArray.push({ id: item.id, qty: item.qty });
-  });
+  const itemsArray = Object.values(cart).map(function (item) { return { id: item.id, qty: item.qty }; });
+  if (itemsArray.length === 0) {
+    alert("Keranjang masih kosong!");
+    return;
+  }
 
   showLoading(true, "Memproses pesanan...");
   google.script.run
@@ -647,16 +797,30 @@ function checkoutWhatsApp() {
       showLoading(false);
       if (res.success) {
         closeCartModal();
-        const waText = 'Halo Admin Laras Satwa Graha,\n\nSaya ingin memesan produk:\n*ID Order:* ' + res.idOrder +
+
+        // Semua angka diambil dari server supaya sama dengan yang tercatat di spreadsheet
+        let waText = 'Halo Admin Laras Satwa Graha,\n\nSaya ingin memesan produk:\n*ID Order:* ' + res.idOrder +
           '\n*Nama:* ' + nama + '\n*Metode:* ' + metode + '\n*Alamat:* ' + alamat +
-          '\n\n*Rincian Belanja:*\n' + detailText + '\n*Total:* Rp ' + totalHarga.toLocaleString('id-ID') +
-          '\n\nMohon segera diproses, terima kasih!';
+          '\n\n*Rincian Belanja:*\n' + res.detailText +
+          '\n*Subtotal:* ' + rp(res.subtotal);
+        if (res.potongan > 0) {
+          waText += '\n*Voucher ' + res.kodeVoucher + ':* - ' + rp(res.potongan);
+        }
+        waText += '\n*Total:* ' + rp(res.total) + '\n\nMohon segera diproses, terima kasih!';
+
         cart = {};
-updateCartSummary();
-renderProduk();
-window.location.href = 'https://wa.me/' + catalogData.waAdmin + '?text=' + encodeURIComponent(waText);
+        resetVoucher();
+        updateCartSummary();
+        renderProduk();
+        window.location.href = 'https://wa.me/' + catalogData.waAdmin + '?text=' + encodeURIComponent(waText);
       } else {
         alert("Gagal memproses pesanan: " + res.message);
+        if (/voucher/i.test(res.message)) {
+          resetVoucher();
+          renderCartList();
+        } else {
+          loadCatalog(false); // stok/harga mungkin berubah, muat ulang diam-diam
+        }
       }
     })
     .withFailureHandler(function (err) {
@@ -668,8 +832,7 @@ window.location.href = 'https://wa.me/' + catalogData.waAdmin + '?text=' + encod
       wa: wa,
       metodeAmbil: metode,
       alamat: alamat,
-      detailText: detailText,
-      totalHarga: totalHarga,
+      voucher: voucher ? voucher.kode : '',
       items: itemsArray
     });
 }
@@ -693,53 +856,49 @@ function renderLayanan() {
   const filtered = catalogData.layanan.filter(function (s) { return s.divisi === currentDivisi; });
 
   if (filtered.length === 0) {
-    list.innerHTML = '<div class="text-center py-8 text-gray-400 text-xs">Belum ada layanan ' + currentDivisi + ' tersedia.</div>';
+    list.innerHTML = '<div class="text-center py-8 text-gray-400 text-xs">Belum ada layanan ' + esc(currentDivisi) + ' tersedia.</div>';
     return;
   }
 
   list.innerHTML = filtered.map(function (s) {
     return `
-      <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between">
+      <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between gap-3">
         <div>
-          <span class="text-[9px] bg-brand-50 text-brand-700 px-2 py-0.5 rounded font-bold">${s.divisi}</span>
-          <h3 class="font-semibold text-xs text-gray-900 mt-1">${s.nama}</h3>
-          <p class="text-[10px] text-gray-500 mt-0.5">${s.deskripsi}</p>
-          <p class="font-bold text-xs text-gray-900 mt-2">Rp ${Number(s.harga).toLocaleString('id-ID')}</p>
+          <span class="text-[9px] bg-brand-50 text-brand-700 px-2 py-0.5 rounded font-bold">${esc(s.divisi)}</span>
+          <h3 class="font-semibold text-xs text-gray-900 mt-1">${esc(s.nama)}</h3>
+          <p class="text-[10px] text-gray-500 mt-0.5">${esc(s.deskripsi)}</p>
+          <p class="font-bold text-xs text-gray-900 mt-2">${rp(s.harga)}</p>
         </div>
-        <button onclick='selectLayanan(${JSON.stringify(s)})' class="px-3.5 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold shadow-sm transition shrink-0">
+        <button onclick="selectLayanan('${esc(s.id)}')" class="px-3.5 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold shadow-sm transition shrink-0">
           Booking
         </button>
       </div>`;
   }).join('');
 }
 
-function selectLayanan(s) {
+function selectLayanan(id) {
+  const s = catalogData.layanan.find(function (x) { return String(x.id) === String(id); });
+  if (!s) return;
   selectedLayananObj = s;
-  document.getElementById('selectedLayananName').value = s.divisi + ' - ' + s.nama + ' (Rp ' + Number(s.harga).toLocaleString('id-ID') + ')';
+  document.getElementById('selectedLayananName').value = s.divisi + ' - ' + s.nama + ' (' + rp(s.harga) + ')';
   document.getElementById('formBookingContainer').classList.remove('hidden');
   document.getElementById('formBookingContainer').scrollIntoView({ behavior: 'smooth' });
-  fetchSlots();
-}
-
-function fetchSlots() {
-  // Pilihan jam dihilangkan, jadi tidak ada slot yang perlu dicek
-}
-
-function setJamBooking(jam) {
-  selectedJamBooking = jam;
-  fetchSlots();
 }
 
 function submitBookingProcess() {
-  const namaPemilik = document.getElementById('bkgNama').value;
-  const wa = document.getElementById('bkgWa').value;
-  const namaHewan = document.getElementById('bkgNamaHewan').value;
+  const namaPemilik = document.getElementById('bkgNama').value.trim();
+  const wa = document.getElementById('bkgWa').value.trim();
+  const namaHewan = document.getElementById('bkgNamaHewan').value.trim();
   const jenisHewan = document.getElementById('bkgJenisHewan').value;
   const tanggal = document.getElementById('bkgTanggal').value;
   const opsiAntar = document.getElementById('bkgOpsiAntar').value;
 
+  if (!selectedLayananObj) {
+    alert("Pilih layanan terlebih dahulu!");
+    return;
+  }
   if (!namaPemilik || !wa || !namaHewan || !tanggal) {
-  alert("Mohon lengkapi seluruh formulir!");
+    alert("Mohon lengkapi seluruh formulir!");
     return;
   }
 
@@ -754,8 +913,8 @@ function submitBookingProcess() {
           '\n*Tanggal Kedatangan:* ' + tanggal + '\n*Opsi:* ' + opsiAntar +
           '\n\nMohon bantuannya untuk konfirmasi jadwal, terima kasih!';
         alert("Booking berhasil dicatatkan! Mengalihkan ke WhatsApp admin...");
-switchPage('katalog');
-window.location.href = 'https://wa.me/' + catalogData.waAdmin + '?text=' + encodeURIComponent(waText);
+        switchPage('katalog');
+        window.location.href = 'https://wa.me/' + catalogData.waAdmin + '?text=' + encodeURIComponent(waText);
       } else {
         alert("Gagal booking: " + res.message);
       }
@@ -776,7 +935,6 @@ window.location.href = 'https://wa.me/' + catalogData.waAdmin + '?text=' + encod
       opsiAntar: opsiAntar
     });
 }
-
   </script>
 </body>
 </html>
