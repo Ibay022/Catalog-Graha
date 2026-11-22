@@ -65,6 +65,11 @@
     <!-- PAGE 1: KATALOG PRODUK -->
     <div id="page-katalog" class="space-y-4 page-section">
       <div class="space-y-3">
+        <!-- Sub Kategori: Kucing / Anjing -->
+        <div class="grid grid-cols-2 gap-2 p-1 bg-gray-200 rounded-xl text-xs font-semibold">
+          <button id="subKucing" onclick="switchSub('Kucing')" class="py-2.5 rounded-lg bg-white text-brand-600 shadow-sm transition">🐱 Kucing</button>
+          <button id="subAnjing" onclick="switchSub('Anjing')" class="py-2.5 rounded-lg text-gray-600 transition">🐶 Anjing</button>
+        </div>
         <div class="relative">
           <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-gray-400 text-sm"></i>
           <input type="text" id="searchInput" oninput="filterProduk()" placeholder="Cari makanan, pasir, vitamin, obat..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 bg-white focus:ring-2 focus:ring-brand-500 focus:outline-none text-xs shadow-sm">
@@ -75,9 +80,10 @@
           <button id="chipPromo" data-kat="Promo" onclick="filterKategori('Promo')" style="display:none" class="cat-btn px-3.5 py-1.5 rounded-full font-medium bg-white text-red-600 border border-red-200 shrink-0 transition"><i class="fa-solid fa-fire mr-1"></i>Promo</button>
           <button data-kat="Dry Food" onclick="filterKategori('Dry Food')" class="cat-btn px-3.5 py-1.5 rounded-full font-medium bg-white text-gray-600 border border-gray-200 shrink-0 transition">Dry Food</button>
           <button data-kat="Wet Food" onclick="filterKategori('Wet Food')" class="cat-btn px-3.5 py-1.5 rounded-full font-medium bg-white text-gray-600 border border-gray-200 shrink-0 transition">Wet Food</button>
-          <button data-kat="Pasir & Litter" onclick="filterKategori('Pasir & Litter')" class="cat-btn px-3.5 py-1.5 rounded-full font-medium bg-white text-gray-600 border border-gray-200 shrink-0 transition">Pasir</button>
+          <button id="chipPasir" data-kat="Pasir & Litter" onclick="filterKategori('Pasir & Litter')" class="cat-btn px-3.5 py-1.5 rounded-full font-medium bg-white text-gray-600 border border-gray-200 shrink-0 transition">Pasir</button>
           <button data-kat="Vitamin & Obat" onclick="filterKategori('Vitamin & Obat')" class="cat-btn px-3.5 py-1.5 rounded-full font-medium bg-white text-gray-600 border border-gray-200 shrink-0 transition">Vitamin</button>
           <button data-kat="Aksesoris & Lainnya" onclick="filterKategori('Aksesoris & Lainnya')" class="cat-btn px-3.5 py-1.5 rounded-full font-medium bg-white text-gray-600 border border-gray-200 shrink-0 transition">Aksesoris</button>
+          <button data-kat="Snack" onclick="filterKategori('Snack')" class="cat-btn px-3.5 py-1.5 rounded-full font-medium bg-white text-gray-600 border border-gray-200 shrink-0 transition">Snack</button>
         </div>
       </div>
 
@@ -363,6 +369,7 @@ let catalogData = { produk: [], layanan: [], waAdmin: "6281234567890" };
 let cart = {};            // { id: { ...produk, qty } }
 let voucher = null;       // { kode, nominal } setelah kode divalidasi server
 let currentKategori = 'Semua';
+let currentSub = 'Kucing';   // Sub kategori aktif: Kucing / Anjing
 let currentDivisi = 'Grooming';
 let selectedLayananObj = null;
 let modalProdId = null;
@@ -377,6 +384,8 @@ function esc(s) {
 function rp(n) { return 'Rp ' + Number(n).toLocaleString('id-ID'); }
 function isPromo(p) { return Number(p.hargaPromo) > 0; }
 function hargaJual(p) { return isPromo(p) ? Number(p.hargaPromo) : Number(p.harga); }
+// Sub kategori produk (kosong = Kucing)
+function subOf(p) { return String(p.subKategori || '').trim().toLowerCase() === 'anjing' ? 'Anjing' : 'Kucing'; }
 function persenDiskon(p) { return Math.round((1 - Number(p.hargaPromo) / Number(p.harga)) * 100); }
 
 // Subtotal (harga jual x qty), potongan voucher, dan total bayar
@@ -403,7 +412,7 @@ function loadCatalog(withSpinner) {
   google.script.run
     .withSuccessHandler(function (res) {
       catalogData = res;
-      document.getElementById('chipPromo').style.display = catalogData.produk.some(isPromo) ? '' : 'none';
+      refreshChips();
       renderProduk();
       renderLayanan();
       if (withSpinner) showLoading(false);
@@ -459,11 +468,35 @@ function chipClass(kat, aktif) {
   return base + (aktif ? 'bg-brand-600 text-white shadow-sm' : 'bg-white text-gray-600 border border-gray-200');
 }
 
+function switchSub(sub) {
+  currentSub = sub;
+  document.getElementById('subKucing').className = 'py-2.5 rounded-lg transition ' + (sub === 'Kucing' ? 'bg-white text-brand-600 shadow-sm' : 'text-gray-600');
+  document.getElementById('subAnjing').className = 'py-2.5 rounded-lg transition ' + (sub === 'Anjing' ? 'bg-white text-brand-600 shadow-sm' : 'text-gray-600');
+  refreshChips();
+  renderProduk();
+}
+
+// Atur chip kategori sesuai sub kategori aktif
+// - Anjing: kategori Pasir & Litter disembunyikan
+// - Promo: hanya tampil kalau ada produk promo di sub kategori itu
+function refreshChips() {
+  const inSub = catalogData.produk.filter(function (p) { return subOf(p) === currentSub; });
+  const adaPromo = inSub.some(isPromo);
+
+  document.getElementById('chipPromo').style.display = adaPromo ? '' : 'none';
+  document.getElementById('chipPasir').style.display = currentSub === 'Anjing' ? 'none' : '';
+
+  if (currentKategori === 'Promo' && !adaPromo) currentKategori = 'Semua';
+  if (currentKategori === 'Pasir & Litter' && currentSub === 'Anjing') currentKategori = 'Semua';
+
+  document.querySelectorAll('.cat-btn').forEach(function (btn) {
+    btn.className = chipClass(btn.dataset.kat, btn.dataset.kat === currentKategori);
+  });
+}
+
 function filterKategori(kat) {
   currentKategori = kat;
-  document.querySelectorAll('.cat-btn').forEach(function (btn) {
-    btn.className = chipClass(btn.dataset.kat, btn.dataset.kat === kat);
-  });
+  refreshChips();
   renderProduk();
 }
 
@@ -476,6 +509,8 @@ function renderProduk() {
   const keyword = document.getElementById('searchInput').value.toLowerCase();
 
   const filtered = catalogData.produk.filter(function (p) {
+    if (subOf(p) !== currentSub) return false;
+    if (currentSub === 'Anjing' && p.kategori === 'Pasir & Litter') return false;
     const matchKat = currentKategori === 'Semua'
       || (currentKategori === 'Promo' ? isPromo(p) : p.kategori === currentKategori);
     const matchKey = String(p.nama).toLowerCase().includes(keyword);
