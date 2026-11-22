@@ -350,6 +350,13 @@
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-600 mb-1">Sub Kategori</label>
+            <select id="prodSubKategori" onchange="onSubKategoriChange()" class="w-full px-3 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm bg-white">
+              <option value="Kucing">🐱 Kucing</option>
+              <option value="Anjing">🐶 Anjing</option>
+            </select>
+          </div>
+          <div>
             <label class="block text-xs font-semibold uppercase tracking-wider text-gray-600 mb-1">Kategori</label>
             <select id="prodKategori" class="w-full px-3 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm bg-white">
               <option value="Dry Food">Dry Food</option>
@@ -357,12 +364,14 @@
               <option value="Pasir & Litter">Pasir & Litter</option>
               <option value="Vitamin & Obat">Vitamin & Obat</option>
               <option value="Aksesoris & Lainnya">Aksesoris & Lainnya</option>
+              <option value="Snack">Snack</option>
             </select>
           </div>
-          <div>
-            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-600 mb-1">Varian / Ukuran</label>
-            <input type="text" id="prodVarian" placeholder="Misal: 1kg / 400gr" class="w-full px-3 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
-          </div>
+        </div>
+        <p id="subInfo" class="hidden text-xs text-amber-600 -mt-2">Sub kategori Anjing tidak memiliki kategori Pasir &amp; Litter.</p>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-gray-600 mb-1">Varian / Ukuran</label>
+          <input type="text" id="prodVarian" placeholder="Misal: 1kg / 400gr" class="w-full px-3 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
         </div>
         <div class="grid grid-cols-2 gap-3">
           <div>
@@ -480,6 +489,9 @@
       if (n.startsWith('0')) n = '62' + n.slice(1);
       return n;
     }
+
+    // Sub kategori produk (kosong = Kucing)
+    function subOf(p) { return String(p.Sub_Kategori || '').trim().toLowerCase() === 'anjing' ? 'Anjing' : 'Kucing'; }
 
     // Produk dianggap promo kalau Harga_Promo > 0 dan lebih kecil dari Harga
     function isPromoRow(p) {
@@ -709,7 +721,7 @@
           <tr class="hover:bg-gray-50/50">
             <td class="p-4"><img src="${esc(p.Foto_URL || PLACEHOLDER)}" referrerpolicy="no-referrer" class="w-12 h-12 object-cover rounded-xl border border-gray-100" onerror="this.onerror=null;this.src=PLACEHOLDER"></td>
             <td class="p-4 font-semibold text-gray-900">${esc(p.Nama_Produk)}<br><span class="font-mono text-xs text-gray-400">${esc(p.ID_Produk)}</span></td>
-            <td class="p-4"><span class="text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded">${esc(p.Kategori)}</span><br><span class="text-xs text-gray-500 mt-1 block">Varian: ${esc(p.Varian || '-')}</span></td>
+            <td class="p-4"><span class="text-xs ${subOf(p)==='Anjing' ? 'bg-sky-50 text-sky-700' : 'bg-pink-50 text-pink-700'} px-2 py-0.5 rounded font-semibold">${subOf(p)==='Anjing' ? '🐶 Anjing' : '🐱 Kucing'}</span> <span class="text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded">${esc(p.Kategori)}</span><br><span class="text-xs text-gray-500 mt-1 block">Varian: ${esc(p.Varian || '-')}</span></td>
             <td class="p-4">${hargaCell}</td>
             <td class="p-4 font-semibold ${Number(p.Stok) <= 3 ? 'text-red-500' : 'text-gray-700'}">${esc(p.Stok)}</td>
             <td class="p-4"><span class="px-2.5 py-1 ${p.Status==='Aktif'?'bg-emerald-50 text-emerald-600':'bg-gray-100 text-gray-500'} rounded-full text-xs font-semibold">${esc(p.Status)}</span></td>
@@ -819,7 +831,20 @@
       document.getElementById('prodHargaPromo').value = "";
       document.getElementById('promoInfo').classList.add('hidden');
       document.getElementById('prodFotoPreview').classList.add('hidden');
+      onSubKategoriChange();
       document.getElementById('productModal').classList.remove('hidden');
+    }
+
+    // Anjing tidak punya kategori Pasir & Litter
+    function onSubKategoriChange() {
+      const sub = document.getElementById('prodSubKategori').value;
+      const kat = document.getElementById('prodKategori');
+      const opt = kat.querySelector('option[value="Pasir & Litter"]');
+      const blok = sub === 'Anjing';
+      opt.disabled = blok;
+      opt.hidden = blok;
+      if (blok && kat.value === 'Pasir & Litter') kat.value = 'Dry Food';
+      document.getElementById('subInfo').classList.toggle('hidden', !blok);
     }
 
     function editProduct(id) {
@@ -828,6 +853,8 @@
       document.getElementById('productModalTitle').innerText = "Edit Produk";
       document.getElementById('prodID').value = p.ID_Produk;
       document.getElementById('prodNama').value = p.Nama_Produk;
+      document.getElementById('prodSubKategori').value = subOf(p);
+      onSubKategoriChange();
       document.getElementById('prodKategori').value = p.Kategori;
       document.getElementById('prodVarian').value = p.Varian || "";
       document.getElementById('prodHarga').value = p.Harga;
@@ -873,6 +900,11 @@
         return;
       }
 
+      if (document.getElementById('prodSubKategori').value === 'Anjing' && document.getElementById('prodKategori').value === 'Pasir & Litter') {
+        alert("Sub kategori Anjing tidak memiliki kategori Pasir & Litter.");
+        return;
+      }
+
       showLoading(true, "Menyimpan produk...");
       const fotoURL = document.getElementById('prodFotoURL').value.trim();
 
@@ -893,6 +925,7 @@
         .saveProduct({
           ID_Produk: document.getElementById('prodID').value,
           Nama_Produk: document.getElementById('prodNama').value,
+          Sub_Kategori: document.getElementById('prodSubKategori').value,
           Kategori: document.getElementById('prodKategori').value,
           Varian: document.getElementById('prodVarian').value,
           Harga: document.getElementById('prodHarga').value,
