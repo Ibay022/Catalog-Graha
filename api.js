@@ -2,7 +2,7 @@
 // Meniru google.script.run supaya kode di index.html & admin.html tidak perlu ditulis ulang.
 (function () {
   // GANTI dengan URL Web App (berakhiran /exec) dari Deploy -> Manage deployments
-  var API_URL = "https://script.google.com/macros/s/AKfycbzFwaC9TdtH6cfL7wRx0i6FuQwsgtH25qGcmOLc384ftQoRuWkbyHW08IpS5NYqLbpw/exec";
+  var API_URL = "https://script.google.com/macros/s/AKfycbwJfqiS5W6bTNLmc3FbPLK8xSe6nxNSFP11_rcHI5yNEFb3t-gYCnblglr-VOoOZK6g/exec";
 
 var token = "";
 try { token = localStorage.getItem("lsg_token") || ""; } catch (e) {}
