@@ -19,6 +19,10 @@
       }
     }
   </script>
+  <style>
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans antialiased">
 
@@ -64,24 +68,24 @@
             <p class="text-xs text-gray-500" id="adminRoleDisplay">Admin Panel</p>
           </div>
         </div>
-        <nav class="p-4 space-y-1">
-          <button onclick="switchTab('home')" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-600 hover:bg-brand-50 hover:text-brand-600 transition bg-brand-50 text-brand-600 font-semibold" data-target="home">
+        <nav class="p-3 md:p-4 flex md:block gap-1 md:space-y-1 overflow-x-auto no-scrollbar">
+          <button onclick="switchTab('home')" class="nav-btn shrink-0 md:w-full flex items-center space-x-2 md:space-x-3 px-3 md:px-4 py-2.5 md:py-3 whitespace-nowrap rounded-xl text-sm font-medium text-gray-600 hover:bg-brand-50 hover:text-brand-600 transition bg-brand-50 text-brand-600 font-semibold" data-target="home">
             <i class="fa-solid fa-chart-pie w-5"></i><span>Ringkasan</span>
           </button>
-          <button onclick="switchTab('pesanan')" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-600 hover:bg-brand-50 hover:text-brand-600 transition" data-target="pesanan">
+          <button onclick="switchTab('pesanan')" class="nav-btn shrink-0 md:w-full flex items-center space-x-2 md:space-x-3 px-3 md:px-4 py-2.5 md:py-3 whitespace-nowrap rounded-xl text-sm font-medium text-gray-600 hover:bg-brand-50 hover:text-brand-600 transition" data-target="pesanan">
             <i class="fa-solid fa-cart-shopping w-5"></i><span>Pesanan Masuk</span>
             <span id="badgePesananBaru" class="ml-auto bg-brand-500 text-white text-xs px-2 py-0.5 rounded-full hidden">0</span>
           </button>
-          <button onclick="switchTab('booking')" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-600 hover:bg-brand-50 hover:text-brand-600 transition" data-target="booking">
+          <button onclick="switchTab('booking')" class="nav-btn shrink-0 md:w-full flex items-center space-x-2 md:space-x-3 px-3 md:px-4 py-2.5 md:py-3 whitespace-nowrap rounded-xl text-sm font-medium text-gray-600 hover:bg-brand-50 hover:text-brand-600 transition" data-target="booking">
             <i class="fa-solid fa-calendar-check w-5"></i><span>Jadwal Booking</span>
           </button>
-          <button onclick="switchTab('produk')" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-600 hover:bg-brand-50 hover:text-brand-600 transition" data-target="produk">
+          <button onclick="switchTab('produk')" class="nav-btn shrink-0 md:w-full flex items-center space-x-2 md:space-x-3 px-3 md:px-4 py-2.5 md:py-3 whitespace-nowrap rounded-xl text-sm font-medium text-gray-600 hover:bg-brand-50 hover:text-brand-600 transition" data-target="produk">
             <i class="fa-solid fa-box-open w-5"></i><span>Kelola Produk</span>
           </button>
-          <button onclick="switchTab('layanan')" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-600 hover:bg-brand-50 hover:text-brand-600 transition" data-target="layanan">
+          <button onclick="switchTab('layanan')" class="nav-btn shrink-0 md:w-full flex items-center space-x-2 md:space-x-3 px-3 md:px-4 py-2.5 md:py-3 whitespace-nowrap rounded-xl text-sm font-medium text-gray-600 hover:bg-brand-50 hover:text-brand-600 transition" data-target="layanan">
             <i class="fa-solid fa-scissors w-5"></i><span>Kelola Layanan Jasa</span>
           </button>
-          <button onclick="switchTab('voucher')" class="nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-600 hover:bg-brand-50 hover:text-brand-600 transition" data-target="voucher">
+          <button onclick="switchTab('voucher')" class="nav-btn shrink-0 md:w-full flex items-center space-x-2 md:space-x-3 px-3 md:px-4 py-2.5 md:py-3 whitespace-nowrap rounded-xl text-sm font-medium text-gray-600 hover:bg-brand-50 hover:text-brand-600 transition" data-target="voucher">
             <i class="fa-solid fa-ticket w-5"></i><span>Voucher</span>
             <span id="badgeVoucherAktif" class="ml-auto bg-gray-200 text-gray-600 text-xs px-2 py-0.5 rounded-full hidden">0</span>
           </button>
@@ -95,7 +99,7 @@
     </aside>
 
     <!-- MAIN CONTENT AREA -->
-    <main class="flex-1 p-6 md:p-8 max-w-7xl overflow-x-auto">
+    <main class="flex-1 min-w-0 p-4 md:p-8 max-w-7xl">
 
       <!-- LOADING SPINNER OVERLAY -->
       <div id="loadingOverlay" class="fixed inset-0 bg-white/80 z-[60] flex flex-col items-center justify-center hidden">
@@ -211,6 +215,26 @@
           <button onclick="openProductModal()" class="px-4 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-sm font-medium transition flex items-center space-x-2 shadow-sm w-fit">
             <i class="fa-solid fa-plus"></i><span>Tambah Produk Baru</span>
           </button>
+        </div>
+
+        <!-- Toolbar: pencarian + filter sub kategori -->
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 space-y-3">
+          <div class="flex flex-col md:flex-row md:items-center gap-3">
+            <div class="relative flex-1">
+              <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-gray-400 text-sm"></i>
+              <input type="text" id="prodSearch" oninput="renderProdukTable()" placeholder="Cari nama, varian, atau ID produk..." autocomplete="off"
+                     class="w-full pl-10 pr-10 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+              <button id="prodSearchClear" type="button" onclick="clearProdSearch()" class="hidden absolute right-3 top-2.5 w-6 h-6 text-gray-400 hover:text-gray-600" title="Hapus pencarian">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+            <div class="grid grid-cols-3 gap-1 p-1 bg-gray-100 rounded-xl text-xs font-semibold md:w-96 shrink-0">
+              <button type="button" data-sub="Semua" onclick="setProdSub('Semua')" class="prod-sub-btn py-2 rounded-lg transition bg-white text-brand-600 shadow-sm">Semua <span class="cnt ml-1 px-1.5 py-0.5 rounded-full bg-gray-200 text-gray-600 text-[10px]">0</span></button>
+              <button type="button" data-sub="Kucing" onclick="setProdSub('Kucing')" class="prod-sub-btn py-2 rounded-lg transition text-gray-600">🐱 Kucing <span class="cnt ml-1 px-1.5 py-0.5 rounded-full bg-gray-200 text-gray-600 text-[10px]">0</span></button>
+              <button type="button" data-sub="Anjing" onclick="setProdSub('Anjing')" class="prod-sub-btn py-2 rounded-lg transition text-gray-600">🐶 Anjing <span class="cnt ml-1 px-1.5 py-0.5 rounded-full bg-gray-200 text-gray-600 text-[10px]">0</span></button>
+            </div>
+          </div>
+          <p id="prodCount" class="text-xs text-gray-500"></p>
         </div>
         <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
           <div class="overflow-x-auto">
@@ -470,6 +494,7 @@
     let currentUser = null;
     let lastBaruCount = null;
     let newVoucherCodes = [];
+    let prodSub = 'Semua';   // filter sub kategori di tabel produk: Semua / Kucing / Anjing
 
     // Placeholder gambar lokal (tidak bergantung pada situs luar)
     const PLACEHOLDER = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Crect width='300' height='300' fill='%23e5e7eb'/%3E%3Ctext x='150' y='155' font-size='20' text-anchor='middle' fill='%239ca3af'%3ENo Image%3C/text%3E%3C/svg%3E";
@@ -706,35 +731,8 @@
       });
       tbBooking.innerHTML = htmlBooking;
 
-      // 4. Table Produk
-      const tbProduk = document.getElementById('tableProdukBody');
-      let htmlProduk = '';
-      if (globalData.produk.length === 0) {
-        htmlProduk = `<tr><td colspan="7" class="p-6 text-center text-gray-400">Belum ada produk.</td></tr>`;
-      }
-      globalData.produk.forEach(p => {
-        const promo = isPromoRow(p);
-        const hargaCell = promo
-          ? `<span class="text-xs text-gray-400 line-through">${rp(p.Harga)}</span><br><span class="font-bold text-red-600">${rp(p.Harga_Promo)}</span> <span class="ml-1 px-1.5 py-0.5 bg-red-600 text-white rounded text-[10px] font-bold">PROMO</span>`
-          : `<span class="font-bold text-gray-900">${rp(p.Harga)}</span>`;
-        htmlProduk += `
-          <tr class="hover:bg-gray-50/50">
-            <td class="p-4"><img src="${esc(p.Foto_URL || PLACEHOLDER)}" referrerpolicy="no-referrer" class="w-12 h-12 object-cover rounded-xl border border-gray-100" onerror="this.onerror=null;this.src=PLACEHOLDER"></td>
-            <td class="p-4 font-semibold text-gray-900">${esc(p.Nama_Produk)}<br><span class="font-mono text-xs text-gray-400">${esc(p.ID_Produk)}</span></td>
-            <td class="p-4"><span class="text-xs ${subOf(p)==='Anjing' ? 'bg-sky-50 text-sky-700' : 'bg-pink-50 text-pink-700'} px-2 py-0.5 rounded font-semibold">${subOf(p)==='Anjing' ? '🐶 Anjing' : '🐱 Kucing'}</span> <span class="text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded">${esc(p.Kategori)}</span><br><span class="text-xs text-gray-500 mt-1 block">Varian: ${esc(p.Varian || '-')}</span></td>
-            <td class="p-4">${hargaCell}</td>
-            <td class="p-4 font-semibold ${Number(p.Stok) <= 3 ? 'text-red-500' : 'text-gray-700'}">${esc(p.Stok)}</td>
-            <td class="p-4"><span class="px-2.5 py-1 ${p.Status==='Aktif'?'bg-emerald-50 text-emerald-600':'bg-gray-100 text-gray-500'} rounded-full text-xs font-semibold">${esc(p.Status)}</span></td>
-            <td class="p-4 text-center">
-              <div class="flex items-center justify-center gap-1.5">
-                <button onclick="editProduct('${esc(p.ID_Produk)}')" class="px-3 py-1.5 bg-brand-50 hover:bg-brand-100 text-brand-700 rounded-lg text-xs font-semibold transition"><i class="fa-solid fa-pen"></i> Edit</button>
-                <button onclick="deleteProductConfirm('${esc(p.ID_Produk)}')" class="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg text-xs font-semibold transition"><i class="fa-solid fa-trash"></i> Hapus</button>
-              </div>
-            </td>
-          </tr>
-        `;
-      });
-      tbProduk.innerHTML = htmlProduk;
+      // 4. Table Produk (pencarian + filter sub kategori)
+      renderProdukTable();
 
       // 5. Table Layanan
       const tbLayanan = document.getElementById('tableLayananBody');
@@ -761,6 +759,77 @@
 
       // 6. Voucher
       renderVoucherTable();
+    }
+
+    // ===== TABEL PRODUK: pencarian + filter sub kategori =====
+    function setProdSub(sub) {
+      prodSub = sub;
+      renderProdukTable();
+    }
+
+    function clearProdSearch() {
+      const input = document.getElementById('prodSearch');
+      input.value = '';
+      renderProdukTable();
+      input.focus();
+    }
+
+    function renderProdukTable() {
+      const semua = globalData.produk || [];
+      const keyword = document.getElementById('prodSearch').value.trim().toLowerCase();
+
+      // Tombol filter + jumlah produk per sub kategori
+      const jumlah = { Semua: semua.length, Kucing: 0, Anjing: 0 };
+      semua.forEach(p => { jumlah[subOf(p)]++; });
+      document.querySelectorAll('.prod-sub-btn').forEach(btn => {
+        const sub = btn.dataset.sub;
+        btn.className = 'prod-sub-btn py-2 rounded-lg transition ' + (sub === prodSub ? 'bg-white text-brand-600 shadow-sm' : 'text-gray-600 hover:text-gray-900');
+        btn.querySelector('.cnt').innerText = jumlah[sub];
+      });
+      document.getElementById('prodSearchClear').classList.toggle('hidden', keyword === '');
+
+      // Saring: sub kategori, lalu kata kunci (nama, varian, kategori, ID)
+      const list = semua.filter(p => {
+        if (prodSub !== 'Semua' && subOf(p) !== prodSub) return false;
+        if (!keyword) return true;
+        return [p.Nama_Produk, p.Varian, p.Kategori, p.ID_Produk]
+          .some(v => String(v === null || v === undefined ? '' : v).toLowerCase().includes(keyword));
+      });
+
+      document.getElementById('prodCount').innerText = 'Menampilkan ' + list.length + ' dari ' + semua.length + ' produk';
+
+      const tb = document.getElementById('tableProdukBody');
+      if (semua.length === 0) {
+        tb.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-gray-400">Belum ada produk.</td></tr>`;
+        return;
+      }
+      if (list.length === 0) {
+        tb.innerHTML = `<tr><td colspan="7" class="p-6 text-center text-gray-400">Tidak ada produk yang cocok dengan pencarian atau filter.</td></tr>`;
+        return;
+      }
+
+      tb.innerHTML = list.map(p => {
+        const promo = isPromoRow(p);
+        const anjing = subOf(p) === 'Anjing';
+        const hargaCell = promo
+          ? `<span class="text-xs text-gray-400 line-through">${rp(p.Harga)}</span><br><span class="font-bold text-red-600">${rp(p.Harga_Promo)}</span> <span class="ml-1 px-1.5 py-0.5 bg-red-600 text-white rounded text-[10px] font-bold">PROMO</span>`
+          : `<span class="font-bold text-gray-900">${rp(p.Harga)}</span>`;
+        return `
+          <tr class="hover:bg-gray-50/50">
+            <td class="p-4"><img src="${esc(p.Foto_URL || PLACEHOLDER)}" referrerpolicy="no-referrer" class="w-12 h-12 object-cover rounded-xl border border-gray-100" onerror="this.onerror=null;this.src=PLACEHOLDER"></td>
+            <td class="p-4 font-semibold text-gray-900">${esc(p.Nama_Produk)}<br><span class="font-mono text-xs text-gray-400">${esc(p.ID_Produk)}</span></td>
+            <td class="p-4"><span class="text-xs ${anjing ? 'bg-sky-50 text-sky-700' : 'bg-pink-50 text-pink-700'} px-2 py-0.5 rounded font-semibold">${anjing ? '🐶 Anjing' : '🐱 Kucing'}</span> <span class="text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded">${esc(p.Kategori)}</span><br><span class="text-xs text-gray-500 mt-1 block">Varian: ${esc(p.Varian || '-')}</span></td>
+            <td class="p-4">${hargaCell}</td>
+            <td class="p-4 font-semibold ${Number(p.Stok) <= 3 ? 'text-red-500' : 'text-gray-700'}">${esc(p.Stok)}</td>
+            <td class="p-4"><span class="px-2.5 py-1 ${p.Status === 'Aktif' ? 'bg-emerald-50 text-emerald-600' : 'bg-gray-100 text-gray-500'} rounded-full text-xs font-semibold">${esc(p.Status)}</span></td>
+            <td class="p-4 text-center">
+              <div class="flex items-center justify-center gap-1.5">
+                <button onclick="editProduct('${esc(p.ID_Produk)}')" class="px-3 py-1.5 bg-brand-50 hover:bg-brand-100 text-brand-700 rounded-lg text-xs font-semibold transition"><i class="fa-solid fa-pen"></i> Edit</button>
+                <button onclick="deleteProductConfirm('${esc(p.ID_Produk)}')" class="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg text-xs font-semibold transition"><i class="fa-solid fa-trash"></i> Hapus</button>
+              </div>
+            </td>
+          </tr>`;
+      }).join('');
     }
 
     // STATUS UPDATERS
