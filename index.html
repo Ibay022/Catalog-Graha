@@ -37,23 +37,22 @@
     @keyframes sheetUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
     .sheet-anim { animation: sheetUp .25s ease-out; }
 
-    /* Carousel promo */
+    /* Banner promo horizontal + carousel */
     .promo-track { display: flex; gap: .75rem; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; margin: 0 -1rem; padding: 0 1rem; scroll-padding-left: 1rem; }
     .promo-track::-webkit-scrollbar { display: none; }
     .promo-track { -ms-overflow-style: none; scrollbar-width: none; }
-    .promo-slide { flex: 0 0 88%; min-width: 0; scroll-snap-align: start; }
-    .promo-img { aspect-ratio: 16 / 9; background: #fff; border-bottom: 1px solid #dbeafe; }
+    .promo-slide { flex: 0 0 100%; min-width: 0; scroll-snap-align: start; }
+    .promo-img { flex: 0 0 104px; width: 104px; height: 104px; background: #fff; overflow: hidden; border-radius: .85rem; }
     .promo-img img { display: block; width: 100%; height: 100%; object-fit: contain; }
+    .promo-img-fallback { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; color: #2563eb; background: linear-gradient(135deg, #dbeafe, #eff6ff); font-size: 2rem; }
     .promo-slide.single { flex: 0 0 100%; }
     .promo-dot { width: 6px; height: 6px; border-radius: 9999px; background: #cbd5e1; transition: all .2s; }
     .promo-dot.aktif { width: 18px; background: #2563eb; }
     @media (min-width: 768px) {
       .promo-track { margin: 0; padding: 0; scroll-padding-left: 0; }
-      .promo-slide { flex: 0 0 calc((100% - .75rem) / 2); }
-      .promo-slide.single { flex: 0 0 100%; max-width: 40rem; margin: 0 auto; }
-    }
-    @media (min-width: 1024px) {
-      .promo-slide { flex: 0 0 calc((100% - 1.5rem) / 3); }
+      .promo-slide { flex: 0 0 100%; }
+      .promo-img { flex-basis: 132px; width: 132px; height: 112px; }
+      .promo-slide.single { flex: 0 0 100%; max-width: none; margin: 0; }
     }
   </style>
 </head>
@@ -432,12 +431,12 @@ const PROMO_LIST = [
   {
     judul: "Promo Loyalti Card",
     deskripsi: "Dapatkan kesempatan membawa pulang motor listrik hanya dengan minimal belanja Rp 150.000, berlaku kelipatan.",
-    foto: "Promo.png"
+    foto: ""
   },
   {
     judul: "Promo Grooming",
     deskripsi: "Dapatkan mandi lengkap super premium dan free obat cacing. Khusus customer yang datang langsung ke outlet juga berkesempatan mendapatkan snack.",
-    foto: "Logo3"
+    foto: ""
   }
 ];
 
@@ -463,14 +462,19 @@ function renderPromo() {
   track.innerHTML = list.map(function (p) {
     const foto = promoImgUrl(p.foto);
     return `
-      <article class="promo-slide${single ? ' single' : ''} bg-brand-50 border border-brand-100 rounded-2xl overflow-hidden flex flex-col text-brand-900">
-        ${foto ? `<div class="promo-img">
-          <img src="${esc(foto)}" alt="${esc(p.judul)}" loading="lazy" referrerpolicy="no-referrer"
-               onerror="this.parentElement.remove()">
-        </div>` : ''}
-        <div class="p-4 space-y-1.5">
-          <h4 class="font-bold text-sm"><i class="fa-solid fa-gift"></i> ${esc(p.judul)}</h4>
-          <p class="text-[11px] leading-relaxed">${esc(p.deskripsi)}</p>
+      <article class="promo-slide${single ? ' single' : ''} bg-gradient-to-r from-blue-50 to-white border border-brand-100 rounded-2xl overflow-hidden flex items-center gap-3 p-3 text-brand-900 shadow-sm">
+        <div class="promo-img shrink-0">
+          ${foto
+            ? `<img src="${esc(foto)}" alt="${esc(p.judul)}" loading="lazy" referrerpolicy="no-referrer"
+                   onerror="this.onerror=null;this.parentElement.innerHTML='<div class=&quot;promo-img-fallback&quot;><i class=&quot;fa-solid fa-gift&quot;></i></div>'">`
+            : `<div class="promo-img-fallback"><i class="fa-solid fa-gift"></i></div>`}
+        </div>
+        <div class="min-w-0 flex-1 py-1">
+          <span class="inline-flex items-center gap-1 text-[9px] font-bold uppercase tracking-wider text-blue-700 bg-blue-100 px-2 py-1 rounded-full mb-1.5">
+            <i class="fa-solid fa-bullhorn"></i> Promo Spesial
+          </span>
+          <h4 class="font-bold text-sm leading-snug text-gray-900">${esc(p.judul)}</h4>
+          <p class="text-[11px] leading-relaxed text-gray-600 mt-1">${esc(p.deskripsi)}</p>
         </div>
       </article>`;
   }).join('');
