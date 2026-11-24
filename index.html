@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Laras Satwa Graha - Katalog & Booking</title>
   <!-- Logo di tab browser & ikon di HP -->
-  <link rel="icon" type="image/png" href="Logo3.png">
-  <link rel="apple-touch-icon" href="Logo3.png">
+  <link rel="icon" type="image/png" href="Logo.png">
+  <link rel="apple-touch-icon" href="Logo.png">
 
   <!-- Preview saat link dibagikan (WhatsApp, dll) -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Laras Satwa Graha - Katalog & Booking">
   <meta property="og:description" content="Petshop, Grooming & Klinik Hewan di Graha Raya. Belanja dan booking layanan langsung dari HP.">
-  <meta property="og:image" content="https://ibay022.github.io/Catalog-Graha/Logo3.png">
+  <meta property="og:image" content="https://ibay022.github.io/Catalog-Graha/Logo.png">
   <meta property="og:url" content="https://ibay022.github.io/Catalog-Graha/">
 
   <!-- Tailwind CSS & FontAwesome -->
@@ -36,6 +36,25 @@
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     @keyframes sheetUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
     .sheet-anim { animation: sheetUp .25s ease-out; }
+
+    /* Carousel promo */
+    .promo-track { display: flex; gap: .75rem; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; margin: 0 -1rem; padding: 0 1rem; scroll-padding-left: 1rem; }
+    .promo-track::-webkit-scrollbar { display: none; }
+    .promo-track { -ms-overflow-style: none; scrollbar-width: none; }
+    .promo-slide { flex: 0 0 88%; min-width: 0; scroll-snap-align: start; }
+    .promo-img { aspect-ratio: 16 / 9; background: #fff; border-bottom: 1px solid #dbeafe; }
+    .promo-img img { display: block; width: 100%; height: 100%; object-fit: contain; }
+    .promo-slide.single { flex: 0 0 100%; }
+    .promo-dot { width: 6px; height: 6px; border-radius: 9999px; background: #cbd5e1; transition: all .2s; }
+    .promo-dot.aktif { width: 18px; background: #2563eb; }
+    @media (min-width: 768px) {
+      .promo-track { margin: 0; padding: 0; scroll-padding-left: 0; }
+      .promo-slide { flex: 0 0 calc((100% - .75rem) / 2); }
+      .promo-slide.single { flex: 0 0 100%; max-width: 40rem; margin: 0 auto; }
+    }
+    @media (min-width: 1024px) {
+      .promo-slide { flex: 0 0 calc((100% - 1.5rem) / 3); }
+    }
   </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans pb-28 antialiased">
@@ -64,6 +83,21 @@
 
     <!-- PAGE 1: KATALOG PRODUK -->
     <div id="page-katalog" class="space-y-4 page-section">
+
+      <!-- PROMO (geser ke samping kalau lebih dari satu) -->
+      <section id="promoSection" class="hidden">
+        <div class="relative">
+          <div id="promoTrack" class="promo-track"></div>
+          <button id="promoPrev" type="button" onclick="promoSlide(-1)" aria-label="Promo sebelumnya" class="hidden absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/95 shadow-md border border-gray-100 items-center justify-center text-gray-600 hover:bg-white z-10">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+          <button id="promoNext" type="button" onclick="promoSlide(1)" aria-label="Promo berikutnya" class="hidden absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/95 shadow-md border border-gray-100 items-center justify-center text-gray-600 hover:bg-white z-10">
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+        <div id="promoDots" class="flex justify-center items-center gap-1.5 mt-2.5"></div>
+      </section>
+
       <div class="space-y-3">
         <!-- Sub Kategori: Kucing / Anjing -->
         <div class="grid grid-cols-2 gap-2 p-1 bg-gray-200 rounded-xl text-xs font-semibold">
@@ -198,16 +232,6 @@
           </ul>
         </div>
       </div>
-
-      <div class="bg-brand-50 p-4 rounded-2xl border border-brand-100 text-brand-900 space-y-2">
-        <h4 class="font-bold text-sm"><i class="fa-solid fa-gift"></i> Promo Loyalti Card</h4>
-        <p class="text-[11px] leading-relaxed">Dapatkan kesempatan membawa pulang motor listrik hanya dengan minimal belanja Rp 150.000, berlaku kelipatan.</p>
-      </div>
-
-      <div class="bg-brand-50 p-4 rounded-2xl border border-brand-100 text-brand-900 space-y-2">
-        <h4 class="font-bold text-sm"><i class="fa-solid fa-gift"></i> Promo Grooming</h4>
-        <p class="text-[11px] leading-relaxed">Dapatkan mandi lengkap super premium dan free obat cacing. Khusus customer yang datang langsung ke outlet juga berkesempatan mendapatkan snack.</p>
-      </div>
     </div>
 
   </main>
@@ -253,7 +277,7 @@
         </button>
         <span id="pmBadge" class="hidden absolute top-3 left-3 text-[10px] bg-red-600 text-white px-2.5 py-1 rounded-lg font-bold z-10"></span>
         <img id="pmFoto" src="" alt="" class="w-full aspect-square object-contain p-4 bg-white"
-             onerror="this.src='https://via.placeholder.com/400?text=No+Image'">
+             onerror="this.onerror=null;this.src=PLACEHOLDER">
       </div>
       <div class="p-5 space-y-3">
         <div class="flex items-center justify-between">
@@ -356,7 +380,7 @@
 
   <!-- LOGO (dipakai di header & halaman info) -->
   <script>
-    const LOGO_SRC = "Logo3.png";
+    const LOGO_SRC = "Logo.png";
     document.querySelectorAll('.js-logo').forEach(function (img) { img.src = LOGO_SRC; });
   </script>
 
@@ -374,6 +398,9 @@ let currentDivisi = 'Grooming';
 let selectedLayananObj = null;
 let modalProdId = null;
 let modalQty = 1;
+
+// Gambar pengganti kalau foto produk gagal dimuat (tanpa bergantung situs luar)
+const PLACEHOLDER = "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Crect width='300' height='300' fill='%23e5e7eb'/%3E%3Ctext x='150' y='155' font-size='20' text-anchor='middle' fill='%239ca3af'%3ENo Image%3C/text%3E%3C/svg%3E";
 
 // ===== HELPER =====
 function esc(s) {
@@ -395,8 +422,125 @@ function getCartTotals() {
   return { subtotal: subtotal, potongan: potongan, total: subtotal - potongan };
 }
 
+// ===== PROMO (tampil di atas katalog) =====
+// Ubah / tambah promo di daftar ini. Kalau lebih dari satu, otomatis bisa digeser ke samping.
+//   judul     : judul promo
+//   deskripsi : isi promo
+//   foto      : boleh dikosongkan (""). Isi nama file di repo (mis. "promo-grooming.jpg")
+//               atau link gambar (link Google Drive otomatis dikonversi). Ukuran ideal 1280x720 (16:9).
+const PROMO_LIST = [
+  {
+    judul: "Promo Loyalti Card",
+    deskripsi: "Dapatkan kesempatan membawa pulang motor listrik hanya dengan minimal belanja Rp 150.000, berlaku kelipatan.",
+    foto: "Promo.png"
+  },
+  {
+    judul: "Promo Grooming",
+    deskripsi: "Dapatkan mandi lengkap super premium dan free obat cacing. Khusus customer yang datang langsung ke outlet juga berkesempatan mendapatkan snack.",
+    foto: "Logo3"
+  }
+];
+
+let promoLastTouch = 0;   // waktu terakhir pengunjung menyentuh carousel (untuk jeda auto-geser)
+
+function promoImgUrl(url) {
+  url = String(url || '').trim();
+  if (!url) return '';
+  const m = url.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/) ||
+            url.match(/drive\.google\.com\/(?:open|uc|thumbnail)\?.*?id=([a-zA-Z0-9_-]+)/) ||
+            url.match(/lh3\.googleusercontent\.com\/d\/([a-zA-Z0-9_-]+)/);
+  return m ? 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w1200' : url;
+}
+
+function renderPromo() {
+  const section = document.getElementById('promoSection');
+  const track = document.getElementById('promoTrack');
+  const list = PROMO_LIST.filter(function (p) { return p && (p.judul || p.deskripsi || p.foto); });
+
+  if (list.length === 0) { section.classList.add('hidden'); return; }
+
+  const single = list.length === 1;
+  track.innerHTML = list.map(function (p) {
+    const foto = promoImgUrl(p.foto);
+    return `
+      <article class="promo-slide${single ? ' single' : ''} bg-brand-50 border border-brand-100 rounded-2xl overflow-hidden flex flex-col text-brand-900">
+        ${foto ? `<div class="promo-img">
+          <img src="${esc(foto)}" alt="${esc(p.judul)}" loading="lazy" referrerpolicy="no-referrer"
+               onerror="this.parentElement.remove()">
+        </div>` : ''}
+        <div class="p-4 space-y-1.5">
+          <h4 class="font-bold text-sm"><i class="fa-solid fa-gift"></i> ${esc(p.judul)}</h4>
+          <p class="text-[11px] leading-relaxed">${esc(p.deskripsi)}</p>
+        </div>
+      </article>`;
+  }).join('');
+
+  document.getElementById('promoDots').innerHTML = list.map(function (_, i) {
+    return '<button type="button" class="promo-dot" aria-label="Promo ' + (i + 1) + '" onclick="promoGoTo(' + i + ')"></button>';
+  }).join('');
+
+  section.classList.remove('hidden');
+
+  ['touchstart', 'pointerdown', 'wheel', 'mouseenter'].forEach(function (ev) {
+    track.addEventListener(ev, function () { promoLastTouch = Date.now(); }, { passive: true });
+  });
+  track.addEventListener('scroll', updatePromoUI, { passive: true });
+  window.addEventListener('resize', updatePromoUI);
+  updatePromoUI();
+
+  // Geser otomatis tiap 5 detik (berhenti sebentar kalau pengunjung baru menyentuh)
+  if (!single) {
+    setInterval(function () {
+      if (document.hidden || Date.now() - promoLastTouch < 8000) return;
+      const maxScroll = track.scrollWidth - track.clientWidth;
+      if (maxScroll <= 2) return;
+      if (track.scrollLeft >= maxScroll - 2) track.scrollTo({ left: 0, behavior: 'smooth' });
+      else promoSlide(1, true);
+    }, 5000);
+  }
+}
+
+function promoStep() {
+  const first = document.getElementById('promoTrack').children[0];
+  return first ? first.offsetWidth + 12 : 0;
+}
+
+function promoSlide(dir, auto) {
+  if (!auto) promoLastTouch = Date.now();
+  document.getElementById('promoTrack').scrollBy({ left: dir * promoStep(), behavior: 'smooth' });
+}
+
+function promoGoTo(i) {
+  promoLastTouch = Date.now();
+  document.getElementById('promoTrack').scrollTo({ left: i * promoStep(), behavior: 'smooth' });
+}
+
+// Titik penanda + panah: hanya tampil kalau memang ada yang bisa digeser
+function updatePromoUI() {
+  const track = document.getElementById('promoTrack');
+  const maxScroll = track.scrollWidth - track.clientWidth;
+  const bisaGeser = maxScroll > 2;
+  const dots = document.querySelectorAll('#promoDots .promo-dot');
+
+  document.getElementById('promoDots').style.display = bisaGeser ? '' : 'none';
+
+  let aktif = promoStep() ? Math.round(track.scrollLeft / promoStep()) : 0;
+  if (track.scrollLeft >= maxScroll - 2) aktif = dots.length - 1;
+  dots.forEach(function (d, i) { d.classList.toggle('aktif', i === aktif); });
+
+  const prev = document.getElementById('promoPrev');
+  const next = document.getElementById('promoNext');
+  const tampilPrev = bisaGeser && track.scrollLeft > 2;
+  const tampilNext = bisaGeser && track.scrollLeft < maxScroll - 2;
+  prev.classList.toggle('hidden', !tampilPrev);
+  prev.classList.toggle('md:flex', tampilPrev);
+  next.classList.toggle('hidden', !tampilNext);
+  next.classList.toggle('md:flex', tampilNext);
+}
+
 // ===== INIT =====
 window.onload = function () {
+  renderPromo();
   loadCatalog(true);
 
   const today = new Date().toISOString().split('T')[0];
@@ -537,7 +681,7 @@ function renderProduk() {
           <div class="relative w-full aspect-square rounded-xl mb-2.5 bg-white border border-gray-100 overflow-hidden">
             <img src="${esc(p.foto)}" alt="${esc(p.nama)}" loading="lazy"
                  class="w-full h-full object-contain p-1.5 ${habis ? 'opacity-40' : ''}"
-                 onerror="this.src='https://via.placeholder.com/300?text=No+Image'">
+                 onerror="this.onerror=null;this.src=PLACEHOLDER">
             ${promo ? `<span class="absolute top-2 left-2 text-[9px] bg-red-600 text-white px-2 py-0.5 rounded-md font-bold">PROMO -${persenDiskon(p)}%</span>` : ''}
             ${habis ? '<span class="absolute top-2 right-2 text-[9px] bg-gray-800 text-white px-2 py-0.5 rounded-md font-bold">Habis</span>' : ''}
           </div>
