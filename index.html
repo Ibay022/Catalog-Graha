@@ -60,14 +60,21 @@
 
   <!-- TOP HEADER -->
   <header class="bg-white sticky top-0 z-30 border-b border-gray-100 shadow-sm">
-    <div class="max-w-md md:max-w-3xl lg:max-w-5xl mx-auto px-4 py-3 flex items-center">
-      <div class="flex items-center space-x-2.5">
+    <div class="max-w-md md:max-w-3xl lg:max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center space-x-2.5 min-w-0">
         <img class="js-logo w-10 h-10 object-contain rounded-xl" alt="Logo Laras Satwa Graha">
         <div>
           <h1 class="font-bold text-sm text-gray-900 leading-tight">Laras Satwa Graha</h1>
           <p class="text-[10px] text-gray-500">Petshop, Grooming & Klinik Hewan</p>
         </div>
       </div>
+      <a href="https://wa.me/6281234567890"
+         onclick="chatAdminWhatsApp(event)"
+         aria-label="Chat WhatsApp Admin Laras Satwa"
+         title="Chat Admin"
+         class="shrink-0 ml-3 w-11 h-11 rounded-full bg-green-50 text-green-600 hover:bg-green-100 flex items-center justify-center shadow-sm transition active:scale-95">
+        <i class="fa-brands fa-whatsapp text-3xl"></i>
+      </a>
     </div>
   </header>
 
@@ -407,6 +414,17 @@ function esc(s) {
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
+function chatAdminWhatsApp(event) {
+  if (event) event.preventDefault();
+  // Mengikuti nomor admin dari API/katalog, dengan nomor fallback.
+  const nomor = String(catalogData.waAdmin || '6281234567890').replace(/\\D/g, '');
+  if (!nomor) {
+    alert('Nomor WhatsApp admin belum tersedia.');
+    return;
+  }
+  window.open('https://wa.me/' + nomor, '_blank', 'noopener');
+}
+
 function rp(n) { return 'Rp ' + Number(n).toLocaleString('id-ID'); }
 function isPromo(p) { return Number(p.hargaPromo) > 0; }
 function hargaJual(p) { return isPromo(p) ? Number(p.hargaPromo) : Number(p.harga); }
