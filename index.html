@@ -90,10 +90,20 @@
     <!-- PAGE 1: KATALOG PRODUK -->
     <div id="page-katalog" class="space-y-4 page-section">
 
-      <!-- PROMO (geser ke samping kalau lebih dari satu) -->
-      <section id="promoSection" class="hidden">
+      <!-- PROMO (diatur dari dashboard admin, geser ke samping kalau lebih dari satu) -->
+      <section id="promoSection">
         <div class="relative">
-          <div id="promoTrack" class="promo-track"></div>
+          <div id="promoTrack" class="promo-track">
+            <!-- Kerangka sementara selama data dimuat -->
+            <article class="promo-slide single bg-white border border-brand-100 rounded-2xl flex items-center gap-3 p-3 shadow-sm animate-pulse">
+              <div class="promo-img" style="background:#e5e7eb"></div>
+              <div class="min-w-0 flex-1 space-y-2">
+                <div class="h-3 w-24 bg-gray-200 rounded"></div>
+                <div class="h-4 w-3/4 bg-gray-200 rounded"></div>
+                <div class="h-3 w-full bg-gray-200 rounded"></div>
+              </div>
+            </article>
+          </div>
           <button id="promoPrev" type="button" onclick="promoSlide(-1)" aria-label="Promo sebelumnya" class="hidden absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/95 shadow-md border border-gray-100 items-center justify-center text-gray-600 hover:bg-white z-10">
             <i class="fa-solid fa-chevron-left"></i>
           </button>
@@ -203,7 +213,7 @@
       </div>
     </div>
 
-    <!-- PAGE 3: INFO TOKO & PROMO -->
+    <!-- PAGE 3: INFO TOKO -->
     <div id="page-info" class="page-section hidden space-y-4 text-xs md:max-w-xl md:mx-auto">
       <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm space-y-4">
         <div class="flex flex-col items-center text-center space-y-2">
@@ -322,7 +332,7 @@
         <button onclick="closeCartModal()" class="text-gray-400 hover:text-gray-600 text-base"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
-      <div id="cartItemList" class="divide-y divide-gray-100 max-h-48 overflow-y-auto text-xs">
+      <div id="cartItemList" class="divide-y divide-gray-100 max-h-64 overflow-y-auto text-xs">
         <!-- Injected via JS -->
       </div>
 
@@ -395,7 +405,7 @@
 // Logika halaman katalog Laras Satwa Graha
 // Dimuat SETELAH api.js (api.js menyediakan google.script.run)
 
-let catalogData = { produk: [], layanan: [], waAdmin: "6281234567890" };
+let catalogData = { produk: [], layanan: [], promo: [], waAdmin: "6281234567890" };
 let cart = {};            // { id: { ...produk, qty } }
 let voucher = null;       // { kode, nominal } setelah kode divalidasi server
 let currentKategori = 'Semua';
@@ -417,7 +427,7 @@ function esc(s) {
 function chatAdminWhatsApp(event) {
   if (event) event.preventDefault();
   // Mengikuti nomor admin dari API/katalog, dengan nomor fallback.
-  const nomor = String(catalogData.waAdmin || '6281234567890').replace(/\\D/g, '');
+  const nomor = String(catalogData.waAdmin || '6281234567890').replace(/\D/g, '');
   if (!nomor) {
     alert('Nomor WhatsApp admin belum tersedia.');
     return;
@@ -439,13 +449,10 @@ function getCartTotals() {
   return { subtotal: subtotal, potongan: potongan, total: subtotal - potongan };
 }
 
-// ===== PROMO (tampil di atas katalog) =====
-// Ubah / tambah promo di daftar ini. Kalau lebih dari satu, otomatis bisa digeser ke samping.
-//   judul     : judul promo
-//   deskripsi : isi promo
-//   foto      : boleh dikosongkan (""). Isi nama file di repo (mis. "promo-grooming.jpg")
-//               atau link gambar (link Google Drive otomatis dikonversi). Ukuran ideal 1280x720 (16:9).
-const PROMO_LIST = [
+// ===== PROMO (banner di atas katalog) =====
+// Daftar promo diatur dari Dashboard Admin (menu Promo) dan dikirim bersama data katalog.
+// PROMO_FALLBACK hanya dipakai kalau backend (Code.gs) belum diperbarui dan belum mengirim data promo.
+const PROMO_FALLBACK = [
   {
     judul: "Promo Loyalti Card",
     deskripsi: "Dapatkan kesempatan membawa pulang motor listrik hanya dengan minimal belanja Rp 150.000, berlaku kelipatan.",
@@ -459,6 +466,8 @@ const PROMO_LIST = [
 ];
 
 let promoLastTouch = 0;   // waktu terakhir pengunjung menyentuh carousel (untuk jeda auto-geser)
+let promoReady = false;   // pendengar event & auto-geser cukup dipasang sekali
+let promoSig = '';        // penanda isi promo terakhir, supaya tidak digambar ulang kalau sama
 
 function promoImgUrl(url) {
   url = String(url || '').trim();
@@ -469,12 +478,20 @@ function promoImgUrl(url) {
   return m ? 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w1200' : url;
 }
 
-function renderPromo() {
+function renderPromo(daftar) {
   const section = document.getElementById('promoSection');
   const track = document.getElementById('promoTrack');
-  const list = PROMO_LIST.filter(function (p) { return p && (p.judul || p.deskripsi || p.foto); });
+  const list = (daftar || []).filter(function (p) { return p && (p.judul || p.deskripsi || p.foto); });
 
-  if (list.length === 0) { section.classList.add('hidden'); return; }
+  if (list.length === 0) {
+    section.classList.add('hidden');
+    promoSig = '';
+    return;
+  }
+
+  const sig = JSON.stringify(list);
+  if (sig === promoSig) { section.classList.remove('hidden'); return; }
+  promoSig = sig;
 
   const single = list.length === 1;
   track.innerHTML = list.map(function (p) {
@@ -502,24 +519,29 @@ function renderPromo() {
   }).join('');
 
   section.classList.remove('hidden');
+  track.scrollLeft = 0;
 
-  ['touchstart', 'pointerdown', 'wheel', 'mouseenter'].forEach(function (ev) {
-    track.addEventListener(ev, function () { promoLastTouch = Date.now(); }, { passive: true });
-  });
-  track.addEventListener('scroll', updatePromoUI, { passive: true });
-  window.addEventListener('resize', updatePromoUI);
-  updatePromoUI();
+  if (!promoReady) {
+    promoReady = true;
 
-  // Geser otomatis tiap 5 detik (berhenti sebentar kalau pengunjung baru menyentuh)
-  if (!single) {
+    ['touchstart', 'pointerdown', 'wheel', 'mouseenter'].forEach(function (ev) {
+      track.addEventListener(ev, function () { promoLastTouch = Date.now(); }, { passive: true });
+    });
+    track.addEventListener('scroll', updatePromoUI, { passive: true });
+    window.addEventListener('resize', updatePromoUI);
+
+    // Geser otomatis tiap 5 detik (berhenti sebentar kalau pengunjung baru menyentuh)
     setInterval(function () {
       if (document.hidden || Date.now() - promoLastTouch < 8000) return;
+      if (track.children.length < 2) return;
       const maxScroll = track.scrollWidth - track.clientWidth;
       if (maxScroll <= 2) return;
       if (track.scrollLeft >= maxScroll - 2) track.scrollTo({ left: 0, behavior: 'smooth' });
       else promoSlide(1, true);
     }, 5000);
   }
+
+  updatePromoUI();
 }
 
 function promoStep() {
@@ -562,7 +584,6 @@ function updatePromoUI() {
 
 // ===== INIT =====
 window.onload = function () {
-  renderPromo();
   loadCatalog(true);
 
   const today = new Date().toISOString().split('T')[0];
@@ -578,12 +599,14 @@ function loadCatalog(withSpinner) {
   google.script.run
     .withSuccessHandler(function (res) {
       catalogData = res;
+      renderPromo(Array.isArray(res.promo) ? res.promo : PROMO_FALLBACK);
       refreshChips();
       renderProduk();
       renderLayanan();
       if (withSpinner) showLoading(false);
     })
     .withFailureHandler(function (err) {
+      if (!promoSig) document.getElementById('promoSection').classList.add('hidden');
       if (withSpinner) {
         showLoading(false);
         alert("Gagal memuat data: " + err.message);
@@ -840,22 +863,58 @@ function updateCartSummary() {
   else cartBar.classList.add('hidden');
 }
 
+// Tambah / kurangi jumlah dari dalam keranjang (minimal 1, maksimal sesuai stok).
+// Untuk membuang produk, pakai tombol "Hapus".
+function changeCartQty(id, delta) {
+  const item = cart[id];
+  if (!item) return;
+
+  const produk = catalogData.produk.find(function (p) { return String(p.id) === String(id); });
+  const stok = produk ? produk.stok : item.stok;
+  const baru = item.qty + delta;
+
+  if (baru < 1) return;
+  if (baru > stok) {
+    alert("Stok produk tidak mencukupi!");
+    return;
+  }
+
+  item.qty = baru;
+  renderProduk();
+  updateCartSummary();
+  renderCartList();
+}
+
 function renderCartList() {
   const listEl = document.getElementById('cartItemList');
 
   listEl.innerHTML = Object.values(cart).map(function (item) {
     const promo = isPromo(item);
+    const produk = catalogData.produk.find(function (p) { return String(p.id) === String(item.id); });
+    const stok = produk ? produk.stok : item.stok;
+    const id = esc(item.id);
+    const minDisabled = item.qty <= 1;
+    const maxDisabled = item.qty >= stok;
     return `
-      <div class="py-2.5 flex items-center justify-between gap-3">
+      <div class="py-3 flex items-start justify-between gap-3">
         <div class="min-w-0">
           <p class="font-semibold text-gray-900">${esc(item.nama)}</p>
-          <p class="text-gray-400 text-[10px]">
-            ${item.qty} x ${rp(hargaJual(item))}
+          <p class="text-gray-400 text-[10px] mt-0.5">
+            ${rp(hargaJual(item))} / item
             ${promo ? `<span class="line-through ml-1">${rp(item.harga)}</span> <span class="text-red-600 font-semibold">PROMO</span>` : ''}
           </p>
-          <button type="button" onclick="removeCartItem('${esc(item.id)}')" class="text-[11px] text-red-600 font-semibold mt-1 hover:text-red-700">
-            Hapus
-          </button>
+          <div class="flex items-center gap-3 mt-2">
+            <div class="flex items-center bg-gray-50 border border-gray-200 rounded-lg overflow-hidden">
+              <button type="button" onclick="changeCartQty('${id}', -1)" ${minDisabled ? 'disabled' : ''} aria-label="Kurangi jumlah"
+                class="w-8 h-8 flex items-center justify-center text-brand-600 font-bold text-base hover:bg-white transition ${minDisabled ? 'opacity-40 cursor-not-allowed' : ''}">&minus;</button>
+              <span class="w-9 text-center text-xs font-bold text-gray-900">${item.qty}</span>
+              <button type="button" onclick="changeCartQty('${id}', 1)" ${maxDisabled ? 'disabled' : ''} aria-label="Tambah jumlah"
+                class="w-8 h-8 flex items-center justify-center bg-brand-600 text-white font-bold text-base hover:bg-brand-700 transition ${maxDisabled ? 'opacity-40 cursor-not-allowed' : ''}">+</button>
+            </div>
+            <button type="button" onclick="removeCartItem('${id}')" class="text-[11px] text-red-600 font-semibold hover:text-red-700">
+              Hapus
+            </button>
+          </div>
         </div>
         <p class="font-bold text-gray-900 shrink-0">${rp(item.qty * hargaJual(item))}</p>
       </div>`;
