@@ -85,6 +85,9 @@
           <button onclick="switchTab('layanan')" class="nav-btn shrink-0 md:w-full flex items-center space-x-2 md:space-x-3 px-3 md:px-4 py-2.5 md:py-3 whitespace-nowrap rounded-xl text-sm font-medium text-gray-600 hover:bg-brand-50 hover:text-brand-600 transition" data-target="layanan">
             <i class="fa-solid fa-scissors w-5"></i><span>Kelola Layanan Jasa</span>
           </button>
+          <button onclick="switchTab('promo')" class="nav-btn shrink-0 md:w-full flex items-center space-x-2 md:space-x-3 px-3 md:px-4 py-2.5 md:py-3 whitespace-nowrap rounded-xl text-sm font-medium text-gray-600 hover:bg-brand-50 hover:text-brand-600 transition" data-target="promo">
+            <i class="fa-solid fa-bullhorn w-5"></i><span>Promo</span>
+          </button>
           <button onclick="switchTab('voucher')" class="nav-btn shrink-0 md:w-full flex items-center space-x-2 md:space-x-3 px-3 md:px-4 py-2.5 md:py-3 whitespace-nowrap rounded-xl text-sm font-medium text-gray-600 hover:bg-brand-50 hover:text-brand-600 transition" data-target="voucher">
             <i class="fa-solid fa-ticket w-5"></i><span>Voucher</span>
             <span id="badgeVoucherAktif" class="ml-auto bg-gray-200 text-gray-600 text-xs px-2 py-0.5 rounded-full hidden">0</span>
@@ -287,7 +290,37 @@
         </div>
       </section>
 
-      <!-- TAB 6: VOUCHER -->
+      <!-- TAB 6: PROMO -->
+      <section id="tab-promo" class="tab-content space-y-6 hidden">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h2 class="text-2xl font-bold text-gray-900">Promo di Halaman Depan</h2>
+            <p class="text-sm text-gray-500">Atur banner promo (teks + foto) yang tampil paling atas di katalog. Kalau ada lebih dari satu, pengunjung bisa menggesernya ke samping.</p>
+          </div>
+          <button onclick="openPromoModal()" class="px-4 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-sm font-medium transition flex items-center space-x-2 shadow-sm w-fit shrink-0">
+            <i class="fa-solid fa-plus"></i><span>Tambah Promo</span>
+          </button>
+        </div>
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-gray-50 border-b border-gray-100 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                  <th class="p-4">Foto</th>
+                  <th class="p-4">Judul & Deskripsi</th>
+                  <th class="p-4">Urutan</th>
+                  <th class="p-4">Status</th>
+                  <th class="p-4 text-center">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="tablePromoBody" class="divide-y divide-gray-100 text-sm"></tbody>
+            </table>
+          </div>
+        </div>
+        <p class="text-xs text-gray-400">Promo berstatus <b>Nonaktif</b> disembunyikan dari katalog tanpa dihapus. Perubahan tampil di katalog saat pengunjung membuka atau memuat ulang halaman.</p>
+      </section>
+
+      <!-- TAB 7: VOUCHER -->
       <section id="tab-voucher" class="tab-content space-y-6 hidden">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
@@ -488,9 +521,54 @@
     </div>
   </div>
 
+  <!-- MODAL: FORM PROMO -->
+  <div id="promoModal" class="fixed inset-0 bg-gray-900/50 z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-100">
+        <h3 id="promoModalTitle" class="text-lg font-bold text-gray-900">Tambah Promo</h3>
+        <button onclick="closePromoModal()" class="text-gray-400 hover:text-gray-600 text-lg"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="promoForm" onsubmit="handleSavePromo(event)" class="space-y-4">
+        <input type="hidden" id="prmID">
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-gray-600 mb-1">Judul Promo</label>
+          <input type="text" id="prmJudul" required maxlength="80" placeholder="Misal: Promo Grooming" class="w-full px-3 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-gray-600 mb-1">Deskripsi</label>
+          <textarea id="prmDeskripsi" rows="4" maxlength="400" placeholder="Isi promo yang akan dibaca pengunjung" class="w-full px-3 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm"></textarea>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-gray-600 mb-1">Foto Promo (opsional)</label>
+          <input type="text" id="prmFoto" oninput="previewPromoFoto()" placeholder="https://... atau nama file di repo (misal Motor.png)" class="w-full px-3 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+          <p class="text-xs text-gray-400 mt-1">Bisa link Google Drive (otomatis dikonversi, pastikan di-share "Anyone with the link"), link gambar lain, atau nama file yang sudah diupload ke repo GitHub. Ukuran paling pas <b>persegi (1:1)</b>, misal 600 x 600 px. Kosongkan kalau tanpa foto.</p>
+          <img id="prmFotoPreview" class="hidden mt-2 w-24 h-24 object-contain bg-white rounded-xl border border-gray-200" referrerpolicy="no-referrer" alt="Preview">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-600 mb-1">Urutan</label>
+            <input type="number" id="prmUrutan" min="1" placeholder="Otomatis paling akhir" class="w-full px-3 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm">
+            <p class="text-xs text-gray-400 mt-1">Angka kecil tampil lebih dulu.</p>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-600 mb-1">Status</label>
+            <select id="prmStatus" class="w-full px-3 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:outline-none text-sm bg-white">
+              <option value="Aktif">Aktif (Tampil di Katalog)</option>
+              <option value="Nonaktif">Nonaktif (Sembunyikan)</option>
+            </select>
+          </div>
+        </div>
+        <div class="pt-3 flex space-x-3">
+          <button type="button" onclick="closePromoModal()" class="w-1/2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-2.5 rounded-lg text-sm transition">Batal</button>
+          <button type="submit" class="w-1/2 bg-brand-600 hover:bg-brand-700 text-white font-semibold py-2.5 rounded-lg text-sm transition shadow-sm">Simpan Promo</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- JAVASCRIPT LOGIC -->
   <script>
-    let globalData = { produk: [], layanan: [], pesanan: [], booking: [], voucher: [] };
+    let globalData = { produk: [], layanan: [], pesanan: [], booking: [], voucher: [], promo: [] };
     let currentUser = null;
     let lastBaruCount = null;
     let newVoucherCodes = [];
@@ -621,6 +699,7 @@
         .withSuccessHandler(data => {
           globalData = data;
           if (!globalData.voucher) globalData.voucher = [];
+          if (!globalData.promo) globalData.promo = [];
           renderDashboard();
           if (silent !== true) showLoading(false);
           checkNewOrders();
@@ -757,7 +836,10 @@
       });
       tbLayanan.innerHTML = htmlLayanan;
 
-      // 6. Voucher
+      // 6. Promo
+      renderPromoTable();
+
+      // 7. Voucher
       renderVoucherTable();
     }
 
@@ -1062,6 +1144,126 @@
         .saveService(srvObj);
     }
 
+    // ===== PROMO =====
+    function renderPromoTable() {
+      const tb = document.getElementById('tablePromoBody');
+      const list = globalData.promo || [];
+
+      if (list.length === 0) {
+        tb.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-gray-400">Belum ada promo. Klik "Tambah Promo" untuk membuat yang pertama.</td></tr>`;
+        return;
+      }
+
+      tb.innerHTML = list.map(p => {
+        const aktif = String(p.Status).trim() === 'Aktif';
+        return `
+          <tr class="hover:bg-gray-50/50">
+            <td class="p-4">
+              ${p.Foto_URL
+                ? `<img src="${esc(p.Foto_URL)}" referrerpolicy="no-referrer" class="w-16 h-16 object-contain bg-white rounded-xl border border-gray-100" onerror="this.onerror=null;this.src=PLACEHOLDER">`
+                : `<div class="w-16 h-16 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center text-2xl"><i class="fa-solid fa-gift"></i></div>`}
+            </td>
+            <td class="p-4 max-w-md">
+              <p class="font-semibold text-gray-900">${esc(p.Judul)}</p>
+              <p class="text-xs text-gray-500 mt-0.5 whitespace-pre-line">${esc(p.Deskripsi)}</p>
+              <span class="font-mono text-[10px] text-gray-400">${esc(p.ID_Promo)}</span>
+            </td>
+            <td class="p-4 font-semibold text-gray-700">${esc(p.Urutan)}</td>
+            <td class="p-4"><span class="px-2.5 py-1 ${aktif ? 'bg-emerald-50 text-emerald-600' : 'bg-gray-100 text-gray-500'} rounded-full text-xs font-semibold">${aktif ? 'Aktif' : 'Nonaktif'}</span></td>
+            <td class="p-4 text-center">
+              <div class="flex items-center justify-center gap-1.5">
+                <button onclick="editPromo('${esc(p.ID_Promo)}')" class="px-3 py-1.5 bg-brand-50 hover:bg-brand-100 text-brand-700 rounded-lg text-xs font-semibold transition"><i class="fa-solid fa-pen"></i> Edit</button>
+                <button onclick="deletePromoConfirm('${esc(p.ID_Promo)}')" class="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg text-xs font-semibold transition"><i class="fa-solid fa-trash"></i> Hapus</button>
+              </div>
+            </td>
+          </tr>`;
+      }).join('');
+    }
+
+    function previewPromoFoto() {
+      const url = normalizeImageUrl(document.getElementById('prmFoto').value);
+      const img = document.getElementById('prmFotoPreview');
+      if (!url) { img.classList.add('hidden'); return; }
+      img.onerror = function () { this.onerror = null; this.src = PLACEHOLDER; };
+      img.src = url;
+      img.classList.remove('hidden');
+    }
+
+    function openPromoModal() {
+      document.getElementById('promoModalTitle').innerText = "Tambah Promo";
+      document.getElementById('promoForm').reset();
+      document.getElementById('prmID').value = "";
+      document.getElementById('prmFotoPreview').classList.add('hidden');
+      document.getElementById('promoModal').classList.remove('hidden');
+    }
+
+    function editPromo(id) {
+      const p = (globalData.promo || []).find(x => String(x.ID_Promo) === String(id));
+      if (!p) return;
+      document.getElementById('promoModalTitle').innerText = "Edit Promo";
+      document.getElementById('prmID').value = p.ID_Promo;
+      document.getElementById('prmJudul').value = p.Judul || "";
+      document.getElementById('prmDeskripsi').value = p.Deskripsi || "";
+      document.getElementById('prmFoto').value = p.Foto_URL || "";
+      document.getElementById('prmUrutan').value = p.Urutan || "";
+      document.getElementById('prmStatus').value = String(p.Status).trim() === 'Nonaktif' ? 'Nonaktif' : 'Aktif';
+      previewPromoFoto();
+      document.getElementById('promoModal').classList.remove('hidden');
+    }
+
+    function closePromoModal() {
+      document.getElementById('promoModal').classList.add('hidden');
+    }
+
+    function handleSavePromo(e) {
+      e.preventDefault();
+      const judul = document.getElementById('prmJudul').value.trim();
+      if (!judul) { alert("Judul promo wajib diisi."); return; }
+
+      showLoading(true, "Menyimpan promo...");
+      google.script.run
+        .withSuccessHandler(res => {
+          showLoading(false);
+          if (res.success) {
+            closePromoModal();
+            loadDashboardData();
+          } else {
+            alert(res.message);
+          }
+        })
+        .withFailureHandler(err => {
+          showLoading(false);
+          alert("Gagal menyimpan promo: " + err.message);
+        })
+        .savePromo({
+          ID_Promo: document.getElementById('prmID').value,
+          Judul: judul,
+          Deskripsi: document.getElementById('prmDeskripsi').value.trim(),
+          Foto_URL: document.getElementById('prmFoto').value.trim(),
+          Urutan: document.getElementById('prmUrutan').value,
+          Status: document.getElementById('prmStatus').value
+        });
+    }
+
+    function deletePromoConfirm(id) {
+      const p = (globalData.promo || []).find(x => String(x.ID_Promo) === String(id));
+      if (!p) return;
+      if (!confirm(`Hapus promo "${p.Judul}"?\nTindakan ini tidak bisa dibatalkan.\n(Kalau hanya ingin menyembunyikan, ubah statusnya jadi Nonaktif.)`)) return;
+
+      showLoading(true, "Menghapus promo...");
+      google.script.run
+        .withSuccessHandler(res => {
+          showLoading(false);
+          if (res.success) loadDashboardData();
+          else alert(res.message);
+        })
+        .withFailureHandler(err => {
+          showLoading(false);
+          alert("Gagal menghapus: " + err.message);
+        })
+        .deletePromo(id);
+    }
+
     // ===== VOUCHER =====
     function renderVoucherTable() {
       const filter = document.getElementById('vcFilter').value;
@@ -1195,6 +1397,7 @@
       if (!currentUser) return;
       if (!document.getElementById('productModal').classList.contains('hidden')) return;
       if (!document.getElementById('serviceModal').classList.contains('hidden')) return;
+      if (!document.getElementById('promoModal').classList.contains('hidden')) return;
       if (document.activeElement && (document.activeElement.tagName === 'SELECT' || document.activeElement.tagName === 'INPUT')) return;
       loadDashboardData(true);
     }, 30000);
